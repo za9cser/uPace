@@ -26,6 +26,7 @@ const TimeInput = ({ time, onChange }) => {
         <View>
             <View style={styles.container}>
                 <TextInput
+                    value={time.minutes.toString()}
                     onChangeText={handleMinutesChange}
                     placeholder="mm"
                     style={styles.textInput}
@@ -33,6 +34,7 @@ const TimeInput = ({ time, onChange }) => {
                 />
                 <Text variant="bodyLarge">:</Text>
                 <TextInput
+                    value={time.seconds.toString()}
                     onChangeText={handleSecondsChange}
                     placeholder="ss"
                     style={styles.textInput}
@@ -40,6 +42,7 @@ const TimeInput = ({ time, onChange }) => {
                 />
                 <Text variant="bodyLarge">.</Text>
                 <TextInput
+                    value={time.milliseconds.toString()}
                     onChangeText={handleMillisecondsChange}
                     placeholder="ms"
                     style={styles.textInput}
