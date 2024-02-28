@@ -7,19 +7,22 @@ import { Button } from "react-native-paper";
 const TimeCalc = () => {
     return (
         <Formik initialValues={initialValues}>
-            {({ handleChange, values }) => (
+            {({ setFieldValue, values }) => (
                 <View>
                     <FieldArray name="splits">
                         {({ push }) => (
                             <View>
                                 {values.splits.map((item, key) => (
                                     <TimeInput
-                                        name={`splits[${key}]`}
+                                        key={key}
                                         time={item}
-                                        onChange={(value) => handleChange(`splits[${key}]`, value)}
+                                        onChange={(value) => {
+                                            console.log("value", value);
+                                            setFieldValue(`splits[${key}]`, value);
+                                        }}
                                     />
                                 ))}
-                                <Button onPress={() => push(new Date())}>Add</Button>
+                                <Button onPress={() => push(new Date(0, 0, 0, 0, 0, 0, 0))}>Add</Button>
                             </View>
                         )}
                     </FieldArray>
@@ -32,7 +35,7 @@ const TimeCalc = () => {
 };
 
 const initialValues = {
-    splits: [new Date()],
+    splits: [new Date(0, 0, 0, 0, 0, 0, 0)],
 };
 
 export default TimeCalc;
