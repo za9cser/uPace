@@ -3,6 +3,7 @@ import React from "react";
 import TimeInput from "../../components/timeInput";
 import { FieldArray, Form, Formik } from "formik";
 import { Button } from "react-native-paper";
+import { TimeSpan } from "timespan";
 
 const TimeCalc = () => {
     return (
@@ -22,7 +23,7 @@ const TimeCalc = () => {
                                         }}
                                     />
                                 ))}
-                                <Button onPress={() => push(new Date(0, 0, 0, 0, 0, 0, 0))}>Add</Button>
+                                <Button onPress={() => push(new TimeSpan())}>Add</Button>
                             </View>
                         )}
                     </FieldArray>
@@ -35,7 +36,7 @@ const TimeCalc = () => {
 };
 
 const initialValues = {
-    splits: [new Date(0, 0, 0, 0, 0, 0, 0)],
+    splits: [new TimeSpan()],
 };
 
 export default TimeCalc;

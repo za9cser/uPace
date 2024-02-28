@@ -1,26 +1,25 @@
 import { StyleSheet, View } from "react-native";
 import React, { useMemo } from "react";
 import { TextInput, Text } from "react-native-paper";
+import { TimeSpan } from "timespan";
 
 const TimeInput = ({ time, onChange }) => {
-    // const { minutes, seconds, milliseconds } = useMemo(() => {}, [time]);
-
     const handleMinutesChange = (newMinutes) => {
-        const date = new Date(0, 0, 0, 0, newMinutes, time.getSeconds(), time.getMilliseconds());
-        console.log("date", date);
-        onChange(date);
+        const timeSpan = new TimeSpan(time.milliseconds, time.seconds, newMinutes);
+        console.log("timeSpan", timeSpan);
+        onChange(timeSpan);
     };
 
     const handleSecondsChange = (newSeconds) => {
-        const date = new Date(0, 0, 0, 0, time.getMinutes(), newSeconds, time.getMilliseconds());
-        console.log("date", date);
-        onChange(date);
+        const timeSpan = new TimeSpan(time.milliseconds, newSeconds, time.minutes);
+        console.log("timeSpan", timeSpan);
+        onChange(timeSpan);
     };
 
     const handleMillisecondsChange = (newMilliseconds) => {
-        const date = new Date(0, 0, 0, 0, time.getMinutes(), time.getSeconds(), newMilliseconds);
-        console.log("date", date);
-        onChange(date);
+        const timeSpan = new TimeSpan(newMilliseconds, time.seconds, time.minutes);
+        console.log("timeSpan", timeSpan);
+        onChange(timeSpan);
     };
 
     return (
