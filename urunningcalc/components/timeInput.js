@@ -3,22 +3,22 @@ import React, { useMemo } from "react";
 import { TextInput, Text } from "react-native-paper";
 import { TimeSpan } from "timespan";
 
-const TimeInput = ({ time, onChange }) => {
+const TimeInput = ({ time, onChange, log }) => {
     const handleMinutesChange = (newMinutes) => {
         const timeSpan = new TimeSpan(time.milliseconds, time.seconds, newMinutes);
-        console.log("timeSpan", timeSpan);
+        log && console.log("timeSpan", timeSpan);
         onChange(timeSpan);
     };
 
     const handleSecondsChange = (newSeconds) => {
         const timeSpan = new TimeSpan(time.milliseconds, newSeconds, time.minutes);
-        console.log("timeSpan", timeSpan);
+        log && console.log("timeSpan", timeSpan);
         onChange(timeSpan);
     };
 
     const handleMillisecondsChange = (newMilliseconds) => {
         const timeSpan = new TimeSpan(newMilliseconds, time.seconds, time.minutes);
-        console.log("timeSpan", timeSpan);
+        log && console.log("timeSpan", timeSpan);
         onChange(timeSpan);
     };
 
@@ -49,7 +49,7 @@ const TimeInput = ({ time, onChange }) => {
                     keyboardType="decimal-pad"
                 />
             </View>
-            <Text>{time.toString()}</Text>
+            {log && <Text>{time.toString()}</Text>}
         </View>
     );
 };

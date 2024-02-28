@@ -21,6 +21,7 @@ const TimeCalc = () => {
                                             console.log("value", value);
                                             setFieldValue(`splits[${key}]`, value);
                                         }}
+                                        log={true}
                                     />
                                 ))}
                                 <Button onPress={() => push(new TimeSpan())}>Add</Button>
@@ -28,7 +29,16 @@ const TimeCalc = () => {
                         )}
                     </FieldArray>
 
-                    <Text>result</Text>
+                    {
+                        <Text>
+                            {values.splits
+                                .reduce((acc, current) => {
+                                    acc.add(current);
+                                    return acc;
+                                }, new TimeSpan())
+                                .toString()}
+                        </Text>
+                    }
                 </View>
             )}
         </Formik>
