@@ -1,5 +1,5 @@
 import { StyleSheet, View } from "react-native";
-import React, { useMemo } from "react";
+import React from "react";
 import { TextInput, Text } from "react-native-paper";
 import { TimeSpan } from "timespan";
 
