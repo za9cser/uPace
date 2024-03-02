@@ -4,6 +4,7 @@ import TimeInput from "../../components/timeInput";
 import { FieldArray, Formik } from "formik";
 import { Button } from "react-native-paper";
 import { TimeSpan } from "timespan";
+import TimeSummary from "./timeSummary";
 
 const TimeCalc = () => {
     return (
@@ -18,24 +19,15 @@ const TimeCalc = () => {
                                         key={key}
                                         time={item}
                                         onChange={(value) => setFieldValue(`splits[${key}]`, value)}
-                                        log={true}
+                                        containerStyle={styles.timeInput}
+                                        log={false}
                                     />
                                 ))}
                                 <Button onPress={() => push(new TimeSpan())}>Add</Button>
                             </View>
                         )}
                     </FieldArray>
-
-                    {
-                        <Text>
-                            {values.splits
-                                .reduce((acc, current) => {
-                                    acc.add(current);
-                                    return acc;
-                                }, new TimeSpan())
-                                .toString()}
-                        </Text>
-                    }
+                    <TimeSummary containerStyle={styles.summary} />
                 </View>
             )}
         </Formik>
@@ -48,4 +40,14 @@ const initialValues = {
 
 export default TimeCalc;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+    timeInput: {
+        justifyContent: "center",
+        paddingRight: 20,
+    },
+    summary: {
+        flexDirection: "row",
+        justifyContent: "flex-end",
+        marginEnd: 100,
+    },
+});
