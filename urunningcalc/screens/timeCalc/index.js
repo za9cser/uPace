@@ -23,7 +23,13 @@ const TimeCalc = () => {
                                         log={false}
                                     />
                                 ))}
-                                <Button onPress={() => push(new TimeSpan())}>Add</Button>
+                                <Button
+                                    style={styles.addButton}
+                                    labelStyle={styles.addButtonText}
+                                    onPress={() => push(new TimeSpan())}
+                                >
+                                    Add
+                                </Button>
                             </View>
                         )}
                     </FieldArray>
@@ -44,11 +50,18 @@ const styles = StyleSheet.create({
     timeInput: {
         justifyContent: "center",
         paddingRight: 20,
+        marginTop: 8,
+    },
+    addButton: {
+        paddingVertical: 8,
+    },
+    addButtonText: {
+        fontSize: 20,
     },
     summary: {
         flexDirection: "row",
         justifyContent: "flex-end",
-        paddingEnd: 100,
+        paddingEnd: "30%",
         borderTopColor: "grey",
         borderTopWidth: 1,
     },
