@@ -3,28 +3,28 @@ import React from "react";
 import { TextInput, Text } from "react-native-paper";
 import { TimeSpan } from "timespan";
 
-const TimeInput = ({ time, onChange, log }) => {
+const TimeInput = ({ time, onChange, containerStyle, log }) => {
     const handleMinutesChange = (newMinutes) => {
-        const timeSpan = new TimeSpan(time.milliseconds, time.seconds, newMinutes);
+        const timeSpan = new TimeSpan(time.milliseconds, time.seconds, parseInt(newMinutes));
         log && console.log("timeSpan", timeSpan);
         onChange(timeSpan);
     };
 
     const handleSecondsChange = (newSeconds) => {
-        const timeSpan = new TimeSpan(time.milliseconds, newSeconds, time.minutes);
+        const timeSpan = new TimeSpan(time.milliseconds, parseInt(newSeconds), time.minutes);
         log && console.log("timeSpan", timeSpan);
         onChange(timeSpan);
     };
 
     const handleMillisecondsChange = (newMilliseconds) => {
-        const timeSpan = new TimeSpan(newMilliseconds, time.seconds, time.minutes);
+        const timeSpan = new TimeSpan(parseInt(newMilliseconds), time.seconds, time.minutes);
         log && console.log("timeSpan", timeSpan);
         onChange(timeSpan);
     };
 
     return (
         <View>
-            <View style={styles.container}>
+            <View style={[styles.container, containerStyle]}>
                 <TextInput
                     value={time.minutes.toString()}
                     onChangeText={handleMinutesChange}
@@ -57,15 +57,14 @@ const TimeInput = ({ time, onChange, log }) => {
 const styles = StyleSheet.create({
     container: {
         flexDirection: "row",
-        justifyContent: "space-between",
-        paddingHorizontal: 10,
         alignItems: "center",
     },
     textInput: {
-        width: "30%", // Adjust the width as needed based on your design
+        width: "14%", // Adjust the width as needed based on your design
+        height: 40,
         borderWidth: 1,
         borderRadius: 5,
-        margin: 5,
+        marginHorizontal: 5,
         textAlign: "center",
         backgroundColor: "fff",
         fontSize: 20,
