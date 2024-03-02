@@ -4,9 +4,7 @@ import { useFormikContext } from "formik";
 import { TimeSpan } from "timespan";
 
 const TimeSummary = ({ containerStyle }) => {
-    const context = useFormikContext();
-    const values = context?.values;
-    console.log("values", values);
+    const { values } = useFormikContext();
     if (!values?.splits) return null;
 
     const timeSpan = values.splits.reduce((acc, current) => {
@@ -14,7 +12,9 @@ const TimeSummary = ({ containerStyle }) => {
         return acc;
     }, new TimeSpan());
 
-    const totalTime = `${timeSpan.minutes}:${timeSpan.seconds}.${timeSpan.milliseconds}`;
+    const totalTime = `${timeSpan.minutes.toString()}:${
+        timeSpan.seconds < 10 ? `0${timeSpan.seconds}` : timeSpan.seconds
+    }.${timeSpan.milliseconds}`;
 
     return (
         <View style={containerStyle}>
