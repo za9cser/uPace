@@ -48,6 +48,8 @@ const styles = StyleSheet.create({
     summary: {
         flexDirection: "row",
         justifyContent: "flex-end",
-        marginEnd: 100,
+        paddingEnd: 100,
+        borderTopColor: "grey",
+        borderTopWidth: 1,
     },
 });
