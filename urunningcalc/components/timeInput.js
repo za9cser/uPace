@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 5,
         marginHorizontal: 5,
-        textAlign: "auto",
+        textAlign: "center",
         backgroundColor: "fff",
         fontSize: 20,
     },
