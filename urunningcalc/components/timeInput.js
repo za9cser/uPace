@@ -60,10 +60,10 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     textInput: {
-        width: "20%", // Adjust the width as needed based on your design
+        width: "18%", // Adjust the width as needed based on your design
         borderWidth: 1,
         borderRadius: 5,
-        margin: 5,
+        marginHorizontal: 5,
         textAlign: "center",
         backgroundColor: "fff",
         fontSize: 20,
