@@ -2,11 +2,12 @@ import { StyleSheet, View } from "react-native";
 import React from "react";
 import TimeInput from "../../components/timeInput";
 import { FieldArray, Formik } from "formik";
-import { Appbar, Button, Text } from "react-native-paper";
+import { Appbar, Button, Surface, Text, useTheme } from "react-native-paper";
 import { TimeSpan } from "timespan";
 import TimeSummary from "./timeSummary";
 
 const TimeCalc = () => {
+    const theme = useTheme();
     return (
         <Formik initialValues={initialValues}>
             {({ setFieldValue, values }) => (
@@ -56,6 +57,7 @@ const styles = StyleSheet.create({
     container: {
         paddingHorizontal: 8,
         paddingTop: 8,
+        height: "100%",
     },
     title: {
         backgroundColor: "#f0e8f3",

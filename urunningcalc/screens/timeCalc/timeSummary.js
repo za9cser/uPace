@@ -2,8 +2,10 @@ import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { useFormikContext } from "formik";
 import { TimeSpan } from "timespan";
+import { useTheme } from "react-native-paper";
 
 const TimeSummary = ({ containerStyle }) => {
+    const { colors } = useTheme();
     const { values } = useFormikContext();
     if (!values?.splits) return null;
 
@@ -18,7 +20,7 @@ const TimeSummary = ({ containerStyle }) => {
 
     return (
         <View style={containerStyle}>
-            <Text style={styles.text}>{totalTime}</Text>
+            <Text style={[styles.text, { color: colors.primary }]}>{totalTime}</Text>
         </View>
     );
 };
