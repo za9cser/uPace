@@ -57,11 +57,6 @@ const styles = StyleSheet.create({
         paddingTop: 8,
         height: "100%",
     },
-    title: {
-        backgroundColor: "#f0e8f3",
-        color: "#fff",
-        borderBottomWidth: 1,
-    },
     description: {
         textAlign: "center",
     },
