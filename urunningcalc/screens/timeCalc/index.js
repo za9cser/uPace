@@ -2,16 +2,16 @@ import { StyleSheet, View } from "react-native";
 import React from "react";
 import TimeInput from "../../components/timeInput";
 import { FieldArray, Formik } from "formik";
-import { Button, Text } from "react-native-paper";
+import { Button, Text, useTheme } from "react-native-paper";
 import { TimeSpan } from "timespan";
 import TimeSummary from "./timeSummary";
 
 const TimeCalc = () => {
+    const { colors } = useTheme();
     return (
         <Formik initialValues={initialValues}>
             {({ setFieldValue, values }) => (
                 <View style={styles.container}>
-                    <Text variant="headlineMedium">Time Calculator</Text>
                     <Text style={styles.description} variant="titleMedium">
                         Enter some time splits and get their sum
                     </Text>
@@ -28,6 +28,7 @@ const TimeCalc = () => {
                                     />
                                 ))}
                                 <Button
+                                    textColor={colors.secondary}
                                     style={styles.addButton}
                                     labelStyle={styles.addButtonText}
                                     onPress={() => push(new TimeSpan())}
@@ -54,6 +55,7 @@ const styles = StyleSheet.create({
     container: {
         paddingHorizontal: 8,
         paddingTop: 8,
+        height: "100%",
     },
     description: {
         textAlign: "center",

@@ -31,6 +31,7 @@ const TimeInput = ({ time, onChange, containerStyle, log }) => {
                     placeholder="mm"
                     style={styles.textInput}
                     keyboardType="decimal-pad"
+                    mode="outlined"
                 />
                 <Text variant="bodyLarge">:</Text>
                 <TextInput
@@ -39,6 +40,7 @@ const TimeInput = ({ time, onChange, containerStyle, log }) => {
                     placeholder="ss"
                     style={styles.textInput}
                     keyboardType="decimal-pad"
+                    mode="outlined"
                 />
                 <Text variant="bodyLarge">.</Text>
                 <TextInput
@@ -47,6 +49,7 @@ const TimeInput = ({ time, onChange, containerStyle, log }) => {
                     placeholder="ms"
                     style={styles.textInput}
                     keyboardType="decimal-pad"
+                    mode="outlined"
                 />
             </View>
             {log && <Text>{time.toString()}</Text>}
@@ -62,11 +65,9 @@ const styles = StyleSheet.create({
     textInput: {
         width: "14%", // Adjust the width as needed based on your design
         height: 40,
-        borderWidth: 1,
         borderRadius: 5,
         marginHorizontal: 5,
         textAlign: "center",
-        backgroundColor: "fff",
         fontSize: 20,
     },
 });
