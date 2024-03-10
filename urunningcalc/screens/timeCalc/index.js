@@ -2,19 +2,15 @@ import { StyleSheet, View } from "react-native";
 import React from "react";
 import TimeInput from "../../components/timeInput";
 import { FieldArray, Formik } from "formik";
-import { Appbar, Button, Surface, Text, useTheme } from "react-native-paper";
+import { Button, Text } from "react-native-paper";
 import { TimeSpan } from "timespan";
 import TimeSummary from "./timeSummary";
 
 const TimeCalc = () => {
-    const theme = useTheme();
     return (
         <Formik initialValues={initialValues}>
             {({ setFieldValue, values }) => (
                 <View style={styles.container}>
-                    {/* <Appbar style={styles.title}>
-                        <Text variant="headlineMedium">Time Calculator</Text>
-                    </Appbar> */}
                     <Text style={styles.description} variant="titleMedium">
                         Enter some time splits and get their sum
                     </Text>
