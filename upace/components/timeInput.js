@@ -33,7 +33,6 @@ const TimeInput = ({ time, onChange, containerStyle, log }) => {
                     placeholder="mm"
                     style={styles.textInput}
                     keyboardType="decimal-pad"
-                    mode="outlined"
                 />
                 <Text variant="bodyLarge">:</Text>
                 <TextInput
@@ -42,7 +41,6 @@ const TimeInput = ({ time, onChange, containerStyle, log }) => {
                     placeholder="ss"
                     style={styles.textInput}
                     keyboardType="decimal-pad"
-                    mode="outlined"
                 />
                 <Text variant="bodyLarge">.</Text>
                 <TextInput
@@ -51,7 +49,6 @@ const TimeInput = ({ time, onChange, containerStyle, log }) => {
                     placeholder="ms"
                     style={styles.textInput}
                     keyboardType="decimal-pad"
-                    mode="outlined"
                 />
             </View>
             {log && <Text>{time.toString()}</Text>}
