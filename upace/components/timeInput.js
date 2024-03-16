@@ -22,34 +22,33 @@ const TimeInput = ({ time, onChange, containerStyle, log }) => {
         onChange(timeSpan);
     };
 
+    const getValue = (value) => (value ? value.toString() : "");
+
     return (
         <View>
             <View style={[styles.container, containerStyle]}>
                 <TextInput
-                    value={time.minutes.toString()}
+                    value={getValue(time.minutes)}
                     onChangeText={handleMinutesChange}
                     placeholder="mm"
                     style={styles.textInput}
                     keyboardType="decimal-pad"
-                    mode="outlined"
                 />
                 <Text variant="bodyLarge">:</Text>
                 <TextInput
-                    value={time.seconds.toString()}
+                    value={getValue(time.seconds)}
                     onChangeText={handleSecondsChange}
                     placeholder="ss"
                     style={styles.textInput}
                     keyboardType="decimal-pad"
-                    mode="outlined"
                 />
                 <Text variant="bodyLarge">.</Text>
                 <TextInput
-                    value={time.milliseconds.toString()}
+                    value={getValue(time.milliseconds)}
                     onChangeText={handleMillisecondsChange}
                     placeholder="ms"
                     style={styles.textInput}
                     keyboardType="decimal-pad"
-                    mode="outlined"
                 />
             </View>
             {log && <Text>{time.toString()}</Text>}
@@ -63,7 +62,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     textInput: {
-        width: "14%", // Adjust the width as needed based on your design
+        width: "20%", // Adjust the width as needed based on your design
         height: 40,
         borderRadius: 5,
         marginHorizontal: 5,

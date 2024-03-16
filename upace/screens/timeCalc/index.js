@@ -1,4 +1,4 @@
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, ScrollView } from "react-native";
 import React from "react";
 import TimeInput from "../../components/timeInput";
 import { FieldArray, Formik } from "formik";
@@ -11,7 +11,7 @@ const TimeCalc = () => {
     return (
         <Formik initialValues={initialValues}>
             {({ setFieldValue, values }) => (
-                <View style={styles.container}>
+                <ScrollView style={styles.container}>
                     <Text style={styles.description} variant="titleMedium">
                         Enter some time splits and get their sum
                     </Text>
@@ -39,7 +39,7 @@ const TimeCalc = () => {
                         )}
                     </FieldArray>
                     <TimeSummary containerStyle={styles.summary} />
-                </View>
+                </ScrollView>
             )}
         </Formik>
     );
@@ -55,7 +55,6 @@ const styles = StyleSheet.create({
     container: {
         paddingHorizontal: 8,
         paddingTop: 8,
-        height: "100%",
     },
     description: {
         textAlign: "center",
@@ -75,6 +74,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "flex-end",
         paddingEnd: "30%",
+        paddingBottom: 25,
         borderTopColor: "#ccc",
         borderTopWidth: 1,
     },
