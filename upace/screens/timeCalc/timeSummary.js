@@ -14,9 +14,11 @@ const TimeSummary = ({ containerStyle }) => {
         return acc;
     }, new TimeSpan());
 
-    const totalTime = `${timeSpan.minutes.toString()}:${
-        timeSpan.seconds < 10 ? `0${timeSpan.seconds}` : timeSpan.seconds
-    }.${timeSpan.milliseconds}`;
+    const hasHours = timeSpan.hours > 0;
+    const totalTime =
+        `${hasHours ? `${timeSpan.hours}:` : ""}` +
+        `${hasHours && timeSpan.minutes < 10 ? `0${timeSpan.minutes}` : timeSpan.minutes}:` +
+        `${timeSpan.seconds < 10 ? `0${timeSpan.seconds}` : timeSpan.seconds}.${timeSpan.milliseconds}`;
 
     return (
         <View style={containerStyle}>
