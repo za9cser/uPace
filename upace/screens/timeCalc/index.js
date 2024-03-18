@@ -11,7 +11,7 @@ const TimeCalc = () => {
     return (
         <Formik initialValues={initialValues}>
             {({ setFieldValue, values }) => (
-                <ScrollView style={styles.container}>
+                <ScrollView style={styles.container} keyboardShouldPersistTaps="handled">
                     <Text style={styles.description} variant="titleMedium">
                         Enter some time splits and get their sum
                     </Text>
