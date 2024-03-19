@@ -1,4 +1,5 @@
 import { StyleSheet, Text, View } from "react-native";
+import * as Clipboard from "expo-clipboard";
 import React, { useState } from "react";
 import { useFormikContext } from "formik";
 import { TimeSpan } from "timespan";
@@ -12,36 +13,46 @@ const TimeSummary = ({ containerStyle }) => {
     const { values } = useFormikContext();
     if (!values?.splits) return null;
 
-    const timeSpan = values.splits.reduce((acc, current) => {
+    const totalTimeSpan = values.splits.reduce((acc, current) => {
         acc.add(current);
         return acc;
     }, new TimeSpan());
 
-    const hasHours = timeSpan.hours > 0;
-    const totalTime =
-        `${hasHours ? `${timeSpan.hours}:` : ""}` +
-        `${hasHours && timeSpan.minutes < 10 ? `0${timeSpan.minutes}` : timeSpan.minutes}:` +
-        `${timeSpan.seconds < 10 ? `0${timeSpan.seconds}` : timeSpan.seconds}.${timeSpan.milliseconds}`;
+    const getTime = (timeSpan) => {
+        const hasHours = timeSpan.hours > 0;
+        const time =
+            `${hasHours ? `${timeSpan.hours}:` : ""}` +
+            `${hasHours && timeSpan.minutes < 10 ? `0${timeSpan.minutes}` : timeSpan.minutes}:` +
+            `${timeSpan.seconds < 10 ? `0${timeSpan.seconds}` : timeSpan.seconds}.${timeSpan.milliseconds}`;
+
+        return time;
+    };
+
+    const totalTime = getTime(totalTimeSpan);
+
+    const copySplits = () => {
+        const splits = values.splits.map((s) => getTime(s)).join(" - ");
+        const result = `${splits} = ${totalTime}`;
+        Clipboard.setStringAsync(result);
+
+        setCopyFeedback("Splits and result copied");
+        setIsCopyFeedbackOpen(true);
+    };
+
+    const copyResult = () => {
+        Clipboard.setStringAsync(totalTime);
+
+        setCopyFeedback("Result copied");
+        setIsCopyFeedbackOpen(true);
+    };
 
     return (
         <View style={[styles.summary, containerStyle]}>
             <View style={styles.buttons}>
-                <Button
-                    icon="content-copy"
-                    onPress={() => {
-                        setCopyFeedback("Splits and result copied");
-                        setIsCopyFeedbackOpen(true);
-                    }}
-                >
+                <Button icon="content-copy" onPress={copySplits}>
                     Splits
                 </Button>
-                <Button
-                    icon="content-copy"
-                    onPress={() => {
-                        setCopyFeedback("Result copied");
-                        setIsCopyFeedbackOpen(true);
-                    }}
-                >
+                <Button icon="content-copy" onPress={copyResult}>
                     Result
                 </Button>
             </View>
