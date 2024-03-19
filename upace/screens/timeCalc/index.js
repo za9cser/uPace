@@ -72,8 +72,8 @@ const styles = StyleSheet.create({
     },
     summary: {
         flexDirection: "row",
-        justifyContent: "flex-end",
-        paddingEnd: "30%",
+        justifyContent: "space-around",
+        paddingEnd: "10%",
         paddingBottom: 25,
         borderTopColor: "#ccc",
         borderTopWidth: 1,
