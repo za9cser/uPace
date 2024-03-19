@@ -1,11 +1,12 @@
 import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { useFormikContext } from "formik";
 import { TimeSpan } from "timespan";
-import { Button, IconButton, useTheme } from "react-native-paper";
-import Icon from "react-native-vector-icons/FontAwesome";
+import { Button, Portal, Snackbar, useTheme } from "react-native-paper";
 
 const TimeSummary = ({ containerStyle }) => {
+    const [isCopyFeedbackOpen, setIsCopyFeedbackOpen] = useState(false);
+    const [copyFeedback, setCopyFeedback] = useState("");
     const { colors } = useTheme();
     const { values } = useFormikContext();
     if (!values?.splits) return null;
@@ -24,15 +25,36 @@ const TimeSummary = ({ containerStyle }) => {
     return (
         <View style={[styles.summary, containerStyle]}>
             <View style={styles.buttons}>
-                <Button icon="content-copy" onPress={() => console.log("first")}>
+                <Button
+                    icon="content-copy"
+                    onPress={() => {
+                        setCopyFeedback("Splits and result copied");
+                        setIsCopyFeedbackOpen(true);
+                    }}
+                >
                     Splits
                 </Button>
-                <Button icon="content-copy" onPress={() => console.log("first")}>
+                <Button
+                    icon="content-copy"
+                    onPress={() => {
+                        setCopyFeedback("Result copied");
+                        setIsCopyFeedbackOpen(true);
+                    }}
+                >
                     Result
                 </Button>
             </View>
-
             <Text style={[styles.text, { color: colors.primary }]}>{totalTime}</Text>
+            <Portal>
+                <Snackbar
+                    visible={isCopyFeedbackOpen}
+                    onDismiss={() => setIsCopyFeedbackOpen(false)}
+                    duration={3000}
+                    icon="times"
+                >
+                    {copyFeedback}
+                </Snackbar>
+            </Portal>
         </View>
     );
 };
@@ -51,4 +73,5 @@ const styles = StyleSheet.create({
         fontSize: 25,
         fontWeight: "600",
     },
+    feedback: {},
 });
