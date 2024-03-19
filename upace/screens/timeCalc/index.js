@@ -2,7 +2,7 @@ import { StyleSheet, View, ScrollView } from "react-native";
 import React from "react";
 import TimeInput from "../../components/timeInput";
 import { FieldArray, Formik } from "formik";
-import { Button, Text, useTheme } from "react-native-paper";
+import { Button, SegmentedButtons, Text, useTheme } from "react-native-paper";
 import { TimeSpan } from "timespan";
 import TimeSummary from "./timeSummary";
 
@@ -15,6 +15,25 @@ const TimeCalc = () => {
                     <Text style={styles.description} variant="titleMedium">
                         Enter some time splits and get their sum
                     </Text>
+                    <SegmentedButtons
+                        multiSelect
+                        value={values.mode}
+                        onValueChange={(value) => {
+                            console.log("value", value);
+                            setFieldValue("mode", value);
+                        }}
+                        buttons={[
+                            {
+                                value: "mm",
+                                label: "mm",
+                            },
+                            {
+                                value: "ss",
+                                label: "ss",
+                            },
+                            { value: "ms", label: "ms" },
+                        ]}
+                    />
                     <FieldArray name="splits">
                         {({ push }) => (
                             <View>
@@ -46,6 +65,7 @@ const TimeCalc = () => {
 };
 
 const initialValues = {
+    mode: ["ss"],
     splits: [new TimeSpan()],
 };
 
