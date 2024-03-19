@@ -8,8 +8,7 @@ import { Button, Portal, Snackbar, useTheme } from "react-native-paper";
 const TimeSummary = ({ containerStyle }) => {
     const [isCopyFeedbackOpen, setIsCopyFeedbackOpen] = useState(false);
     const [copyFeedback, setCopyFeedback] = useState("");
-    const theme = useTheme();
-    const colors = theme.colors;
+    const { colors } = useTheme();
     const { values } = useFormikContext();
     if (!values?.splits) return null;
 
