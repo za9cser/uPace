@@ -6,8 +6,8 @@ import { TimeSpan } from "timespan";
 import { Button, Portal, Snackbar, useTheme } from "react-native-paper";
 
 const TimeSummary = ({ containerStyle }) => {
-    const [isCopyFeedbackOpen, setIsCopyFeedbackOpen] = useState(false);
-    const [copyFeedback, setCopyFeedback] = useState("");
+    const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
+    const [feedbackMessage, setFeedbackMessage] = useState("");
     const { colors } = useTheme();
     const { values } = useFormikContext();
     if (!values?.splits) return null;
@@ -34,15 +34,15 @@ const TimeSummary = ({ containerStyle }) => {
         const result = `${splits} = ${totalTime}`;
         Clipboard.setStringAsync(result);
 
-        setCopyFeedback("Splits and result copied");
-        setIsCopyFeedbackOpen(true);
+        setFeedbackMessage("Splits and result copied");
+        setIsFeedbackOpen(true);
     };
 
     const copyResult = () => {
         Clipboard.setStringAsync(totalTime);
 
-        setCopyFeedback("Result copied");
-        setIsCopyFeedbackOpen(true);
+        setFeedbackMessage("Result copied");
+        setIsFeedbackOpen(true);
     };
 
     return (
@@ -56,14 +56,15 @@ const TimeSummary = ({ containerStyle }) => {
                 </Button>
             </View>
             <Text style={[styles.text, { color: colors.primary }]}>{totalTime}</Text>
+
             <Portal>
                 <Snackbar
-                    visible={isCopyFeedbackOpen}
-                    onDismiss={() => setIsCopyFeedbackOpen(false)}
+                    visible={isFeedbackOpen}
+                    onDismiss={() => setIsFeedbackOpen(false)}
                     duration={3000}
                     style={{ backgroundColor: colors.secondary }}
                 >
-                    {copyFeedback}
+                    {feedbackMessage}
                 </Snackbar>
             </Portal>
         </View>
