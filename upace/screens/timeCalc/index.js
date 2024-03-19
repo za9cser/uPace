@@ -15,25 +15,27 @@ const TimeCalc = () => {
                     <Text style={styles.description} variant="titleMedium">
                         Enter some time splits and get their sum
                     </Text>
-                    <SegmentedButtons
-                        multiSelect
-                        value={values.mode}
-                        onValueChange={(value) => {
-                            console.log("value", value);
-                            setFieldValue("mode", value);
-                        }}
-                        buttons={[
-                            {
-                                value: "mm",
-                                label: "mm",
-                            },
-                            {
-                                value: "ss",
-                                label: "ss",
-                            },
-                            { value: "ms", label: "ms" },
-                        ]}
-                    />
+                    <View style={{ flexDirection: "row" }}>
+                        <SegmentedButtons
+                            multiSelect
+                            value={values.mode}
+                            onValueChange={(value) => {
+                                console.log("value", value);
+                                setFieldValue("mode", value);
+                            }}
+                            buttons={[
+                                {
+                                    value: "mm",
+                                    label: "mm",
+                                },
+                                {
+                                    value: "ss",
+                                    label: "ss",
+                                },
+                                { value: "ms", label: "ms" },
+                            ]}
+                        />
+                    </View>
                     <FieldArray name="splits">
                         {({ push }) => (
                             <View>
@@ -79,6 +81,7 @@ const styles = StyleSheet.create({
     description: {
         textAlign: "center",
     },
+
     timeInput: {
         justifyContent: "center",
         paddingRight: 20,
