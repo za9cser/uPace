@@ -2,7 +2,8 @@ import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { useFormikContext } from "formik";
 import { TimeSpan } from "timespan";
-import { useTheme } from "react-native-paper";
+import { Button, IconButton, useTheme } from "react-native-paper";
+import Icon from "react-native-vector-icons/FontAwesome";
 
 const TimeSummary = ({ containerStyle }) => {
     const { colors } = useTheme();
@@ -21,7 +22,12 @@ const TimeSummary = ({ containerStyle }) => {
         `${timeSpan.seconds < 10 ? `0${timeSpan.seconds}` : timeSpan.seconds}.${timeSpan.milliseconds}`;
 
     return (
-        <View style={containerStyle}>
+        <View style={[styles.summary, containerStyle]}>
+            <View style={styles.buttons}>
+                <IconButton icon="content-copy" />
+                <IconButton icon="content-copy" onPress={() => console.log("first")} />
+            </View>
+
             <Text style={[styles.text, { color: colors.primary }]}>{totalTime}</Text>
         </View>
     );
@@ -30,6 +36,12 @@ const TimeSummary = ({ containerStyle }) => {
 export default TimeSummary;
 
 const styles = StyleSheet.create({
+    summary: {
+        alignItems: "center",
+    },
+    buttons: {
+        flexDirection: "row",
+    },
     text: {
         fontSize: 25,
         fontWeight: "600",
