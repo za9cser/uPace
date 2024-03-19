@@ -24,8 +24,12 @@ const TimeSummary = ({ containerStyle }) => {
     return (
         <View style={[styles.summary, containerStyle]}>
             <View style={styles.buttons}>
-                <IconButton icon="content-copy" />
-                <IconButton icon="content-copy" onPress={() => console.log("first")} />
+                <Button icon="content-copy" onPress={() => console.log("first")}>
+                    Splits
+                </Button>
+                <Button icon="content-copy" onPress={() => console.log("first")}>
+                    Result
+                </Button>
             </View>
 
             <Text style={[styles.text, { color: colors.primary }]}>{totalTime}</Text>
@@ -41,6 +45,7 @@ const styles = StyleSheet.create({
     },
     buttons: {
         flexDirection: "row",
+        alignItems: "center",
     },
     text: {
         fontSize: 25,
