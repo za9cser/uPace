@@ -7,7 +7,8 @@ import { Button, Portal, Snackbar, useTheme } from "react-native-paper";
 const TimeSummary = ({ containerStyle }) => {
     const [isCopyFeedbackOpen, setIsCopyFeedbackOpen] = useState(false);
     const [copyFeedback, setCopyFeedback] = useState("");
-    const { colors } = useTheme();
+    const theme = useTheme();
+    const colors = theme.colors;
     const { values } = useFormikContext();
     if (!values?.splits) return null;
 
@@ -50,7 +51,7 @@ const TimeSummary = ({ containerStyle }) => {
                     visible={isCopyFeedbackOpen}
                     onDismiss={() => setIsCopyFeedbackOpen(false)}
                     duration={3000}
-                    icon="times"
+                    style={{ backgroundColor: colors.secondary }}
                 >
                     {copyFeedback}
                 </Snackbar>
