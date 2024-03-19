@@ -9,7 +9,7 @@ const TimeSummary = ({ containerStyle }) => {
     const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
     const [feedbackMessage, setFeedbackMessage] = useState("");
     const { colors } = useTheme();
-    const { values } = useFormikContext();
+    const { values, setFieldValue } = useFormikContext();
     if (!values?.splits) return null;
 
     const totalTimeSpan = values.splits.reduce((acc, current) => {
@@ -45,6 +45,14 @@ const TimeSummary = ({ containerStyle }) => {
         setIsFeedbackOpen(true);
     };
 
+    const clear = () => {
+        Clipboard.setStringAsync("");
+
+        setFieldValue("splits", [new TimeSpan()]);
+        setFeedbackMessage("Time splits cleared");
+        setIsFeedbackOpen(true);
+    };
+
     return (
         <View style={[styles.summary, containerStyle]}>
             <View style={styles.buttons}>
@@ -53,6 +61,9 @@ const TimeSummary = ({ containerStyle }) => {
                 </Button>
                 <Button icon="content-copy" onPress={copyResult}>
                     Result
+                </Button>
+                <Button icon="block-helper" onPress={clear} textColor={colors.error}>
+                    Clear
                 </Button>
             </View>
             <Text style={[styles.text, { color: colors.primary }]}>{totalTime}</Text>
