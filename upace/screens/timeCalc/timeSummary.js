@@ -10,9 +10,10 @@ const TimeSummary = ({ containerStyle }) => {
     const [feedbackMessage, setFeedbackMessage] = useState("");
     const { colors } = useTheme();
     const { values, setFieldValue } = useFormikContext();
-    if (!values?.splits) return null;
+    if (!values) return null;
 
-    const totalTimeSpan = values.splits.reduce((acc, current) => {
+    const { splits, mode } = values;
+    const totalTimeSpan = splits.reduce((acc, current) => {
         acc.add(current);
         return acc;
     }, new TimeSpan());
@@ -30,8 +31,7 @@ const TimeSummary = ({ containerStyle }) => {
     const totalTime = getTime(totalTimeSpan);
 
     const copySplits = () => {
-        const splits = values.splits.map((s) => getTime(s)).join(" - ");
-        const result = `${splits} = ${totalTime}`;
+        const result = splits.map((s) => getTime(s)).join(" - ");
         Clipboard.setStringAsync(result);
 
         setFeedbackMessage("Splits and result copied");
