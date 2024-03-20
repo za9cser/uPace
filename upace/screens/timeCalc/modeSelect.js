@@ -1,15 +1,17 @@
 import { View } from "react-native";
 import React from "react";
-import { Text, TouchableRipple } from "react-native-paper";
+import { Text, TouchableRipple, useTheme } from "react-native-paper";
 
-const ModeSelect = ({ value, buttons, onChange, multiSelect, bordered }) => {
+const ModeSelect = ({ value, buttons, onChange, multiSelect }) => {
+    const { colors } = useTheme();
     const isActiveButton = (buttonValue) => (multiSelect ? value.includes(buttonValue) : value === buttonValue);
 
     const handlePress = (buttonValue) => {
+        console.log("buttonValue", buttonValue);
         if (multiSelect) {
             const index = value.indexOf(buttonValue);
             const newValue = [...value];
-            if (index > 0) newValue.splice(index, 1);
+            if (index >= 0) newValue.splice(index, 1);
             else newValue.push(buttonValue);
 
             onChange(newValue);
@@ -17,12 +19,13 @@ const ModeSelect = ({ value, buttons, onChange, multiSelect, bordered }) => {
     };
 
     return (
-        <View style={{ flexDirection: "row", gap: 20 }}>
-            {buttons.map((button, index) => {
+        <View style={{ flexDirection: "row", gap: 22 }}>
+            {buttons.map((button) => {
                 const isActive = isActiveButton(button.value);
                 return (
                     <TouchableRipple
-                        style={{ backgroundColor: isActive ? "red" : "transparent" }}
+                        key={button.value}
+                        style={{ backgroundColor: isActive ? colors.surfaceVariant : "transparent" }}
                         onPress={() => handlePress(button.value)}
                     >
                         <View
