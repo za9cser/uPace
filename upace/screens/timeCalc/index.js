@@ -2,9 +2,10 @@ import { StyleSheet, View, ScrollView } from "react-native";
 import React from "react";
 import TimeInput from "../../components/timeInput";
 import { FieldArray, Formik } from "formik";
-import { Button, SegmentedButtons, Text, useTheme } from "react-native-paper";
+import { Button, Text, useTheme } from "react-native-paper";
 import { TimeSpan } from "timespan";
 import TimeSummary from "./timeSummary";
+import ModeSelect from "./modeSelect";
 
 const TimeCalc = () => {
     const { colors } = useTheme();
@@ -15,29 +16,28 @@ const TimeCalc = () => {
                     <Text style={styles.description} variant="titleMedium">
                         Enter some time splits and get their sum
                     </Text>
-                    <View style={{ borderWidth: 1, borderColor: "red", alignItems: "center" }}>
-                        <View style={{ borderWidth: 1, width: "75%" }}>
-                            <SegmentedButtons
-                                multiSelect
-                                value={values.mode}
-                                onValueChange={(value) => {
-                                    console.log("value", value);
-                                    setFieldValue("mode", value);
-                                }}
-                                buttons={[
-                                    {
-                                        value: "mm",
-                                        label: "mm",
-                                    },
-                                    {
-                                        value: "ss",
-                                        label: "ss",
-                                    },
-                                    { value: "ms", label: "ms" },
-                                ]}
-                            />
-                        </View>
+                    <View style={{ flexDirection: "row", width: "100%", justifyContent: "center" }}>
+                        <ModeSelect
+                            multiSelect
+                            value={values.mode}
+                            onChange={(value) => {
+                                console.log("value", value);
+                                setFieldValue("mode", value);
+                            }}
+                            buttons={[
+                                {
+                                    value: "mm",
+                                    label: "mm",
+                                },
+                                {
+                                    value: "ss",
+                                    label: "ss",
+                                },
+                                { value: "ms", label: "ms" },
+                            ]}
+                        />
                     </View>
+
                     <FieldArray name="splits">
                         {({ push }) => (
                             <View>
@@ -85,7 +85,6 @@ const styles = StyleSheet.create({
     },
     timeInput: {
         justifyContent: "center",
-        paddingRight: 20,
         marginTop: 8,
     },
     addButton: {
