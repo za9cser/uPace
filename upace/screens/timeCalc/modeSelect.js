@@ -7,7 +7,6 @@ const ModeSelect = ({ value, buttons, onChange, multiSelect }) => {
     const isActiveButton = (buttonValue) => (multiSelect ? value.includes(buttonValue) : value === buttonValue);
 
     const handlePress = (buttonValue) => {
-        console.log("buttonValue", buttonValue);
         if (multiSelect) {
             const index = value.indexOf(buttonValue);
             const newValue = [...value];

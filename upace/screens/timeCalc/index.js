@@ -20,10 +20,7 @@ const TimeCalc = () => {
                         <ModeSelect
                             multiSelect
                             value={values.mode}
-                            onChange={(value) => {
-                                console.log("value", value);
-                                setFieldValue("mode", value);
-                            }}
+                            onChange={(value) => setFieldValue("mode", value)}
                             buttons={[
                                 {
                                     value: "mm",
@@ -47,6 +44,7 @@ const TimeCalc = () => {
                                         time={item}
                                         onChange={(value) => setFieldValue(`splits[${key}]`, value)}
                                         containerStyle={styles.timeInput}
+                                        mode={values.mode}
                                         log={false}
                                     />
                                 ))}
@@ -69,7 +67,7 @@ const TimeCalc = () => {
 };
 
 const initialValues = {
-    mode: ["ss"],
+    mode: ["mm", "ss", "ms"],
     splits: [new TimeSpan()],
 };
 
