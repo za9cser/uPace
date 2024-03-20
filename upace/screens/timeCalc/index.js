@@ -15,26 +15,28 @@ const TimeCalc = () => {
                     <Text style={styles.description} variant="titleMedium">
                         Enter some time splits and get their sum
                     </Text>
-                    <View style={{ flexDirection: "row" }}>
-                        <SegmentedButtons
-                            multiSelect
-                            value={values.mode}
-                            onValueChange={(value) => {
-                                console.log("value", value);
-                                setFieldValue("mode", value);
-                            }}
-                            buttons={[
-                                {
-                                    value: "mm",
-                                    label: "mm",
-                                },
-                                {
-                                    value: "ss",
-                                    label: "ss",
-                                },
-                                { value: "ms", label: "ms" },
-                            ]}
-                        />
+                    <View style={{ borderWidth: 1, borderColor: "red", alignItems: "center" }}>
+                        <View style={{ borderWidth: 1, width: "75%" }}>
+                            <SegmentedButtons
+                                multiSelect
+                                value={values.mode}
+                                onValueChange={(value) => {
+                                    console.log("value", value);
+                                    setFieldValue("mode", value);
+                                }}
+                                buttons={[
+                                    {
+                                        value: "mm",
+                                        label: "mm",
+                                    },
+                                    {
+                                        value: "ss",
+                                        label: "ss",
+                                    },
+                                    { value: "ms", label: "ms" },
+                                ]}
+                            />
+                        </View>
                     </View>
                     <FieldArray name="splits">
                         {({ push }) => (
@@ -81,7 +83,6 @@ const styles = StyleSheet.create({
     description: {
         textAlign: "center",
     },
-
     timeInput: {
         justifyContent: "center",
         paddingRight: 20,
