@@ -45,3 +45,9 @@ const ModeSelect = ({ value, buttons, onChange, multiSelect }) => {
 };
 
 export default ModeSelect;
+
+export const describeTimeMode = (mode) => ({
+    hasMinutes: mode.includes("mm"),
+    hasSeconds: mode.includes("ss"),
+    hasMilliSeconds: mode.includes("ms"),
+});
