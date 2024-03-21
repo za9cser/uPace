@@ -3,7 +3,7 @@ import React from "react";
 import { TextInput, Text } from "react-native-paper";
 import { TimeSpan } from "timespan";
 
-const TimeInput = ({ time, onChange, containerStyle, log }) => {
+const TimeInput = ({ time, onChange, containerStyle, mode, log }) => {
     const handleMinutesChange = (newMinutes) => {
         const timeSpan = new TimeSpan(time.milliseconds, time.seconds, parseInt(newMinutes));
         log && console.log("timeSpan", timeSpan);
@@ -23,6 +23,7 @@ const TimeInput = ({ time, onChange, containerStyle, log }) => {
     };
 
     const getValue = (value) => (value ? value.toString() : "");
+    const hasMode = mode !== undefined && mode != null;
 
     return (
         <View>
@@ -33,6 +34,7 @@ const TimeInput = ({ time, onChange, containerStyle, log }) => {
                     placeholder="mm"
                     style={styles.textInput}
                     keyboardType="decimal-pad"
+                    disabled={hasMode && !mode.includes("mm")}
                 />
                 <Text variant="bodyLarge">:</Text>
                 <TextInput
@@ -41,6 +43,7 @@ const TimeInput = ({ time, onChange, containerStyle, log }) => {
                     placeholder="ss"
                     style={styles.textInput}
                     keyboardType="decimal-pad"
+                    disabled={hasMode && !mode.includes("ss")}
                 />
                 <Text variant="bodyLarge">.</Text>
                 <TextInput
@@ -49,6 +52,7 @@ const TimeInput = ({ time, onChange, containerStyle, log }) => {
                     placeholder="ms"
                     style={styles.textInput}
                     keyboardType="decimal-pad"
+                    disabled={hasMode && !mode.includes("ms")}
                 />
             </View>
             {log && <Text>{time.toString()}</Text>}
@@ -62,12 +66,11 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     textInput: {
-        width: "20%", // Adjust the width as needed based on your design
         height: 40,
         borderRadius: 5,
         marginHorizontal: 5,
         textAlign: "center",
-        fontSize: 20,
+        fontSize: 18,
     },
 });
 

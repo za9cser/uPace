@@ -5,6 +5,7 @@ import { FieldArray, Formik } from "formik";
 import { Button, Text, useTheme } from "react-native-paper";
 import { TimeSpan } from "timespan";
 import TimeSummary from "./timeSummary";
+import ModeSelect from "./modeSelect";
 
 const TimeCalc = () => {
     const { colors } = useTheme();
@@ -15,6 +16,25 @@ const TimeCalc = () => {
                     <Text style={styles.description} variant="titleMedium">
                         Enter some time splits and get their sum
                     </Text>
+                    <View style={{ flexDirection: "row", width: "100%", justifyContent: "center" }}>
+                        <ModeSelect
+                            multiSelect
+                            value={values.mode}
+                            onChange={(value) => setFieldValue("mode", value)}
+                            buttons={[
+                                {
+                                    value: "mm",
+                                    label: "mm",
+                                },
+                                {
+                                    value: "ss",
+                                    label: "ss",
+                                },
+                                { value: "ms", label: "ms" },
+                            ]}
+                        />
+                    </View>
+
                     <FieldArray name="splits">
                         {({ push }) => (
                             <View>
@@ -24,6 +44,7 @@ const TimeCalc = () => {
                                         time={item}
                                         onChange={(value) => setFieldValue(`splits[${key}]`, value)}
                                         containerStyle={styles.timeInput}
+                                        mode={values.mode}
                                         log={false}
                                     />
                                 ))}
@@ -46,6 +67,7 @@ const TimeCalc = () => {
 };
 
 const initialValues = {
+    mode: ["mm", "ss", "ms"],
     splits: [new TimeSpan()],
 };
 
@@ -61,7 +83,6 @@ const styles = StyleSheet.create({
     },
     timeInput: {
         justifyContent: "center",
-        paddingRight: 20,
         marginTop: 8,
     },
     addButton: {

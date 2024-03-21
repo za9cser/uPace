@@ -4,34 +4,56 @@ import React, { useState } from "react";
 import { useFormikContext } from "formik";
 import { TimeSpan } from "timespan";
 import { Button, Portal, Snackbar, useTheme } from "react-native-paper";
+import { describeTimeMode } from "./modeSelect";
 
 const TimeSummary = ({ containerStyle }) => {
     const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
     const [feedbackMessage, setFeedbackMessage] = useState("");
     const { colors } = useTheme();
     const { values, setFieldValue } = useFormikContext();
-    if (!values?.splits) return null;
+    if (!values) return null;
 
-    const totalTimeSpan = values.splits.reduce((acc, current) => {
-        acc.add(current);
+    const { splits, mode } = values;
+    const { hasMinutes, hasSeconds, hasMilliSeconds } = describeTimeMode(mode);
+    const totalTimeSpan = splits.reduce((acc, current) => {
+        hasMinutes && acc.addMinutes(current.minutes);
+        hasSeconds && acc.addSeconds(current.seconds);
+        hasMilliSeconds && acc.addMilliseconds(current.milliseconds * 10);
         return acc;
     }, new TimeSpan());
 
     const getTime = (timeSpan) => {
-        const hasHours = timeSpan.hours > 0;
-        const time =
-            `${hasHours ? `${timeSpan.hours}:` : ""}` +
-            `${hasHours && timeSpan.minutes < 10 ? `0${timeSpan.minutes}` : timeSpan.minutes}:` +
-            `${timeSpan.seconds < 10 ? `0${timeSpan.seconds}` : timeSpan.seconds}.${timeSpan.milliseconds}`;
+        const displayHours = timeSpan.hours > 0;
+        const hours = `${displayHours ? `${timeSpan.hours}:` : ""}`;
 
+        let minutes = "";
+        if (displayHours) minutes = timeSpan.minutes < 10 ? `0${timeSpan.minutes}` : timeSpan.minutes;
+        else if (hasMinutes || timeSpan.minutes > 0) minutes = timeSpan.minutes.toString();
+
+        const displayMinutes = minutes !== "";
+
+        let seconds = "";
+        if (hasSeconds || timeSpan.seconds > 0)
+            seconds = `${displayMinutes ? ":" : ""}${
+                displayMinutes && timeSpan.seconds < 10 ? `0${timeSpan.seconds}` : timeSpan.seconds
+            }`;
+
+        const displaySeconds = seconds !== "";
+
+        let milliseconds = hasMilliSeconds
+            ? `${displaySeconds ? "." : ""}${
+                  timeSpan.milliseconds < 10 ? `0${timeSpan.milliseconds / 10}` : timeSpan.milliseconds / 10
+              }`
+            : "";
+
+        const time = hours + minutes + seconds + milliseconds;
         return time;
     };
 
     const totalTime = getTime(totalTimeSpan);
 
     const copySplits = () => {
-        const splits = values.splits.map((s) => getTime(s)).join(" - ");
-        const result = `${splits} = ${totalTime}`;
+        const result = splits.map((s) => getTime(s)).join(" - ");
         Clipboard.setStringAsync(result);
 
         setFeedbackMessage("Splits and result copied");
@@ -93,7 +115,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     text: {
-        fontSize: 25,
+        fontSize: 20,
         fontWeight: "600",
     },
 });
