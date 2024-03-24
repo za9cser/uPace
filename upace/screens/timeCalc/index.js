@@ -30,7 +30,7 @@ const TimeCalc = () => {
                                     value: "ss",
                                     label: "ss",
                                 },
-                                { value: "cs", label: "cs" },
+                                { value: "ds", label: "ds" },
                             ]}
                         />
                     </View>
@@ -67,7 +67,7 @@ const TimeCalc = () => {
 };
 
 const initialValues = {
-    mode: ["mm", "ss", "cs"],
+    mode: ["mm", "ss", "ds"],
     splits: [new TimeSpan()],
 };
 

@@ -1,9 +1,14 @@
 import { StyleSheet, View } from "react-native";
-import React from "react";
+import React, { forwardRef, useRef } from "react";
 import { TextInput, Text } from "react-native-paper";
 import { TimeSpan } from "timespan";
+import { describeTimeMode } from "../screens/timeCalc/modeSelect";
 
-const TimeInput = ({ time, onChange, containerStyle, mode, log }) => {
+const TimeInput = forwardRef(({ time, onChange, containerStyle, mode, log }, ref) => {
+    const minutesRef = useRef(null);
+    const secondsRef = useRef(null);
+    const decisecondsRef = useRef(null);
+
     const handleMinutesChange = (newMinutes) => {
         const timeSpan = new TimeSpan(time.milliseconds, time.seconds, parseInt(newMinutes));
         log && console.log("timeSpan", timeSpan);
@@ -16,14 +21,15 @@ const TimeInput = ({ time, onChange, containerStyle, mode, log }) => {
         onChange(timeSpan);
     };
 
-    const handleMillisecondsChange = (newMilliseconds) => {
-        const timeSpan = new TimeSpan(parseInt(newMilliseconds * 100), time.seconds, time.minutes);
+    const handleDecisecondsChange = (newDeciseconds) => {
+        const timeSpan = new TimeSpan(parseInt(newDeciseconds * 100), time.seconds, time.minutes);
         log && console.log("timeSpan", timeSpan);
         onChange(timeSpan);
     };
 
     const getValue = (value) => (value ? value.toString() : "");
     const hasMode = mode !== undefined && mode != null;
+    const { hasMinutes, hasSeconds, hasMilliSeconds } = describeTimeMode(mode);
 
     return (
         <View>
@@ -48,17 +54,17 @@ const TimeInput = ({ time, onChange, containerStyle, mode, log }) => {
                 <Text variant="bodyLarge">.</Text>
                 <TextInput
                     value={getValue(time.milliseconds / 100)}
-                    onChangeText={handleMillisecondsChange}
-                    placeholder="cs"
+                    onChangeText={handleDecisecondsChange}
+                    placeholder="ds"
                     style={styles.textInput}
                     keyboardType="decimal-pad"
-                    disabled={hasMode && !mode.includes("cs")}
+                    disabled={hasMode && !mode.includes("ds")}
                 />
             </View>
             {log && <Text>{time.toString()}</Text>}
         </View>
     );
-};
+});
 
 const styles = StyleSheet.create({
     container: {
