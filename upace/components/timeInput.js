@@ -17,7 +17,7 @@ const TimeInput = ({ time, onChange, containerStyle, mode, log }) => {
     };
 
     const handleMillisecondsChange = (newMilliseconds) => {
-        const timeSpan = new TimeSpan(parseInt(newMilliseconds), time.seconds, time.minutes);
+        const timeSpan = new TimeSpan(parseInt(newMilliseconds * 100), time.seconds, time.minutes);
         log && console.log("timeSpan", timeSpan);
         onChange(timeSpan);
     };
@@ -47,12 +47,12 @@ const TimeInput = ({ time, onChange, containerStyle, mode, log }) => {
                 />
                 <Text variant="bodyLarge">.</Text>
                 <TextInput
-                    value={getValue(time.milliseconds)}
+                    value={getValue(time.milliseconds / 100)}
                     onChangeText={handleMillisecondsChange}
-                    placeholder="ms"
+                    placeholder="cs"
                     style={styles.textInput}
                     keyboardType="decimal-pad"
-                    disabled={hasMode && !mode.includes("ms")}
+                    disabled={hasMode && !mode.includes("cs")}
                 />
             </View>
             {log && <Text>{time.toString()}</Text>}
