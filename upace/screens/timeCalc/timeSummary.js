@@ -41,7 +41,7 @@ const TimeSummary = ({ containerStyle }) => {
 
         const displaySeconds = seconds !== "";
 
-        let deciseconds = hasDeciseconds ? `${displaySeconds ? "." : ""}${timeSpan.milliseconds / 100}` : "";
+        const deciseconds = hasDeciseconds ? `${displaySeconds ? "." : ""}${timeSpan.milliseconds / 100}` : "";
 
         const time = hours + minutes + seconds + deciseconds;
         return time;
