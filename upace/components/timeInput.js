@@ -11,8 +11,11 @@ const TimeInput = forwardRef(({ time, onChange, containerStyle, mode, log }, ref
 
     useImperativeHandle(ref, () => ({
         focus() {
-            console.log("focused");
-            minutesRef?.current?.focus();
+            minutesRef?.current &&
+                setTimeout(() => {
+                    minutesRef.current.blur();
+                    minutesRef.current.focus();
+                }, 100);
         },
     }));
 
@@ -48,6 +51,8 @@ const TimeInput = forwardRef(({ time, onChange, containerStyle, mode, log }, ref
                     placeholder="mm"
                     style={styles.textInput}
                     keyboardType="decimal-pad"
+                    returnKeyType="next"
+                    onSubmitEditing={() => secondsRef?.current?.focus()}
                     disabled={hasMode && !hasMinutes}
                 />
                 <Text variant="bodyLarge">:</Text>
@@ -58,6 +63,8 @@ const TimeInput = forwardRef(({ time, onChange, containerStyle, mode, log }, ref
                     placeholder="ss"
                     style={styles.textInput}
                     keyboardType="decimal-pad"
+                    returnKeyType="next"
+                    onSubmitEditing={() => decisecondsRef?.current?.focus()}
                     disabled={hasMode && !hasSeconds}
                 />
                 <Text variant="bodyLarge">.</Text>
