@@ -3,10 +3,10 @@ import React from "react";
 import TimeInput from "../../components/timeInput";
 import { FieldArray, Formik } from "formik";
 import { Button, Text, useTheme } from "react-native-paper";
-import { TimeSpan } from "timespan";
 import TimeSummary from "./timeSummary";
 import ModeSelect from "./modeSelect";
 import TimeCalcObserver from "./timeCalcObserver";
+import { getNewTimeSplit, initialValues } from "./timeCalcUtils";
 
 const TimeCalc = () => {
     const { colors } = useTheme();
@@ -67,12 +67,6 @@ const TimeCalc = () => {
             )}
         </Formik>
     );
-};
-
-export const getNewTimeSplit = () => ({ split: new TimeSpan(), ref: React.createRef() });
-export const initialValues = {
-    mode: ["mm", "ss", "ds"],
-    splits: [getNewTimeSplit()],
 };
 
 export default TimeCalc;
