@@ -73,7 +73,7 @@ const TimeSummary = ({ containerStyle }) => {
 
     return (
         <>
-            <View style={[{ flex: 1, flexDirection: "row", alignItems: "center" }, containerStyle]}>
+            <View style={[styles.summary, containerStyle]}>
                 <View style={{ flex: 1, flexDirection: "row" }}>
                     <Button icon="content-copy" onPress={copySplits}>
                         Splits
@@ -86,9 +86,7 @@ const TimeSummary = ({ containerStyle }) => {
                     </Button>
                 </View>
                 <View style={{ flex: 1 }}>
-                    <Text style={{ textAlign: "right", color: colors.primary, fontWeight: "600", fontSize: 20 }}>
-                        {totalTime.toString()}
-                    </Text>
+                    <Text style={[styles.text, { color: colors.primary }]}>{totalTime.toString()}</Text>
                 </View>
             </View>
 
@@ -110,14 +108,10 @@ export default TimeSummary;
 
 const styles = StyleSheet.create({
     summary: {
-        alignItems: "center",
-    },
-    buttons: {
+        flex: 1,
         flexDirection: "row",
         alignItems: "center",
     },
-    text: {
-        fontSize: 20,
-        fontWeight: "600",
-    },
+    buttons: { flex: 1, flexDirection: "row" },
+    text: { textAlign: "right", fontWeight: "600", fontSize: 20 },
 });
