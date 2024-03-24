@@ -40,11 +40,7 @@ const TimeSummary = ({ containerStyle }) => {
 
         const displaySeconds = seconds !== "";
 
-        let milliseconds = hasMilliSeconds
-            ? `${displaySeconds ? "." : ""}${
-                  timeSpan.milliseconds < 10 ? `0${timeSpan.milliseconds / 10}` : timeSpan.milliseconds / 10
-              }`
-            : "";
+        let milliseconds = hasMilliSeconds ? `${displaySeconds ? "." : ""}${timeSpan.milliseconds / 100}` : "";
 
         const time = hours + minutes + seconds + milliseconds;
         return time;
@@ -76,19 +72,25 @@ const TimeSummary = ({ containerStyle }) => {
     };
 
     return (
-        <View style={[styles.summary, containerStyle]}>
-            <View style={styles.buttons}>
-                <Button icon="content-copy" onPress={copySplits}>
-                    Splits
-                </Button>
-                <Button icon="content-copy" onPress={copyResult}>
-                    Result
-                </Button>
-                <Button icon="block-helper" onPress={clear} textColor={colors.error}>
-                    Clear
-                </Button>
+        <>
+            <View style={[{ flex: 1, flexDirection: "row", alignItems: "center" }, containerStyle]}>
+                <View style={{ flex: 1, flexDirection: "row" }}>
+                    <Button icon="content-copy" onPress={copySplits}>
+                        Splits
+                    </Button>
+                    <Button icon="content-copy" onPress={copyResult}>
+                        Result
+                    </Button>
+                    <Button icon="block-helper" onPress={clear} textColor={colors.error}>
+                        Clear
+                    </Button>
+                </View>
+                <View style={{ flex: 1 }}>
+                    <Text style={{ textAlign: "right", color: colors.primary, fontWeight: "600", fontSize: 20 }}>
+                        {totalTime.toString()}
+                    </Text>
+                </View>
             </View>
-            <Text style={[styles.text, { color: colors.primary }]}>{totalTime}</Text>
 
             <Portal>
                 <Snackbar
@@ -100,7 +102,7 @@ const TimeSummary = ({ containerStyle }) => {
                     {feedbackMessage}
                 </Snackbar>
             </Portal>
-        </View>
+        </>
     );
 };
 

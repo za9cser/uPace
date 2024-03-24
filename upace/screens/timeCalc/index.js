@@ -75,7 +75,7 @@ export default TimeCalc;
 
 const styles = StyleSheet.create({
     container: {
-        paddingHorizontal: 8,
+        paddingHorizontal: 16,
         paddingTop: 8,
     },
     description: {
