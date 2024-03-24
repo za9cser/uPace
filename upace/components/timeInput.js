@@ -3,6 +3,7 @@ import React, { forwardRef, useImperativeHandle, useRef } from "react";
 import { TextInput, Text } from "react-native-paper";
 import { TimeSpan } from "timespan";
 import { describeTimeMode } from "../screens/timeCalc/modeSelect";
+import { focusRef } from "../utils/form";
 
 const TimeInput = forwardRef(({ time, onChange, containerStyle, mode, log }, ref) => {
     const minutesRef = useRef(ref);
@@ -11,11 +12,7 @@ const TimeInput = forwardRef(({ time, onChange, containerStyle, mode, log }, ref
 
     useImperativeHandle(ref, () => ({
         focus() {
-            minutesRef?.current &&
-                setTimeout(() => {
-                    minutesRef.current.blur();
-                    minutesRef.current.focus();
-                }, 100);
+            focusRef(minutesRef);
         },
     }));
 
