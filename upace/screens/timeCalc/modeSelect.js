@@ -35,6 +35,7 @@ const ModeSelect = ({ value, buttons, onChange, multiSelect }) => {
 
                 return (
                     <ModeButton
+                        key={button.value}
                         button={button}
                         onPress={handlePress}
                         isActive={isActive}
