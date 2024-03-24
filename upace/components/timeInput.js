@@ -29,7 +29,7 @@ const TimeInput = forwardRef(({ time, onChange, containerStyle, mode, log }, ref
 
     const getValue = (value) => (value ? value.toString() : "");
     const hasMode = mode !== undefined && mode != null;
-    const { hasMinutes, hasSeconds, hasMilliSeconds } = describeTimeMode(mode);
+    const { hasMinutes, hasSeconds, hasDeciseconds } = describeTimeMode(mode);
 
     return (
         <View>
@@ -40,7 +40,7 @@ const TimeInput = forwardRef(({ time, onChange, containerStyle, mode, log }, ref
                     placeholder="mm"
                     style={styles.textInput}
                     keyboardType="decimal-pad"
-                    disabled={hasMode && !mode.includes("mm")}
+                    disabled={hasMode && !hasMinutes}
                 />
                 <Text variant="bodyLarge">:</Text>
                 <TextInput
@@ -49,7 +49,7 @@ const TimeInput = forwardRef(({ time, onChange, containerStyle, mode, log }, ref
                     placeholder="ss"
                     style={styles.textInput}
                     keyboardType="decimal-pad"
-                    disabled={hasMode && !mode.includes("ss")}
+                    disabled={hasMode && !hasSeconds}
                 />
                 <Text variant="bodyLarge">.</Text>
                 <TextInput
@@ -58,7 +58,7 @@ const TimeInput = forwardRef(({ time, onChange, containerStyle, mode, log }, ref
                     placeholder="ds"
                     style={styles.textInput}
                     keyboardType="decimal-pad"
-                    disabled={hasMode && !mode.includes("ds")}
+                    disabled={hasMode && !hasDeciseconds}
                 />
             </View>
             {log && <Text>{time.toString()}</Text>}

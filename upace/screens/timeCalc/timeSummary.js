@@ -14,11 +14,11 @@ const TimeSummary = ({ containerStyle }) => {
     if (!values) return null;
 
     const { splits, mode } = values;
-    const { hasMinutes, hasSeconds, hasMilliSeconds } = describeTimeMode(mode);
+    const { hasMinutes, hasSeconds, hasDeciseconds } = describeTimeMode(mode);
     const totalTimeSpan = splits.reduce((acc, current) => {
         hasMinutes && acc.addMinutes(current.minutes);
         hasSeconds && acc.addSeconds(current.seconds);
-        hasMilliSeconds && acc.addMilliseconds(current.milliseconds);
+        hasDeciseconds && acc.addMilliseconds(current.milliseconds);
         return acc;
     }, new TimeSpan());
 
@@ -40,9 +40,9 @@ const TimeSummary = ({ containerStyle }) => {
 
         const displaySeconds = seconds !== "";
 
-        let milliseconds = hasMilliSeconds ? `${displaySeconds ? "." : ""}${timeSpan.milliseconds / 100}` : "";
+        let deciseconds = hasDeciseconds ? `${displaySeconds ? "." : ""}${timeSpan.milliseconds / 100}` : "";
 
-        const time = hours + minutes + seconds + milliseconds;
+        const time = hours + minutes + seconds + deciseconds;
         return time;
     };
 

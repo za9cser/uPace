@@ -76,5 +76,5 @@ export default ModeSelect;
 export const describeTimeMode = (mode) => ({
     hasMinutes: mode?.includes("mm") ?? true,
     hasSeconds: mode.includes("ss") ?? true,
-    hasMilliSeconds: mode.includes("ds") ?? true,
+    hasDeciseconds: mode.includes("ds") ?? true,
 });
