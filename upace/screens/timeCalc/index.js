@@ -30,7 +30,7 @@ const TimeCalc = () => {
                                     value: "ss",
                                     label: "ss",
                                 },
-                                { value: "ms", label: "ms" },
+                                { value: "cs", label: "cs" },
                             ]}
                         />
                     </View>
@@ -67,7 +67,7 @@ const TimeCalc = () => {
 };
 
 const initialValues = {
-    mode: ["mm", "ss", "ms"],
+    mode: ["mm", "ss", "cs"],
     splits: [new TimeSpan()],
 };
 
@@ -75,7 +75,7 @@ export default TimeCalc;
 
 const styles = StyleSheet.create({
     container: {
-        paddingHorizontal: 8,
+        paddingHorizontal: 16,
         paddingTop: 8,
     },
     description: {

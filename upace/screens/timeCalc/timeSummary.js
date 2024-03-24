@@ -18,7 +18,7 @@ const TimeSummary = ({ containerStyle }) => {
     const totalTimeSpan = splits.reduce((acc, current) => {
         hasMinutes && acc.addMinutes(current.minutes);
         hasSeconds && acc.addSeconds(current.seconds);
-        hasMilliSeconds && acc.addMilliseconds(current.milliseconds * 10);
+        hasMilliSeconds && acc.addMilliseconds(current.milliseconds);
         return acc;
     }, new TimeSpan());
 
@@ -40,11 +40,7 @@ const TimeSummary = ({ containerStyle }) => {
 
         const displaySeconds = seconds !== "";
 
-        let milliseconds = hasMilliSeconds
-            ? `${displaySeconds ? "." : ""}${
-                  timeSpan.milliseconds < 10 ? `0${timeSpan.milliseconds / 10}` : timeSpan.milliseconds / 10
-              }`
-            : "";
+        let milliseconds = hasMilliSeconds ? `${displaySeconds ? "." : ""}${timeSpan.milliseconds / 100}` : "";
 
         const time = hours + minutes + seconds + milliseconds;
         return time;
@@ -76,19 +72,23 @@ const TimeSummary = ({ containerStyle }) => {
     };
 
     return (
-        <View style={[styles.summary, containerStyle]}>
-            <View style={styles.buttons}>
-                <Button icon="content-copy" onPress={copySplits}>
-                    Splits
-                </Button>
-                <Button icon="content-copy" onPress={copyResult}>
-                    Result
-                </Button>
-                <Button icon="block-helper" onPress={clear} textColor={colors.error}>
-                    Clear
-                </Button>
+        <>
+            <View style={[styles.summary, containerStyle]}>
+                <View style={{ flex: 1, flexDirection: "row" }}>
+                    <Button icon="content-copy" onPress={copySplits}>
+                        Splits
+                    </Button>
+                    <Button icon="content-copy" onPress={copyResult}>
+                        Result
+                    </Button>
+                    <Button icon="block-helper" onPress={clear} textColor={colors.error}>
+                        Clear
+                    </Button>
+                </View>
+                <View style={{ flex: 1 }}>
+                    <Text style={[styles.text, { color: colors.primary }]}>{totalTime.toString()}</Text>
+                </View>
             </View>
-            <Text style={[styles.text, { color: colors.primary }]}>{totalTime}</Text>
 
             <Portal>
                 <Snackbar
@@ -100,7 +100,7 @@ const TimeSummary = ({ containerStyle }) => {
                     {feedbackMessage}
                 </Snackbar>
             </Portal>
-        </View>
+        </>
     );
 };
 
@@ -108,14 +108,10 @@ export default TimeSummary;
 
 const styles = StyleSheet.create({
     summary: {
-        alignItems: "center",
-    },
-    buttons: {
+        flex: 1,
         flexDirection: "row",
         alignItems: "center",
     },
-    text: {
-        fontSize: 20,
-        fontWeight: "600",
-    },
+    buttons: { flex: 1, flexDirection: "row" },
+    text: { textAlign: "right", fontWeight: "600", fontSize: 20 },
 });
