@@ -5,14 +5,11 @@ const TimeCalcObserver = () => {
     const { values } = useFormikContext();
 
     useEffect(() => {
-        console.log("fired");
-        console.log("values?.splits[0]", values?.splits?.[0]);
-        console.log("values?.splits?.[0]?.ref", values?.splits?.[0]?.ref);
-        if (values?.splits?.length === 1) values?.splits?.[0].ref?.current?.focus();
+        values?.splits?.length === 1 && values?.splits?.[0].ref?.current?.focus();
     }, [values?.splits[0]?.ref]);
 
     useEffect(() => {
-        if (values?.splits?.length > 1)
+        values?.splits?.length > 1 &&
             setTimeout(() => values.splits[values.splits.length - 1].ref?.current?.focus(), 100);
     }, [values?.splits?.length]);
 
