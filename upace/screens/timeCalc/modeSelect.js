@@ -3,7 +3,6 @@ import React from "react";
 import { Text, TouchableRipple, useTheme } from "react-native-paper";
 
 const ModeSelect = ({ value, buttons, onChange, multiSelect }) => {
-    const { colors } = useTheme();
     const isActiveButton = (buttonValue) => (multiSelect ? value.includes(buttonValue) : value === buttonValue);
 
     const handlePress = (buttonValue) => {
@@ -18,29 +17,56 @@ const ModeSelect = ({ value, buttons, onChange, multiSelect }) => {
     };
 
     return (
-        <View style={{ flexDirection: "row", gap: 22 }}>
+        <View style={{ flexDirection: "row", gap: 15 }}>
             {buttons.map((button) => {
                 const isActive = isActiveButton(button.value);
+                let paddingHorizontal;
+                switch (button.value) {
+                    case "ss":
+                        paddingHorizontal = 25;
+                        break;
+                    case "ms":
+                        paddingHorizontal = 22;
+                        break;
+                    default:
+                        paddingHorizontal = 20;
+                        break;
+                }
+
                 return (
-                    <TouchableRipple
-                        key={button.value}
-                        style={{ backgroundColor: isActive ? colors.surfaceVariant : "transparent" }}
-                        onPress={() => handlePress(button.value)}
-                    >
-                        <View
-                            style={{
-                                flex: 1,
-                                alignItems: "center",
-                                paddingVertical: 10,
-                                paddingHorizontal: 20,
-                            }}
-                        >
-                            <Text>{button.label}</Text>
-                        </View>
-                    </TouchableRipple>
+                    <ModeButton
+                        button={button}
+                        onPress={handlePress}
+                        isActive={isActive}
+                        modeStyle={{ paddingHorizontal: paddingHorizontal }}
+                    />
                 );
             })}
         </View>
+    );
+};
+
+const ModeButton = ({ button, isActive, onPress, modeStyle }) => {
+    const { colors } = useTheme();
+    return (
+        <TouchableRipple
+            key={button.value}
+            style={{ backgroundColor: isActive ? colors.inverseOnSurface : "transparent" }}
+            onPress={() => onPress(button.value)}
+        >
+            <View
+                style={[
+                    {
+                        alignItems: "center",
+                        paddingVertical: 10,
+                        width: "100%",
+                    },
+                    modeStyle,
+                ]}
+            >
+                <Text>{button.label}</Text>
+            </View>
+        </TouchableRipple>
     );
 };
 
