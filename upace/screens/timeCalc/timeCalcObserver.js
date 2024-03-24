@@ -11,6 +11,11 @@ const TimeCalcObserver = () => {
         if (values?.splits?.length === 1) values?.splits?.[0].ref?.current?.focus();
     }, [values?.splits[0]?.ref]);
 
+    useEffect(() => {
+        if (values?.splits?.length > 1)
+            setTimeout(() => values.splits[values.splits.length - 1].ref?.current?.focus(), 100);
+    }, [values?.splits?.length]);
+
     return null;
 };
 
