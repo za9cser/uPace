@@ -59,7 +59,6 @@ const ModeButton = ({ button, isActive, onPress, modeStyle }) => {
                     {
                         alignItems: "center",
                         paddingVertical: 10,
-                        paddingHorizontal: 20,
                         width: "100%",
                     },
                     modeStyle,
