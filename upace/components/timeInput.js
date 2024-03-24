@@ -16,22 +16,35 @@ const TimeInput = forwardRef(({ time, onChange, containerStyle, mode, log }, ref
         },
     }));
 
-    const handleMinutesChange = (newMinutes) => {
-        const timeSpan = new TimeSpan(time.milliseconds, time.seconds, parseInt(newMinutes));
+    const handleMinutesChange = (input) => {
+        const newMinutes = validateInput(input, 59);
+        const timeSpan = new TimeSpan(time.milliseconds, time.seconds, newMinutes);
         log && console.log("timeSpan", timeSpan);
         onChange(timeSpan);
     };
 
-    const handleSecondsChange = (newSeconds) => {
-        const timeSpan = new TimeSpan(time.milliseconds, parseInt(newSeconds), time.minutes);
+    const handleSecondsChange = (input) => {
+        const newSeconds = validateInput(input, 59);
+        const timeSpan = new TimeSpan(time.milliseconds, newSeconds, time.minutes);
         log && console.log("timeSpan", timeSpan);
         onChange(timeSpan);
     };
 
-    const handleDecisecondsChange = (newDeciseconds) => {
-        const timeSpan = new TimeSpan(parseInt(newDeciseconds * 100), time.seconds, time.minutes);
+    const handleDecisecondsChange = (input) => {
+        const newDeciseconds = validateInput(input);
+        const timeSpan = new TimeSpan(newDeciseconds * 100, time.seconds, time.minutes);
         log && console.log("timeSpan", timeSpan);
         onChange(timeSpan);
+    };
+
+    const validateInput = (input, maxValue) => {
+        let value = parseInt(input);
+        if (value > maxValue) {
+            value = maxValue;
+            // TODO: display warning feedback if necessary in the future
+        }
+
+        return value;
     };
 
     const getValue = (value) => (value ? value.toString() : "");

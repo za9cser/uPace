@@ -5,7 +5,7 @@ import { useFormikContext } from "formik";
 import { TimeSpan } from "timespan";
 import { Button, Portal, Snackbar, useTheme } from "react-native-paper";
 import { describeTimeMode } from "./modeSelect";
-import { getNewTimeSplit } from ".";
+import { getNewTimeSplit } from "./timeCalcUtils";
 
 const TimeSummary = ({ containerStyle }) => {
     const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
