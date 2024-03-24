@@ -1,13 +1,20 @@
 import { StyleSheet, View } from "react-native";
-import React, { forwardRef, useRef } from "react";
+import React, { forwardRef, useImperativeHandle, useRef } from "react";
 import { TextInput, Text } from "react-native-paper";
 import { TimeSpan } from "timespan";
 import { describeTimeMode } from "../screens/timeCalc/modeSelect";
 
 const TimeInput = forwardRef(({ time, onChange, containerStyle, mode, log }, ref) => {
-    const minutesRef = useRef(null);
+    const minutesRef = useRef(ref);
     const secondsRef = useRef(null);
     const decisecondsRef = useRef(null);
+
+    useImperativeHandle(ref, () => ({
+        focus() {
+            console.log("focused");
+            minutesRef?.current?.focus();
+        },
+    }));
 
     const handleMinutesChange = (newMinutes) => {
         const timeSpan = new TimeSpan(time.milliseconds, time.seconds, parseInt(newMinutes));
@@ -35,6 +42,7 @@ const TimeInput = forwardRef(({ time, onChange, containerStyle, mode, log }, ref
         <View>
             <View style={[styles.container, containerStyle]}>
                 <TextInput
+                    ref={minutesRef}
                     value={getValue(time.minutes)}
                     onChangeText={handleMinutesChange}
                     placeholder="mm"
@@ -44,6 +52,7 @@ const TimeInput = forwardRef(({ time, onChange, containerStyle, mode, log }, ref
                 />
                 <Text variant="bodyLarge">:</Text>
                 <TextInput
+                    ref={secondsRef}
                     value={getValue(time.seconds)}
                     onChangeText={handleSecondsChange}
                     placeholder="ss"
@@ -53,6 +62,7 @@ const TimeInput = forwardRef(({ time, onChange, containerStyle, mode, log }, ref
                 />
                 <Text variant="bodyLarge">.</Text>
                 <TextInput
+                    ref={decisecondsRef}
                     value={getValue(time.milliseconds / 100)}
                     onChangeText={handleDecisecondsChange}
                     placeholder="ds"
