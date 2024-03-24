@@ -51,7 +51,7 @@ const ModeButton = ({ button, isActive, onPress, modeStyle }) => {
     return (
         <TouchableRipple
             key={button.value}
-            style={{ backgroundColor: isActive ? colors.surfaceVariant : "transparent" }}
+            style={{ backgroundColor: isActive ? colors.inverseOnSurface : "transparent" }}
             onPress={() => onPress(button.value)}
         >
             <View
