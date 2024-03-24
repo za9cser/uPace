@@ -55,7 +55,7 @@ const TimeCalc = () => {
                                     textColor={colors.secondary}
                                     style={styles.addButton}
                                     labelStyle={styles.addButtonText}
-                                    onPress={() => push({ split: new TimeSpan(), ref: React.createRef() })}
+                                    onPress={() => push(getNewTimeSplit())}
                                 >
                                     Add
                                 </Button>
@@ -69,9 +69,10 @@ const TimeCalc = () => {
     );
 };
 
-const initialValues = {
+export const getNewTimeSplit = () => ({ split: new TimeSpan(), ref: React.createRef() });
+export const initialValues = {
     mode: ["mm", "ss", "ds"],
-    splits: [{ split: new TimeSpan(), ref: React.createRef() }],
+    splits: [getNewTimeSplit()],
 };
 
 export default TimeCalc;

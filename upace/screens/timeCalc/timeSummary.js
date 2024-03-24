@@ -5,6 +5,7 @@ import { useFormikContext } from "formik";
 import { TimeSpan } from "timespan";
 import { Button, Portal, Snackbar, useTheme } from "react-native-paper";
 import { describeTimeMode } from "./modeSelect";
+import { getNewTimeSplit } from ".";
 
 const TimeSummary = ({ containerStyle }) => {
     const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
@@ -67,7 +68,7 @@ const TimeSummary = ({ containerStyle }) => {
     const clear = () => {
         Clipboard.setStringAsync("");
 
-        setFieldValue("splits", [new TimeSpan()]);
+        setFieldValue("splits", [getNewTimeSplit()]);
         setFeedbackMessage("Time splits cleared");
         setIsFeedbackOpen(true);
     };
