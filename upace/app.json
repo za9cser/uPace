@@ -2,7 +2,7 @@
   "expo": {
     "name": "uPace",
     "slug": "upace",
-    "version": "0.9.2",
+    "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -23,7 +23,7 @@
         "backgroundColor": "#000"
       },
       "package": "com.za9cser.upace",
-      "versionCode": 3
+      "versionCode": 4
     },
     "web": {
       "favicon": "./assets/favicon.png"
