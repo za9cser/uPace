@@ -25,8 +25,8 @@ const ModeSelect = ({ value, buttons, onChange, multiSelect }) => {
                     case "ss":
                         paddingHorizontal = 25;
                         break;
-                    case "ms":
-                        paddingHorizontal = 22;
+                    case "cs":
+                        paddingHorizontal = 25;
                         break;
                     default:
                         paddingHorizontal = 20;

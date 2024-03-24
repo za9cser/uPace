@@ -18,7 +18,7 @@ const TimeSummary = ({ containerStyle }) => {
     const totalTimeSpan = splits.reduce((acc, current) => {
         hasMinutes && acc.addMinutes(current.minutes);
         hasSeconds && acc.addSeconds(current.seconds);
-        hasMilliSeconds && acc.addMilliseconds(current.milliseconds * 10);
+        hasMilliSeconds && acc.addMilliseconds(current.milliseconds);
         return acc;
     }, new TimeSpan());
 
