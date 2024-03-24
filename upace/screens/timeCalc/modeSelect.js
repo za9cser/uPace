@@ -25,7 +25,7 @@ const ModeSelect = ({ value, buttons, onChange, multiSelect }) => {
                     case "ss":
                         paddingHorizontal = 25;
                         break;
-                    case "cs":
+                    case "ds":
                         paddingHorizontal = 25;
                         break;
                     default:
@@ -74,7 +74,7 @@ const ModeButton = ({ button, isActive, onPress, modeStyle }) => {
 export default ModeSelect;
 
 export const describeTimeMode = (mode) => ({
-    hasMinutes: mode.includes("mm"),
-    hasSeconds: mode.includes("ss"),
-    hasMilliSeconds: mode.includes("cs"),
+    hasMinutes: mode?.includes("mm") ?? true,
+    hasSeconds: mode?.includes("ss") ?? true,
+    hasDeciseconds: mode?.includes("ds") ?? true,
 });

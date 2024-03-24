@@ -5,6 +5,7 @@ import { useFormikContext } from "formik";
 import { TimeSpan } from "timespan";
 import { Button, Portal, Snackbar, useTheme } from "react-native-paper";
 import { describeTimeMode } from "./modeSelect";
+import { getNewTimeSplit } from ".";
 
 const TimeSummary = ({ containerStyle }) => {
     const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
@@ -14,11 +15,12 @@ const TimeSummary = ({ containerStyle }) => {
     if (!values) return null;
 
     const { splits, mode } = values;
-    const { hasMinutes, hasSeconds, hasMilliSeconds } = describeTimeMode(mode);
+    const { hasMinutes, hasSeconds, hasDeciseconds } = describeTimeMode(mode);
     const totalTimeSpan = splits.reduce((acc, current) => {
-        hasMinutes && acc.addMinutes(current.minutes);
-        hasSeconds && acc.addSeconds(current.seconds);
-        hasMilliSeconds && acc.addMilliseconds(current.milliseconds);
+        const split = current.split;
+        hasMinutes && acc.addMinutes(split.minutes);
+        hasSeconds && acc.addSeconds(split.seconds);
+        hasDeciseconds && acc.addMilliseconds(split.milliseconds);
         return acc;
     }, new TimeSpan());
 
@@ -40,9 +42,9 @@ const TimeSummary = ({ containerStyle }) => {
 
         const displaySeconds = seconds !== "";
 
-        let milliseconds = hasMilliSeconds ? `${displaySeconds ? "." : ""}${timeSpan.milliseconds / 100}` : "";
+        const deciseconds = hasDeciseconds ? `${displaySeconds ? "." : ""}${timeSpan.milliseconds / 100}` : "";
 
-        const time = hours + minutes + seconds + milliseconds;
+        const time = hours + minutes + seconds + deciseconds;
         return time;
     };
 
@@ -66,7 +68,7 @@ const TimeSummary = ({ containerStyle }) => {
     const clear = () => {
         Clipboard.setStringAsync("");
 
-        setFieldValue("splits", [new TimeSpan()]);
+        setFieldValue("splits", [getNewTimeSplit()]);
         setFeedbackMessage("Time splits cleared");
         setIsFeedbackOpen(true);
     };

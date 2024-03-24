@@ -6,6 +6,7 @@ import { Button, Text, useTheme } from "react-native-paper";
 import { TimeSpan } from "timespan";
 import TimeSummary from "./timeSummary";
 import ModeSelect from "./modeSelect";
+import TimeCalcObserver from "./timeCalcObserver";
 
 const TimeCalc = () => {
     const { colors } = useTheme();
@@ -13,6 +14,7 @@ const TimeCalc = () => {
         <Formik initialValues={initialValues}>
             {({ setFieldValue, values }) => (
                 <ScrollView style={styles.container} keyboardShouldPersistTaps="handled">
+                    <TimeCalcObserver />
                     <Text style={styles.description} variant="titleMedium">
                         Enter some time splits and get their sum
                     </Text>
@@ -30,7 +32,7 @@ const TimeCalc = () => {
                                     value: "ss",
                                     label: "ss",
                                 },
-                                { value: "cs", label: "cs" },
+                                { value: "ds", label: "ds" },
                             ]}
                         />
                     </View>
@@ -41,8 +43,9 @@ const TimeCalc = () => {
                                 {values.splits.map((item, key) => (
                                     <TimeInput
                                         key={key}
-                                        time={item}
-                                        onChange={(value) => setFieldValue(`splits[${key}]`, value)}
+                                        time={item.split}
+                                        ref={item.ref}
+                                        onChange={(value) => setFieldValue(`splits[${key}].split`, value)}
                                         containerStyle={styles.timeInput}
                                         mode={values.mode}
                                         log={false}
@@ -52,7 +55,7 @@ const TimeCalc = () => {
                                     textColor={colors.secondary}
                                     style={styles.addButton}
                                     labelStyle={styles.addButtonText}
-                                    onPress={() => push(new TimeSpan())}
+                                    onPress={() => push(getNewTimeSplit())}
                                 >
                                     Add
                                 </Button>
@@ -66,9 +69,10 @@ const TimeCalc = () => {
     );
 };
 
-const initialValues = {
-    mode: ["mm", "ss", "cs"],
-    splits: [new TimeSpan()],
+export const getNewTimeSplit = () => ({ split: new TimeSpan(), ref: React.createRef() });
+export const initialValues = {
+    mode: ["mm", "ss", "ds"],
+    splits: [getNewTimeSplit()],
 };
 
 export default TimeCalc;

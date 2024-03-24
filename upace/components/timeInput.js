@@ -1,9 +1,21 @@
 import { StyleSheet, View } from "react-native";
-import React from "react";
+import React, { forwardRef, useImperativeHandle, useRef } from "react";
 import { TextInput, Text } from "react-native-paper";
 import { TimeSpan } from "timespan";
+import { describeTimeMode } from "../screens/timeCalc/modeSelect";
+import { focusRef } from "../utils/form";
 
-const TimeInput = ({ time, onChange, containerStyle, mode, log }) => {
+const TimeInput = forwardRef(({ time, onChange, containerStyle, mode, log }, ref) => {
+    const minutesRef = useRef(ref);
+    const secondsRef = useRef(null);
+    const decisecondsRef = useRef(null);
+
+    useImperativeHandle(ref, () => ({
+        focus() {
+            focusRef(minutesRef);
+        },
+    }));
+
     const handleMinutesChange = (newMinutes) => {
         const timeSpan = new TimeSpan(time.milliseconds, time.seconds, parseInt(newMinutes));
         log && console.log("timeSpan", timeSpan);
@@ -16,49 +28,57 @@ const TimeInput = ({ time, onChange, containerStyle, mode, log }) => {
         onChange(timeSpan);
     };
 
-    const handleMillisecondsChange = (newMilliseconds) => {
-        const timeSpan = new TimeSpan(parseInt(newMilliseconds * 100), time.seconds, time.minutes);
+    const handleDecisecondsChange = (newDeciseconds) => {
+        const timeSpan = new TimeSpan(parseInt(newDeciseconds * 100), time.seconds, time.minutes);
         log && console.log("timeSpan", timeSpan);
         onChange(timeSpan);
     };
 
     const getValue = (value) => (value ? value.toString() : "");
     const hasMode = mode !== undefined && mode != null;
+    const { hasMinutes, hasSeconds, hasDeciseconds } = describeTimeMode(mode);
 
     return (
         <View>
             <View style={[styles.container, containerStyle]}>
                 <TextInput
+                    ref={minutesRef}
                     value={getValue(time.minutes)}
                     onChangeText={handleMinutesChange}
                     placeholder="mm"
                     style={styles.textInput}
                     keyboardType="decimal-pad"
-                    disabled={hasMode && !mode.includes("mm")}
+                    returnKeyType="next"
+                    onSubmitEditing={() => secondsRef?.current?.focus()}
+                    disabled={hasMode && !hasMinutes}
                 />
                 <Text variant="bodyLarge">:</Text>
                 <TextInput
+                    ref={secondsRef}
                     value={getValue(time.seconds)}
                     onChangeText={handleSecondsChange}
                     placeholder="ss"
                     style={styles.textInput}
                     keyboardType="decimal-pad"
-                    disabled={hasMode && !mode.includes("ss")}
+                    returnKeyType="next"
+                    onSubmitEditing={() => decisecondsRef?.current?.focus()}
+                    disabled={hasMode && !hasSeconds}
                 />
                 <Text variant="bodyLarge">.</Text>
                 <TextInput
+                    ref={decisecondsRef}
                     value={getValue(time.milliseconds / 100)}
-                    onChangeText={handleMillisecondsChange}
-                    placeholder="cs"
+                    onChangeText={handleDecisecondsChange}
+                    placeholder="ds"
                     style={styles.textInput}
                     keyboardType="decimal-pad"
-                    disabled={hasMode && !mode.includes("cs")}
+                    disabled={hasMode && !hasDeciseconds}
                 />
             </View>
             {log && <Text>{time.toString()}</Text>}
         </View>
     );
-};
+});
 
 const styles = StyleSheet.create({
     container: {
