@@ -16,9 +16,10 @@ const TimeSummary = ({ containerStyle }) => {
     const { splits, mode } = values;
     const { hasMinutes, hasSeconds, hasDeciseconds } = describeTimeMode(mode);
     const totalTimeSpan = splits.reduce((acc, current) => {
-        hasMinutes && acc.addMinutes(current.minutes);
-        hasSeconds && acc.addSeconds(current.seconds);
-        hasDeciseconds && acc.addMilliseconds(current.milliseconds);
+        const split = current.split;
+        hasMinutes && acc.addMinutes(split.minutes);
+        hasSeconds && acc.addSeconds(split.seconds);
+        hasDeciseconds && acc.addMilliseconds(split.milliseconds);
         return acc;
     }, new TimeSpan());
 
