@@ -51,7 +51,7 @@ const TimeSummary = ({ containerStyle }) => {
     const totalTime = getTime(totalTimeSpan);
 
     const copySplits = () => {
-        const result = splits.map((s) => getTime(s)).join(" - ");
+        const result = splits.map((s) => getTime(s.split)).join(" - ");
         Clipboard.setStringAsync(result);
 
         setFeedbackMessage("Splits and result copied");
