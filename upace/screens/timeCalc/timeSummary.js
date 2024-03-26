@@ -51,7 +51,7 @@ const TimeSummary = ({ containerStyle }) => {
     const totalTime = getTime(totalTimeSpan);
 
     const copySplits = () => {
-        const result = splits.map((s) => getTime(s)).join(" - ");
+        const result = splits.map((s) => getTime(s.split)).join(" - ");
         Clipboard.setStringAsync(result);
 
         setFeedbackMessage("Splits and result copied");
@@ -83,11 +83,11 @@ const TimeSummary = ({ containerStyle }) => {
                     <Button icon="content-copy" onPress={copyResult}>
                         Result
                     </Button>
-                    <Button icon="block-helper" onPress={clear} textColor={colors.error}>
+                    <Button icon="block-helper" textColor={colors.error} onPress={clear}>
                         Clear
                     </Button>
                 </View>
-                <View style={{ flex: 1 }}>
+                <View>
                     <Text style={[styles.text, { color: colors.primary }]}>{totalTime.toString()}</Text>
                 </View>
             </View>
