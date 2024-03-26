@@ -83,8 +83,11 @@ const TimeSummary = ({ containerStyle }) => {
                     <Button icon="content-copy" onPress={copyResult}>
                         Result
                     </Button>
+                    <Button icon="block-helper" textColor={colors.error} onPress={clear}>
+                        Clear
+                    </Button>
                 </View>
-                <View style={{ flex: 1 }}>
+                <View>
                     <Text style={[styles.text, { color: colors.primary }]}>{totalTime.toString()}</Text>
                 </View>
             </View>
@@ -110,7 +113,6 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: "row",
         alignItems: "center",
-        justifyContent: "space-around",
     },
     buttons: { flex: 1, flexDirection: "row" },
     text: { textAlign: "right", fontWeight: "600", fontSize: 20 },
