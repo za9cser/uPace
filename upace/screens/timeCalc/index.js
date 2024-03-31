@@ -48,6 +48,10 @@ const TimeCalc = () => {
                                         onChange={(value) => setFieldValue(`splits[${key}].split`, value)}
                                         containerStyle={styles.timeInput}
                                         mode={values.mode}
+                                        onSubmitEditing={() => {
+                                            if (key + 1 === values.splits.length) push(getNewTimeSplit());
+                                            else values.splits[key + 1].ref?.current?.focus();
+                                        }}
                                         log={false}
                                     />
                                 ))}
