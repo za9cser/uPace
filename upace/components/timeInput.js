@@ -5,7 +5,7 @@ import { TimeSpan } from "timespan";
 import { describeTimeMode } from "../screens/timeCalc/modeSelect";
 import { focusRef } from "../utils/form";
 
-const TimeInput = forwardRef(({ time, onChange, containerStyle, mode, log }, ref) => {
+const TimeInput = forwardRef(({ time, onChange, containerStyle, mode, log, onSubmitEditing }, ref) => {
     const minutesRef = useRef(ref);
     const secondsRef = useRef(null);
     const decisecondsRef = useRef(null);
@@ -47,6 +47,16 @@ const TimeInput = forwardRef(({ time, onChange, containerStyle, mode, log }, ref
         return value;
     };
 
+    const handleSubmitting = (...refs) => {
+        for (const ref of refs)
+            if (ref?.current) {
+                ref.current.focus();
+                return;
+            }
+
+        onSubmitEditing?.();
+    };
+
     const getValue = (value) => (value ? value.toString() : "");
     const hasMode = mode !== undefined && mode != null;
     const { hasMinutes, hasSeconds, hasDeciseconds } = describeTimeMode(mode);
@@ -62,7 +72,7 @@ const TimeInput = forwardRef(({ time, onChange, containerStyle, mode, log }, ref
                     style={styles.textInput}
                     keyboardType="decimal-pad"
                     returnKeyType="next"
-                    onSubmitEditing={() => secondsRef?.current?.focus()}
+                    onSubmitEditing={() => handleSubmitting(hasSeconds && secondsRef, hasDeciseconds && decisecondsRef)}
                     disabled={hasMode && !hasMinutes}
                 />
                 <Text variant="bodyLarge">:</Text>
@@ -74,7 +84,7 @@ const TimeInput = forwardRef(({ time, onChange, containerStyle, mode, log }, ref
                     style={styles.textInput}
                     keyboardType="decimal-pad"
                     returnKeyType="next"
-                    onSubmitEditing={() => decisecondsRef?.current?.focus()}
+                    onSubmitEditing={() => handleSubmitting(hasDeciseconds && decisecondsRef)}
                     disabled={hasMode && !hasSeconds}
                 />
                 <Text variant="bodyLarge">.</Text>
@@ -84,7 +94,9 @@ const TimeInput = forwardRef(({ time, onChange, containerStyle, mode, log }, ref
                     onChangeText={handleDecisecondsChange}
                     placeholder="ds"
                     style={styles.textInput}
-                    keyboardType="decimal-pad"
+                    keyboardType={"decimal-pad"}
+                    returnKeyType={onSubmitEditing ? "next" : "done"}
+                    onSubmitEditing={() => onSubmitEditing?.()}
                     disabled={hasMode && !hasDeciseconds}
                 />
             </View>
