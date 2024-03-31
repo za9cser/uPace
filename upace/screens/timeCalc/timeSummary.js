@@ -35,7 +35,7 @@ const TimeSummary = ({ containerStyle }) => {
         const displayMinutes = minutes !== "";
 
         let seconds = "";
-        if (hasSeconds || timeSpan.seconds > 0 || hasMilliSeconds)
+        if (hasSeconds || timeSpan.seconds > 0 || hasDeciseconds)
             seconds = `${displayMinutes ? ":" : ""}${
                 displayMinutes && timeSpan.seconds < 10 ? `0${timeSpan.seconds}` : timeSpan.seconds
             }`;
