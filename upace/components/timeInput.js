@@ -74,6 +74,7 @@ const TimeInput = forwardRef(({ time, onChange, containerStyle, mode, log, onSub
                     returnKeyType="next"
                     onSubmitEditing={() => handleSubmitting(hasSeconds && secondsRef, hasDeciseconds && decisecondsRef)}
                     disabled={hasMode && !hasMinutes}
+                    autoComplete="off"
                 />
                 <Text variant="bodyLarge">:</Text>
                 <TextInput
@@ -86,6 +87,7 @@ const TimeInput = forwardRef(({ time, onChange, containerStyle, mode, log, onSub
                     returnKeyType="next"
                     onSubmitEditing={() => handleSubmitting(hasDeciseconds && decisecondsRef)}
                     disabled={hasMode && !hasSeconds}
+                    autoComplete="off"
                 />
                 <Text variant="bodyLarge">.</Text>
                 <TextInput
@@ -98,6 +100,7 @@ const TimeInput = forwardRef(({ time, onChange, containerStyle, mode, log, onSub
                     returnKeyType={onSubmitEditing ? "next" : "done"}
                     onSubmitEditing={() => onSubmitEditing?.()}
                     disabled={hasMode && !hasDeciseconds}
+                    autoComplete="off"
                 />
             </View>
             {log && <Text>{time.toString()}</Text>}
