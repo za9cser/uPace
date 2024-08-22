@@ -135,7 +135,7 @@ const TimeInput = forwardRef(({ time, onChange, containerStyle, mode, log, onSub
                 )}
                 {displayDeciseconds && (
                     <>
-                        {(displayHours || displayMinutes || displayDeciseconds) && <Text variant="bodyLarge">.</Text>}
+                        {(displayHours || displayMinutes || displaySeconds) && <Text variant="bodyLarge">.</Text>}
                         <TextInput
                             ref={decisecondsRef}
                             value={getValue(time.milliseconds / 100)}
