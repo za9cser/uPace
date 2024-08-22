@@ -1,14 +1,12 @@
 import { PaperProvider, MD3LightTheme, adaptNavigationTheme } from "react-native-paper";
 import TimeCalc from "./screens/timeCalc";
 import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
-import { createMaterialBottomTabNavigator } from "react-native-paper/react-navigation";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Ionicons from "@expo/vector-icons/Ionicons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import PaceCalc from "./screens/paceCalc";
 
 const { LightTheme } = adaptNavigationTheme({ reactNavigationLight: DefaultTheme });
-const Tab1 = createMaterialBottomTabNavigator();
 const Tab = createBottomTabNavigator();
 
 export default function App() {
@@ -31,7 +29,7 @@ export default function App() {
                     initialRouteName="Time Calc"
                 >
                     <Tab.Screen name="TimeCalc" component={TimeCalc} options={{ title: "Time Calc" }} />
-                    <Tab.Screen name="PaceCalc" component={TimeCalc} options={{ title: "Pace Calc" }} />
+                    <Tab.Screen name="PaceCalc" component={PaceCalc} options={{ title: "Pace Calc" }} />
                 </Tab.Navigator>
             </NavigationContainer>
         </PaperProvider>
