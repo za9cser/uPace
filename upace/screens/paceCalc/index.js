@@ -1,14 +1,36 @@
 import { Text, ScrollView, StyleSheet } from "react-native";
 import React from "react";
-import { TextInput, useTheme } from "react-native-paper";
+import { TextInput } from "react-native-paper";
 import { Formik } from "formik";
 import TimeInput from "../../components/timeInput";
 import { initialValues, paceMode, timeMode } from "./paceCalcUtils";
 import PaceCalcInput from "./paceCalcInput";
 import { TimeSpan } from "timespan";
 
-export default function PaceCalc() {
-    const { colors } = useTheme();
+const PaceCalc = () => {
+    const handleCalcTime = (values, setFieldValue) => {
+        if (values.pace.totalSeconds() === 0 || values.distance === 0 || values.distance === "") return;
+
+        const timeSeconds = values.pace.totalSeconds() * parseFloat(values.distance);
+        const time = new TimeSpan(0, timeSeconds);
+        setFieldValue("time", time);
+    };
+
+    const handleCalcPace = (values, setFieldValue) => {
+        if (values.time.totalSeconds() === 0 || values.distance === 0 || values.distance === "") return;
+
+        const paceSeconds = values.time.totalSeconds() / parseFloat(values.distance);
+        const pace = new TimeSpan(0, paceSeconds);
+        setFieldValue("pace", pace);
+    };
+
+    const handleCalcDistance = (values, setFieldValue) => {
+        if (values.time.totalSeconds() === 0 || values.pace.totalSeconds() === 0) return;
+
+        const distance = values.time.totalSeconds() / values.pace.totalSeconds();
+        console.log("distance", distance);
+        setFieldValue("distance", distance.toFixed(2));
+    };
 
     return (
         <Formik initialValues={initialValues}>
@@ -17,63 +39,36 @@ export default function PaceCalc() {
                     <Text style={styles.description} variant="titleMedium">
                         Enter two values to calculate the third
                     </Text>
-                    <PaceCalcInput
-                        buttonCaption={"Time"}
-                        onCalc={() => {
-                            if (values.pace.totalSeconds() === 0 || values.distance === 0 || values.distance === "")
-                                return;
-
-                            const timeSeconds = values.pace.totalSeconds() * parseFloat(values.distance);
-                            const time = new TimeSpan(0, timeSeconds);
-                            setFieldValue("time", time);
-                        }}
-                    >
+                    <PaceCalcInput buttonCaption={"Time"} onCalc={() => handleCalcTime(values, setFieldValue)}>
                         <TimeInput
                             mode={timeMode}
                             time={values.time}
                             onChange={(value) => setFieldValue("time", value)}
                         />
                     </PaceCalcInput>
-                    <PaceCalcInput
-                        buttonCaption={"Pace"}
-                        onCalc={() => {
-                            if (values.time.totalSeconds() === 0 || values.distance === 0 || values.distance === "")
-                                return;
-
-                            const paceSeconds = values.time.totalSeconds() / parseFloat(values.distance);
-                            const pace = new TimeSpan(0, paceSeconds);
-                            setFieldValue("pace", pace);
-                        }}
-                    >
+                    <PaceCalcInput buttonCaption={"Pace"} onCalc={() => handleCalcPace(values, setFieldValue)}>
                         <TimeInput
                             mode={paceMode}
                             time={values.pace}
                             onChange={(value) => setFieldValue("pace", value)}
                         />
                     </PaceCalcInput>
-                    <PaceCalcInput
-                        buttonCaption={"Distance"}
-                        onCalc={() => {
-                            if (values.time.totalSeconds() === 0 || values.pace.totalSeconds() === 0) return;
-
-                            const distance = values.time.totalSeconds() / values.pace.totalSeconds();
-                            console.log("distance", distance);
-                            setFieldValue("distance", distance.toFixed(2));
-                        }}
-                    >
+                    <PaceCalcInput buttonCaption={"Distance"} onCalc={() => handleCalcDistance(values, setFieldValue)}>
                         <TextInput
                             value={values.distance?.toString() ?? ""}
                             placeholder="km"
                             onChangeText={(value) => setFieldValue("distance", value)}
                             keyboardType="decimal-pad"
-                            style={{ width: 150, textAlign: "center", height: 40, fontSize: 18 }}
+                            style={styles.distance}
                         />
                     </PaceCalcInput>
                 </ScrollView>
             )}
         </Formik>
     );
-}
+};
+
+export default PaceCalc;
 
 const styles = StyleSheet.create({
     container: {
@@ -83,21 +78,10 @@ const styles = StyleSheet.create({
     description: {
         textAlign: "center",
     },
-    timeInput: {
-        justifyContent: "center",
-        marginTop: 8,
-    },
-    addButton: {
-        paddingVertical: 8,
-    },
-    addButtonText: {
-        fontSize: 16,
-    },
-    summary: {
-        flexDirection: "row",
-        justifyContent: "space-around",
-        paddingBottom: 25,
-        borderTopColor: "#ccc",
-        borderTopWidth: 1,
+    distance: {
+        width: 150,
+        textAlign: "center",
+        height: 40,
+        fontSize: 18,
     },
 });
