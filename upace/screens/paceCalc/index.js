@@ -1,13 +1,14 @@
 import { View, Text, ScrollView, StyleSheet } from "react-native";
 import React from "react";
-import { TextInput, useTheme } from "react-native-paper";
+import { Button, TextInput, useTheme } from "react-native-paper";
 import { Formik } from "formik";
 import TimeInput from "../../components/timeInput";
-import { initialValues } from "./paceCalcUtils";
+import { initialValues, paceMode, timeMode } from "./paceCalcUtils";
+import PaceCalcInput from "./paceCalcInput";
 
 export default function PaceCalc() {
     const { colors } = useTheme();
-    const timeInputMode = ["mm", "ss", "ds"];
+
     return (
         <Formik initialValues={initialValues}>
             {({ setFieldValue, values }) => (
@@ -15,26 +16,23 @@ export default function PaceCalc() {
                     <Text style={styles.description} variant="titleMedium">
                         Enter two values to calculate the third
                     </Text>
-                    <View style={{ flexDirection: "row", justifyContent: "center" }}>
+                    <PaceCalcInput buttonCaption={"Time"} onCalc={() => {}}>
                         <TimeInput
-                            mode={timeInputMode}
+                            mode={timeMode}
                             time={values.time}
                             onChange={(value) => setFieldValue("time", value)}
                         />
-                        <Text>Time</Text>
-                    </View>
-                    <View style={{ flexDirection: "row", justifyContent: "center" }}>
+                    </PaceCalcInput>
+                    <PaceCalcInput buttonCaption={"Pace"} onCalc={() => {}}>
                         <TimeInput
-                            mode={timeInputMode}
-                            time={values.time}
-                            onChange={(value) => setFieldValue("time", value)}
+                            mode={paceMode}
+                            time={values.pace}
+                            onChange={(value) => setFieldValue("pace", value)}
                         />
-                        <Text>Pace</Text>
-                    </View>
-                    <View style={{ flexDirection: "row", justifyContent: "center" }}>
-                        <TextInput />
-                        <Text>Pace</Text>
-                    </View>
+                    </PaceCalcInput>
+                    <PaceCalcInput buttonCaption={"Distance"} onCalc={() => {}}>
+                        <TextInput style={{ width: 150 }} />
+                    </PaceCalcInput>
                 </ScrollView>
             )}
         </Formik>
@@ -57,7 +55,7 @@ const styles = StyleSheet.create({
         paddingVertical: 8,
     },
     addButtonText: {
-        fontSize: 20,
+        fontSize: 16,
     },
     summary: {
         flexDirection: "row",

@@ -6,3 +6,13 @@ export const initialValues = {
     pace: new TimeSpan(),
     distance: "",
 };
+
+export const timeMode = {
+    inputModes: ["hh", "mm", "ss"],
+    displayModes: ["hh", "mm", "ss"],
+};
+
+export const paceMode = {
+    inputModes: ["mm", "ss"],
+    displayModes: ["mm", "ss"],
+};
