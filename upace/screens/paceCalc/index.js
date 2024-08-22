@@ -23,7 +23,7 @@ export default function PaceCalc() {
                             if (values.pace.totalSeconds() === 0 || values.distance === 0 || values.distance === "")
                                 return;
 
-                            const timeSeconds = values.pace.totalSeconds() * values.distance;
+                            const timeSeconds = values.pace.totalSeconds() * parseFloat(values.distance);
                             const time = new TimeSpan(0, timeSeconds);
                             setFieldValue("time", time);
                         }}
@@ -40,7 +40,7 @@ export default function PaceCalc() {
                             if (values.time.totalSeconds() === 0 || values.distance === 0 || values.distance === "")
                                 return;
 
-                            const paceSeconds = values.time.totalSeconds() / values.distance;
+                            const paceSeconds = values.time.totalSeconds() / parseFloat(values.distance);
                             const pace = new TimeSpan(0, paceSeconds);
                             setFieldValue("pace", pace);
                         }}
@@ -64,7 +64,7 @@ export default function PaceCalc() {
                         <TextInput
                             value={values.distance?.toString() ?? ""}
                             placeholder="km"
-                            onChangeText={(value) => setFieldValue("distance", value === "" ? 0 : parseFloat(value))}
+                            onChangeText={(value) => setFieldValue("distance", value)}
                             keyboardType="decimal-pad"
                             style={{ width: 150, textAlign: "center", height: 40, fontSize: 18 }}
                         />
