@@ -66,68 +66,90 @@ const TimeInput = forwardRef(({ time, onChange, containerStyle, mode, log, onSub
 
     const getValue = (value) => (value ? value.toString() : "");
     const hasMode = mode !== undefined && mode != null;
-    const { hasHours, hasMinutes, hasSeconds, hasDeciseconds } = describeTimeMode(mode);
+    const { hasHours, hasMinutes, hasSeconds, hasDeciseconds } = describeTimeMode(mode.inputModes);
+    const {
+        hasHours: displayHours,
+        hasMinutes: displayMinutes,
+        hasSeconds: displaySeconds,
+        hasDeciseconds: displayDeciseconds,
+    } = describeTimeMode(mode.displayModes);
 
     return (
         <View>
             <View style={[styles.container, containerStyle]}>
-                <TextInput
-                    ref={hoursRef}
-                    value={getValue(time.hours)}
-                    onChangeText={handleHoursChange}
-                    placeholder="hh"
-                    style={styles.textInput}
-                    keyboardType="decimal-pad"
-                    returnKeyType="next"
-                    onSubmitEditing={() =>
-                        handleSubmitting(
-                            hasMinutes && minutesRef,
-                            hasSeconds && secondsRef,
-                            hasDeciseconds && decisecondsRef
-                        )
-                    }
-                    disabled={hasMode && !hasHours}
-                    autoComplete="off"
-                />
-                <Text variant="bodyLarge">:</Text>
-                <TextInput
-                    ref={minutesRef}
-                    value={getValue(time.minutes)}
-                    onChangeText={handleMinutesChange}
-                    placeholder="mm"
-                    style={styles.textInput}
-                    keyboardType="decimal-pad"
-                    returnKeyType="next"
-                    onSubmitEditing={() => handleSubmitting(hasSeconds && secondsRef, hasDeciseconds && decisecondsRef)}
-                    disabled={hasMode && !hasMinutes}
-                    autoComplete="off"
-                />
-                <Text variant="bodyLarge">:</Text>
-                <TextInput
-                    ref={secondsRef}
-                    value={getValue(time.seconds)}
-                    onChangeText={handleSecondsChange}
-                    placeholder="ss"
-                    style={styles.textInput}
-                    keyboardType="decimal-pad"
-                    returnKeyType="next"
-                    onSubmitEditing={() => handleSubmitting(hasDeciseconds && decisecondsRef)}
-                    disabled={hasMode && !hasSeconds}
-                    autoComplete="off"
-                />
-                <Text variant="bodyLarge">.</Text>
-                <TextInput
-                    ref={decisecondsRef}
-                    value={getValue(time.milliseconds / 100)}
-                    onChangeText={handleDecisecondsChange}
-                    placeholder="ds"
-                    style={styles.textInput}
-                    keyboardType={"decimal-pad"}
-                    returnKeyType={onSubmitEditing ? "next" : "done"}
-                    onSubmitEditing={() => onSubmitEditing?.()}
-                    disabled={hasMode && !hasDeciseconds}
-                    autoComplete="off"
-                />
+                {displayHours && (
+                    <>
+                        <TextInput
+                            ref={hoursRef}
+                            value={getValue(time.hours)}
+                            onChangeText={handleHoursChange}
+                            placeholder="hh"
+                            style={styles.textInput}
+                            keyboardType="decimal-pad"
+                            returnKeyType="next"
+                            onSubmitEditing={() =>
+                                handleSubmitting(
+                                    hasMinutes && minutesRef,
+                                    hasSeconds && secondsRef,
+                                    hasDeciseconds && decisecondsRef
+                                )
+                            }
+                            disabled={hasMode && !hasHours}
+                            autoComplete="off"
+                        />
+                        <Text variant="bodyLarge">:</Text>
+                    </>
+                )}
+                {displayMinutes && (
+                    <>
+                        <TextInput
+                            ref={minutesRef}
+                            value={getValue(time.minutes)}
+                            onChangeText={handleMinutesChange}
+                            placeholder="mm"
+                            style={styles.textInput}
+                            keyboardType="decimal-pad"
+                            returnKeyType="next"
+                            onSubmitEditing={() =>
+                                handleSubmitting(hasSeconds && secondsRef, hasDeciseconds && decisecondsRef)
+                            }
+                            disabled={hasMode && !hasMinutes}
+                            autoComplete="off"
+                        />
+                        <Text variant="bodyLarge">:</Text>
+                    </>
+                )}
+                {displaySeconds && (
+                    <>
+                        <TextInput
+                            ref={secondsRef}
+                            value={getValue(time.seconds)}
+                            onChangeText={handleSecondsChange}
+                            placeholder="ss"
+                            style={styles.textInput}
+                            keyboardType="decimal-pad"
+                            returnKeyType="next"
+                            onSubmitEditing={() => handleSubmitting(hasDeciseconds && decisecondsRef)}
+                            disabled={hasMode && !hasSeconds}
+                            autoComplete="off"
+                        />
+                        <Text variant="bodyLarge">.</Text>
+                    </>
+                )}
+                {displayDeciseconds && (
+                    <TextInput
+                        ref={decisecondsRef}
+                        value={getValue(time.milliseconds / 100)}
+                        onChangeText={handleDecisecondsChange}
+                        placeholder="ds"
+                        style={styles.textInput}
+                        keyboardType={"decimal-pad"}
+                        returnKeyType={onSubmitEditing ? "next" : "done"}
+                        onSubmitEditing={() => onSubmitEditing?.()}
+                        disabled={hasMode && !hasDeciseconds}
+                        autoComplete="off"
+                    />
+                )}
             </View>
             {log && <Text>{time.toString()}</Text>}
         </View>

@@ -21,8 +21,8 @@ const TimeCalc = () => {
                     <View style={{ flexDirection: "row", width: "100%", justifyContent: "center" }}>
                         <ModeSelect
                             multiSelect
-                            value={values.mode}
-                            onChange={(value) => setFieldValue("mode", value)}
+                            value={values.mode.inputModes}
+                            onChange={(value) => setFieldValue("mode.inputModes", value)}
                             buttons={[
                                 {
                                     value: "mm",
