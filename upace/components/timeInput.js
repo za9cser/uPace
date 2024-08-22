@@ -78,30 +78,28 @@ const TimeInput = forwardRef(({ time, onChange, containerStyle, mode, log, onSub
         <View>
             <View style={[styles.container, containerStyle]}>
                 {displayHours && (
-                    <>
-                        <TextInput
-                            ref={hoursRef}
-                            value={getValue(time.hours)}
-                            onChangeText={handleHoursChange}
-                            placeholder="hh"
-                            style={styles.textInput}
-                            keyboardType="decimal-pad"
-                            returnKeyType="next"
-                            onSubmitEditing={() =>
-                                handleSubmitting(
-                                    hasMinutes && minutesRef,
-                                    hasSeconds && secondsRef,
-                                    hasDeciseconds && decisecondsRef
-                                )
-                            }
-                            disabled={hasMode && !hasHours}
-                            autoComplete="off"
-                        />
-                        <Text variant="bodyLarge">:</Text>
-                    </>
+                    <TextInput
+                        ref={hoursRef}
+                        value={getValue(time.hours)}
+                        onChangeText={handleHoursChange}
+                        placeholder="hh"
+                        style={styles.textInput}
+                        keyboardType="decimal-pad"
+                        returnKeyType="next"
+                        onSubmitEditing={() =>
+                            handleSubmitting(
+                                hasMinutes && minutesRef,
+                                hasSeconds && secondsRef,
+                                hasDeciseconds && decisecondsRef
+                            )
+                        }
+                        disabled={hasMode && !hasHours}
+                        autoComplete="off"
+                    />
                 )}
                 {displayMinutes && (
                     <>
+                        {displayHours && <Text variant="bodyLarge">:</Text>}
                         <TextInput
                             ref={minutesRef}
                             value={getValue(time.minutes)}
@@ -116,11 +114,11 @@ const TimeInput = forwardRef(({ time, onChange, containerStyle, mode, log, onSub
                             disabled={hasMode && !hasMinutes}
                             autoComplete="off"
                         />
-                        <Text variant="bodyLarge">:</Text>
                     </>
                 )}
                 {displaySeconds && (
                     <>
+                        {(displayHours || displayMinutes) && <Text variant="bodyLarge">:</Text>}
                         <TextInput
                             ref={secondsRef}
                             value={getValue(time.seconds)}
@@ -133,22 +131,24 @@ const TimeInput = forwardRef(({ time, onChange, containerStyle, mode, log, onSub
                             disabled={hasMode && !hasSeconds}
                             autoComplete="off"
                         />
-                        <Text variant="bodyLarge">.</Text>
                     </>
                 )}
                 {displayDeciseconds && (
-                    <TextInput
-                        ref={decisecondsRef}
-                        value={getValue(time.milliseconds / 100)}
-                        onChangeText={handleDecisecondsChange}
-                        placeholder="ds"
-                        style={styles.textInput}
-                        keyboardType={"decimal-pad"}
-                        returnKeyType={onSubmitEditing ? "next" : "done"}
-                        onSubmitEditing={() => onSubmitEditing?.()}
-                        disabled={hasMode && !hasDeciseconds}
-                        autoComplete="off"
-                    />
+                    <>
+                        {(displayHours || displayMinutes || displayDeciseconds) && <Text variant="bodyLarge">.</Text>}
+                        <TextInput
+                            ref={decisecondsRef}
+                            value={getValue(time.milliseconds / 100)}
+                            onChangeText={handleDecisecondsChange}
+                            placeholder="ds"
+                            style={styles.textInput}
+                            keyboardType={"decimal-pad"}
+                            returnKeyType={onSubmitEditing ? "next" : "done"}
+                            onSubmitEditing={() => onSubmitEditing?.()}
+                            disabled={hasMode && !hasDeciseconds}
+                            autoComplete="off"
+                        />
+                    </>
                 )}
             </View>
             {log && <Text>{time.toString()}</Text>}
