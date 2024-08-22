@@ -74,6 +74,7 @@ const ModeButton = ({ button, isActive, onPress, modeStyle }) => {
 export default ModeSelect;
 
 export const describeTimeMode = (mode) => ({
+    hasHours: mode?.includes("hh") ?? true,
     hasMinutes: mode?.includes("mm") ?? true,
     hasSeconds: mode?.includes("ss") ?? true,
     hasDeciseconds: mode?.includes("ds") ?? true,
