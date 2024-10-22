@@ -2,6 +2,9 @@ import { View } from "react-native";
 import React from "react";
 import { Text, TouchableRipple, useTheme } from "react-native-paper";
 
+export type ModeSelectProps = { value: string[], buttons, onChange, multiSelect };
+
+
 const ModeSelect = ({ value, buttons, onChange, multiSelect }) => {
   const isActiveButton = (buttonValue) =>
     multiSelect ? value.includes(buttonValue) : value === buttonValue;
@@ -76,7 +79,7 @@ const ModeButton = ({ button, isActive, onPress, modeStyle }) => {
 
 export default ModeSelect;
 
-export const describeTimeMode = (mode) => ({
+export const describeTimeMode = (mode? : string[]) => ({
   hasHours: mode?.includes("hh") ?? true,
   hasMinutes: mode?.includes("mm") ?? true,
   hasSeconds: mode?.includes("ss") ?? true,
