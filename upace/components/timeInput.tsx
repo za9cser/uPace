@@ -1,11 +1,11 @@
 import { StyleSheet, View } from "react-native";
-import React, { forwardRef, useImperativeHandle, useRef } from "react";
+import React, {  forwardRef, useImperativeHandle, useRef } from "react";
 import { TextInput, Text } from "react-native-paper";
 import { TimeSpan } from "timespan";
 import { describeTimeMode } from "../screens/timeCalc/modeSelect";
 import { focusRef } from "../utils/form";
 
-const TimeInput = forwardRef(({ time, onChange, containerStyle, mode, log, onSubmitEditing }, ref) => {
+const TimeInput = forwardRef(({ time, onChange, containerStyle, mode, log, onSubmitEditing }: Props, ref : any) => {
     const hoursRef = useRef(ref);
     const minutesRef = useRef(ref);
     const secondsRef = useRef(null);
@@ -17,36 +17,36 @@ const TimeInput = forwardRef(({ time, onChange, containerStyle, mode, log, onSub
         },
     }));
 
-    const handleHoursChange = (input) => {
+    const handleHoursChange = (input : string) => {
         const value = parseInt(input);
         const timeSpan = new TimeSpan(time.milliseconds, time.seconds, time.minutes, value);
         log && console.log("timeSpan", timeSpan);
         onChange(timeSpan);
     };
-    const handleMinutesChange = (input) => {
+    const handleMinutesChange = (input: string) => {
         const newMinutes = validateInput(input, 59);
         const timeSpan = new TimeSpan(time.milliseconds, time.seconds, newMinutes, time.hours);
         log && console.log("timeSpan", timeSpan);
         onChange(timeSpan);
     };
 
-    const handleSecondsChange = (input) => {
+    const handleSecondsChange = (input: string) => {
         const newSeconds = validateInput(input, 59);
         const timeSpan = new TimeSpan(time.milliseconds, newSeconds, time.minutes, time.hours);
         log && console.log("timeSpan", timeSpan);
         onChange(timeSpan);
     };
 
-    const handleDecisecondsChange = (input) => {
+    const handleDecisecondsChange = (input: string) => {
         const newDeciseconds = validateInput(input);
         const timeSpan = new TimeSpan(newDeciseconds * 100, time.seconds, time.minutes, time.hours);
         log && console.log("timeSpan", timeSpan);
         onChange(timeSpan);
     };
 
-    const validateInput = (input, maxValue) => {
+    const validateInput = (input:string, maxValue?: number) => {
         let value = parseInt(input);
-        if (value > maxValue) {
+        if (maxValue && value > maxValue) {
             value = maxValue;
             // TODO: display warning feedback if necessary in the future
         }
@@ -54,7 +54,7 @@ const TimeInput = forwardRef(({ time, onChange, containerStyle, mode, log, onSub
         return value;
     };
 
-    const handleSubmitting = (...refs) => {
+    const handleSubmitting = (...refs: any[]) => {
         for (const ref of refs)
             if (ref?.current) {
                 ref.current.focus();
@@ -64,7 +64,7 @@ const TimeInput = forwardRef(({ time, onChange, containerStyle, mode, log, onSub
         onSubmitEditing?.();
     };
 
-    const getValue = (value) => (value ? value.toString() : "");
+    const getValue = (value?: number) => (value ? value.toString() : "");
     const hasMode = mode !== undefined && mode != null;
     const { hasHours, hasMinutes, hasSeconds, hasDeciseconds } = describeTimeMode(mode.inputModes);
     const {
@@ -171,7 +171,12 @@ const styles = StyleSheet.create({
 });
 
 export type Props = {
-    time, onChange, containerStyle, mode, log, onSubmitEditing
+    time : TimeSpan,
+    onChange: (value: TimeSpan) => void, 
+    containerStyle?: any,
+    mode?: string[],
+    log?: boolean,
+    onSubmitEditing?: () => void
 }
 
 export default TimeInput;
