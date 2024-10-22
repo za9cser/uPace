@@ -170,4 +170,8 @@ const styles = StyleSheet.create({
     },
 });
 
+export type Props = {
+    time, onChange, containerStyle, mode, log, onSubmitEditing
+}
+
 export default TimeInput;
