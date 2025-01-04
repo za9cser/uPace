@@ -1,0 +1,40 @@
+import React from "react";
+import { View } from "react-native";
+import { Text, TouchableRipple, useTheme } from "react-native-paper";
+
+type ModeButtonProps = { 
+    button: ButtonProps,
+     isActive: boolean, 
+     onPress: (value : string) => void, 
+     modeStyle: any }
+
+type ButtonProps = {
+    value : string,
+    label : string
+}
+
+const ModeButton = ({ button, isActive, onPress, modeStyle }: ModeButtonProps) => {
+    const { colors } = useTheme();
+    return (
+      <TouchableRipple
+        key={button.value}
+        style={{
+          backgroundColor: isActive ? colors.inverseOnSurface : "transparent",
+        }}
+        onPress={() => onPress(button.value)}
+      >
+        <View
+          style={[
+            {
+              alignItems: "center",
+              paddingVertical: 10,
+              width: "100%",
+            },
+            modeStyle,
+          ]}
+        >
+          <Text>{button.label}</Text>
+        </View>
+      </TouchableRipple>
+    );
+  };
