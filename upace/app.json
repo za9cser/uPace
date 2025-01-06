@@ -11,20 +11,7 @@
       "resizeMode": "cover",
       "backgroundColor": "#000"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "newArchEnabled": true,
-    "plugins": [
-      [
-        "expo-splash-screen",
-        {
-          "resizeMode": "cover",
-          "backgroundColor": "#000",
-          "image": "./assets/splash.png"          
-        }
-      ]
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
