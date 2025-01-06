@@ -3,13 +3,13 @@ import { View } from "react-native";
 import { Text, TouchableRipple, useTheme } from "react-native-paper";
 
 type ModeButtonProps = {
-  button: ButtonProps;
+  button: ModeButtonData;
   isActive: boolean;
   onPress: (value: string) => void;
   modeStyle: any;
 };
 
-type ButtonProps = {
+export type ModeButtonData = {
   value: string;
   label: string;
 };
@@ -44,3 +44,5 @@ const ModeButton = ({
     </TouchableRipple>
   );
 };
+
+export default ModeButton;

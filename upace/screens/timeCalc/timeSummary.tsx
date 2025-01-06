@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { useFormikContext } from "formik";
 import { Button, Portal, Snackbar, useTheme } from "react-native-paper";
 import { describeTimeMode } from "./modeSelect/describeTimeMode";
-import { getNewTimeSplit, TimeCalcValue } from "./timeCalcUtils";
+import { getNewTimeSplit, TimeCalcState } from "./timeCalcUtils";
 import moment from "moment";
 
 type Props = { containerStyle?: StyleProp<ViewStyle> };
@@ -13,7 +13,7 @@ const TimeSummary = ({ containerStyle }: Props) => {
   const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
   const [feedbackMessage, setFeedbackMessage] = useState("");
   const { colors } = useTheme();
-  const { values, setFieldValue } = useFormikContext<TimeCalcValue>();
+  const { values, setFieldValue } = useFormikContext<TimeCalcState>();
   if (!values) return null;
 
   const { splits, mode } = values;

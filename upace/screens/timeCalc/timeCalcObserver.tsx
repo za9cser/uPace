@@ -1,9 +1,9 @@
 import { useFormikContext } from "formik";
 import React, { useEffect } from "react";
-import { TimeCalcValue } from "./timeCalcUtils";
+import { TimeCalcState } from "./timeCalcUtils";
 
 const TimeCalcObserver = () => {
-  const { values } = useFormikContext<TimeCalcValue>();
+  const { values } = useFormikContext<TimeCalcState>();
 
   useEffect(() => {
     values?.splits?.length === 1 && values.splits[0].ref?.current?.focus();

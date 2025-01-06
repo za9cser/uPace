@@ -4,7 +4,7 @@ import { TextInput, Text } from "react-native-paper";
 import { describeTimeMode } from "../screens/timeCalc/modeSelect/describeTimeMode";
 import { focusRef } from "../utils/form";
 import moment from "moment";
-import { TimeMode } from "../screens/timeCalc/timeCalcUtils";
+import { TimeMode } from "../lib/timeMode";
 
 const TimeInput = forwardRef(
   (

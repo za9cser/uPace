@@ -1,17 +1,12 @@
-import { StyleProp, View, ViewStyle } from "react-native";
+import { View } from "react-native";
 import React from "react";
-import { Text, TouchableRipple, useTheme } from "react-native-paper";
+import ModeButton, { ModeButtonData } from "./modeButton";
 
 export type ModeSelectProps = {
   value: string[] | string;
-  buttons: ModeButton[];
+  buttons: ModeButtonData[];
   onChange: (newValue: string[] | string) => void;
   multiSelect: boolean;
-};
-
-export type ModeButton = {
-  label: string;
-  value: string;
 };
 
 const ModeSelect = ({
@@ -62,44 +57,6 @@ const ModeSelect = ({
         );
       })}
     </View>
-  );
-};
-
-type ModeButtonProps = {
-  button: ModeButton;
-  isActive: boolean;
-  onPress: (value: string) => void;
-  modeStyle?: StyleProp<ViewStyle>;
-};
-
-const ModeButton = ({
-  button,
-  isActive,
-  onPress,
-  modeStyle,
-}: ModeButtonProps) => {
-  const { colors } = useTheme();
-  return (
-    <TouchableRipple
-      key={button.value}
-      style={{
-        backgroundColor: isActive ? colors.inverseOnSurface : "transparent",
-      }}
-      onPress={() => onPress(button.value)}
-    >
-      <View
-        style={[
-          {
-            alignItems: "center",
-            paddingVertical: 10,
-            width: "100%",
-          },
-          modeStyle,
-        ]}
-      >
-        <Text>{button.label}</Text>
-      </View>
-    </TouchableRipple>
   );
 };
 

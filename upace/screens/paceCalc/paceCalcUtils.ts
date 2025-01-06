@@ -1,11 +1,12 @@
 import moment from "moment";
 import React from "react";
-import { TimeMode } from "../timeCalc/timeCalcUtils";
+import { TimeMode } from "../../lib/timeMode";
 
 export const getNewTimeSplit = () => ({
   split: moment.duration(),
   ref: React.createRef(),
 });
+
 export const initialValues = {
   time: moment.duration(),
   pace: moment.duration(),
@@ -13,11 +14,10 @@ export const initialValues = {
 } as PaceCalcValue;
 
 export type PaceCalcValue = {
-  time: moment.Duration,
-  pace: moment.Duration,
-  distance?: number,
-}
-
+  time: moment.Duration;
+  pace: moment.Duration;
+  distance?: number;
+};
 
 export const timeMode = {
   inputModes: ["hh", "mm", "ss"],
