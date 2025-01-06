@@ -11,7 +11,7 @@ import { getNewTimeSplit, initialValues } from "./timeCalcUtils";
 const TimeCalc = () => {
   const { colors } = useTheme();
   return (
-    <Formik initialValues={initialValues}>
+    <Formik initialValues={initialValues} onSubmit={() => {}}>
       {({ setFieldValue, values }) => (
         <ScrollView
           style={styles.container}

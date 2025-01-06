@@ -1,17 +1,19 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleProp, StyleSheet, Text, View, ViewStyle } from "react-native";
 import * as Clipboard from "expo-clipboard";
 import React, { useState } from "react";
 import { useFormikContext } from "formik";
-import { TimeSpan } from "timespan";
 import { Button, Portal, Snackbar, useTheme } from "react-native-paper";
-import { describeTimeMode } from "./modeSelect";
-import { getNewTimeSplit } from "./timeCalcUtils";
+import { describeTimeMode } from "./modeSelect/describeTimeMode";
+import { getNewTimeSplit, TimeCalcValue } from "./timeCalcUtils";
+import moment from "moment";
 
-const TimeSummary = ({ containerStyle }) => {
+type Props = { containerStyle?: StyleProp<ViewStyle> };
+
+const TimeSummary = ({ containerStyle }: Props) => {
   const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
   const [feedbackMessage, setFeedbackMessage] = useState("");
   const { colors } = useTheme();
-  const { values, setFieldValue } = useFormikContext();
+  const { values, setFieldValue } = useFormikContext<TimeCalcValue>();
   if (!values) return null;
 
   const { splits, mode } = values;
@@ -20,37 +22,39 @@ const TimeSummary = ({ containerStyle }) => {
   );
   const totalTimeSpan = splits.reduce((acc, current) => {
     const split = current.split;
-    hasMinutes && acc.addMinutes(split.minutes);
-    hasSeconds && acc.addSeconds(split.seconds);
-    hasDeciseconds && acc.addMilliseconds(split.milliseconds);
+    hasMinutes && acc.add(split.minutes(), "m");
+    hasSeconds && acc.add(split.seconds(), "s");
+    hasDeciseconds && acc.add(split.milliseconds(), "ms");
     return acc;
-  }, new TimeSpan());
+  }, moment.duration());
 
-  const getTime = (timeSpan) => {
-    const displayHours = timeSpan.hours > 0;
+  const getTime = (timeSpan: moment.Duration) => {
+    const displayHours = timeSpan.hours() > 0;
     const hours = `${displayHours ? `${timeSpan.hours}:` : ""}`;
 
     let minutes = "";
     if (displayHours)
       minutes =
-        timeSpan.minutes < 10 ? `0${timeSpan.minutes}` : timeSpan.minutes;
-    else if (hasMinutes || timeSpan.minutes > 0)
-      minutes = timeSpan.minutes.toString();
+        timeSpan.minutes() < 10
+          ? `0${timeSpan.minutes()}`
+          : timeSpan.minutes().toString();
+    else if (hasMinutes || timeSpan.minutes() > 0)
+      minutes = timeSpan.minutes().toString();
 
     const displayMinutes = minutes !== "";
 
     let seconds = "";
-    if (hasSeconds || timeSpan.seconds > 0 || hasDeciseconds)
+    if (hasSeconds || timeSpan.seconds() > 0 || hasDeciseconds)
       seconds = `${displayMinutes ? ":" : ""}${
-        displayMinutes && timeSpan.seconds < 10
-          ? `0${timeSpan.seconds}`
-          : timeSpan.seconds
+        displayMinutes && timeSpan.seconds() < 10
+          ? `0${timeSpan.seconds()}`
+          : timeSpan.seconds()
       }`;
 
     const displaySeconds = seconds !== "";
 
     const deciseconds = hasDeciseconds
-      ? `${displaySeconds ? "." : ""}${timeSpan.milliseconds / 100}`
+      ? `${displaySeconds ? "." : ""}${timeSpan.milliseconds() / 100}`
       : "";
 
     const time = hours + minutes + seconds + deciseconds;

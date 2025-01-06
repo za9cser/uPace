@@ -1,15 +1,29 @@
-import { View } from "react-native";
+import { StyleProp, View, ViewStyle } from "react-native";
 import React from "react";
 import { Text, TouchableRipple, useTheme } from "react-native-paper";
 
-export type ModeSelectProps = { value: string[], buttons, onChange, multiSelect };
+export type ModeSelectProps = {
+  value: string[] | string;
+  buttons: ModeButton[];
+  onChange: (newValue: string[] | string) => void;
+  multiSelect: boolean;
+};
 
+export type ModeButton = {
+  label: string;
+  value: string;
+};
 
-const ModeSelect = ({ value, buttons, onChange, multiSelect }) => {
-  const isActiveButton = (buttonValue) =>
+const ModeSelect = ({
+  value,
+  buttons,
+  onChange,
+  multiSelect,
+}: ModeSelectProps) => {
+  const isActiveButton = (buttonValue: string) =>
     multiSelect ? value.includes(buttonValue) : value === buttonValue;
 
-  const handlePress = (buttonValue) => {
+  const handlePress = (buttonValue: string) => {
     if (multiSelect) {
       const index = value.indexOf(buttonValue);
       const newValue = [...value];
@@ -51,7 +65,19 @@ const ModeSelect = ({ value, buttons, onChange, multiSelect }) => {
   );
 };
 
-const ModeButton = ({ button, isActive, onPress, modeStyle }) => {
+type ModeButtonProps = {
+  button: ModeButton;
+  isActive: boolean;
+  onPress: (value: string) => void;
+  modeStyle?: StyleProp<ViewStyle>;
+};
+
+const ModeButton = ({
+  button,
+  isActive,
+  onPress,
+  modeStyle,
+}: ModeButtonProps) => {
   const { colors } = useTheme();
   return (
     <TouchableRipple
@@ -78,10 +104,3 @@ const ModeButton = ({ button, isActive, onPress, modeStyle }) => {
 };
 
 export default ModeSelect;
-
-export const describeTimeMode = (mode? : string[]) => ({
-  hasHours: mode?.includes("hh") ?? true,
-  hasMinutes: mode?.includes("mm") ?? true,
-  hasSeconds: mode?.includes("ss") ?? true,
-  hasDeciseconds: mode?.includes("ds") ?? true,
-});
