@@ -1,52 +1,65 @@
-import { Text, ScrollView, StyleSheet } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import React from "react";
-import { TextInput } from "react-native-paper";
-import { Formik } from "formik";
+import { TextInput, Text } from "react-native-paper";
+import { Formik, FormikErrors } from "formik";
 import TimeInput from "../../components/timeInput";
-import { initialValues, paceMode, timeMode } from "./paceCalcUtils";
+import {
+  initialValues,
+  PaceCalcValue as PaceCalcState,
+  paceMode,
+  timeMode,
+} from "./paceCalcUtils";
 import PaceCalcInput from "./paceCalcInput";
-import { TimeSpan } from "timespan";
+import moment from "moment";
 
 const PaceCalc = () => {
-  const handleCalcTime = (values, setFieldValue) => {
-    if (
-      values.pace.totalSeconds() === 0 ||
-      values.distance === 0 ||
-      values.distance === ""
-    )
-      return;
+  const handleCalcTime = (
+    values: PaceCalcState,
+    setFieldValue: (
+      field: string,
+      value: any,
+      shouldValidate?: boolean
+    ) => Promise<void | FormikErrors<PaceCalcState>>
+  ) => {
+    if (values.pace.asSeconds() === 0 || !values.distance) return;
 
-    const timeSeconds =
-      values.pace.totalSeconds() * parseFloat(values.distance);
-    const time = new TimeSpan(0, timeSeconds);
+    const timeSeconds = values.pace.asSeconds() * values.distance;
+    const time = moment.duration(timeSeconds, "s");
     setFieldValue("time", time);
   };
 
-  const handleCalcPace = (values, setFieldValue) => {
-    if (
-      values.time.totalSeconds() === 0 ||
-      values.distance === 0 ||
-      values.distance === ""
-    )
-      return;
+  const handleCalcPace = (
+    values: PaceCalcState,
+    setFieldValue: (
+      field: string,
+      value: any,
+      shouldValidate?: boolean
+    ) => Promise<void | FormikErrors<PaceCalcState>>
+  ) => {
+    if (values.time.asSeconds() === 0 || !values.distance) return;
 
-    const paceSeconds =
-      values.time.totalSeconds() / parseFloat(values.distance);
-    const pace = new TimeSpan(0, paceSeconds);
+    const paceSeconds = values.time.asSeconds() / values.distance;
+    const pace = moment.duration(paceSeconds, "s");
     setFieldValue("pace", pace);
   };
 
-  const handleCalcDistance = (values, setFieldValue) => {
-    if (values.time.totalSeconds() === 0 || values.pace.totalSeconds() === 0)
-      return;
+  const handleCalcDistance = (
+    values: PaceCalcState,
+    setFieldValue: (
+      field: string,
+      value: any,
+      shouldValidate?: boolean
+    ) => Promise<void | FormikErrors<PaceCalcState>>
+  ) => {
+    if (values.time.asSeconds() === 0 || values.pace.asSeconds() === 0) return;
 
-    const distance = values.time.totalSeconds() / values.pace.totalSeconds();
+    const distance = values.time.asSeconds() / values.pace.asSeconds();
     console.log("distance", distance);
     setFieldValue("distance", distance.toFixed(2));
   };
 
   return (
-    <Formik initialValues={initialValues}>
+    <Formik initialValues={initialValues} onSubmit={() => {}}>
       {({ setFieldValue, values }) => (
         <ScrollView
           style={styles.container}

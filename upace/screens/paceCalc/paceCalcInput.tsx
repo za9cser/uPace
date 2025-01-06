@@ -2,7 +2,13 @@ import { View, StyleSheet } from "react-native";
 import React from "react";
 import { Button, useTheme } from "react-native-paper";
 
-const PaceCalcInput = ({ buttonCaption, onCalc, children }) => {
+type Props = {
+  buttonCaption: string;
+  onCalc: () => void;
+  children: React.ReactNode;
+};
+
+const PaceCalcInput = ({ buttonCaption, onCalc, children }: Props) => {
   const { colors } = useTheme();
   return (
     <View style={styles.container}>
