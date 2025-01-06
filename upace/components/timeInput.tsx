@@ -32,8 +32,9 @@ const TimeInput = forwardRef(
     };
     const handleMinutesChange = (input: string) => {
       const newMinutes = validateInput(input, 59);
-      let timeSpan = time.subtract(time.minutes(), "m");
-      timeSpan = timeSpan.add(newMinutes, "m");
+      let timeSpan = moment.duration(time);
+      timeSpan.subtract(timeSpan.minutes(), "m");
+      timeSpan.add(newMinutes, "m");
 
       log && console.log("timeSpan", timeSpan);
       onChange(timeSpan);
@@ -41,8 +42,9 @@ const TimeInput = forwardRef(
 
     const handleSecondsChange = (input: string) => {
       const newSeconds = validateInput(input, 59);
-      let timeSpan = time.subtract(time.seconds(), "s");
-      timeSpan = timeSpan.add(newSeconds, "s");
+      let timeSpan = moment.duration(time);
+      timeSpan.subtract(timeSpan.seconds(), "s");
+      timeSpan.add(newSeconds, "s");
 
       log && console.log("timeSpan", timeSpan);
       onChange(timeSpan);
@@ -50,8 +52,9 @@ const TimeInput = forwardRef(
 
     const handleDecisecondsChange = (input: string) => {
       const newDeciseconds = validateInput(input);
-      let timeSpan = time.subtract(time.milliseconds(), "ms");
-      timeSpan = timeSpan.add(newDeciseconds * 100, "ms");
+      let timeSpan = moment.duration(time);
+      timeSpan.subtract(timeSpan.milliseconds(), "ms");
+      timeSpan.add(newDeciseconds * 100, "ms");
 
       log && console.log("timeSpan", timeSpan);
       onChange(timeSpan);
