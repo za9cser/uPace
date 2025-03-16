@@ -115,7 +115,11 @@ const TimeInput = forwardRef(
         )}
         {displayMinutes && (
           <>
-            {displayHours && <Text variant="bodyLarge">:</Text>}
+            {displayHours && (
+              <Text variant="bodyLarge" style={styles.separator}>
+                :
+              </Text>
+            )}
             <TextInput
               ref={minutesRef}
               value={getValue(time.minutes())}
@@ -138,7 +142,7 @@ const TimeInput = forwardRef(
         {displaySeconds && (
           <>
             {(displayHours || displayMinutes) && (
-              <Text variant="bodyLarge" style={{ marginHorizontal: 5 }}>
+              <Text variant="bodyLarge" style={styles.separator}>
                 :
               </Text>
             )}
@@ -197,6 +201,9 @@ const styles = StyleSheet.create({
     // marginHorizontal: 5,
     textAlign: "center",
     fontSize: 18,
+  },
+  separator: {
+    marginHorizontal: 5,
   },
 });
 

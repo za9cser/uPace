@@ -54,7 +54,6 @@ const PaceCalc = () => {
     if (values.time.asSeconds() === 0 || values.pace.asSeconds() === 0) return;
 
     const distance = values.time.asSeconds() / values.pace.asSeconds();
-    console.log("distance", distance);
     setFieldValue("distance", distance.toFixed(2));
   };
 
@@ -76,6 +75,7 @@ const PaceCalc = () => {
               mode={timeMode}
               time={values.time}
               onChange={(value) => setFieldValue("time", value)}
+              containerStyle={styles.timeInput}
             />
           </PaceCalcInput>
           <PaceCalcInput
@@ -86,6 +86,7 @@ const PaceCalc = () => {
               mode={paceMode}
               time={values.pace}
               onChange={(value) => setFieldValue("pace", value)}
+              containerStyle={styles.timeInput}
             />
           </PaceCalcInput>
           <PaceCalcInput
@@ -97,7 +98,7 @@ const PaceCalc = () => {
               placeholder="km"
               onChangeText={(value) => setFieldValue("distance", value)}
               keyboardType="decimal-pad"
-              style={styles.distance}
+              style={[styles.timeInput, styles.distance]}
             />
           </PaceCalcInput>
         </ScrollView>
@@ -112,12 +113,16 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 16,
     paddingTop: 8,
+    gap: 4,
   },
   description: {
     textAlign: "center",
   },
+  timeInput: {
+    marginTop: 8,
+  },
   distance: {
-    width: 150,
+    width: 145,
     textAlign: "center",
     height: 40,
     fontSize: 18,
