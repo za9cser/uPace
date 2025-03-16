@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
   summary: {
     flexDirection: "row",
     justifyContent: "space-around",
-    paddingHorizontal: 4,
+    paddingHorizontal: 8,
     paddingBottom: 25,
     borderTopColor: "#ccc",
     borderTopWidth: 1,
