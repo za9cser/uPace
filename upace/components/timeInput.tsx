@@ -192,13 +192,10 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     alignItems: "center",
-    padding: 0,
-    margin: 0,
   },
   textInput: {
     height: 40,
     borderRadius: 5,
-    // marginHorizontal: 5,
     textAlign: "center",
     fontSize: 18,
   },
