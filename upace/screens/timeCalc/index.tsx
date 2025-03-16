@@ -58,9 +58,7 @@ const TimeCalc = () => {
                       gap: 4,
                     }}
                   >
-                    <View style={styles.timeSplitNumber}>
-                      <Text>{key + 1}</Text>
-                    </View>
+                    <Text style={styles.timeSplitNumber}>{key + 1}</Text>
 
                     <TimeInput
                       time={item.split}
@@ -107,11 +105,15 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   timeInput: {
-    borderColor: "red",
-    borderWidth: 1,
     flex: 0.8,
   },
-  timeSplitNumber: { borderWidth: 1, flex: 0.2, textAlign: "right" },
+  timeSplitNumber: {
+    flex: 0.2,
+    textAlign: "center",
+    fontSize: 18,
+    paddingTop: 8,
+    opacity: 0.5,
+  },
   addButton: {
     paddingVertical: 8,
   },
