@@ -50,22 +50,32 @@ const TimeCalc = () => {
             {({ push }) => (
               <View>
                 {values.splits.map((item, key) => (
-                  <TimeInput
+                  <View
                     key={key}
-                    time={item.split}
-                    ref={item.ref}
-                    onChange={(value) =>
-                      setFieldValue(`splits[${key}].split`, value)
-                    }
-                    containerStyle={styles.timeInput}
-                    mode={values.mode}
-                    onSubmitEditing={() => {
-                      if (key + 1 === values.splits.length)
-                        push(getNewTimeSplit());
-                      else values.splits[key + 1].ref?.current?.focus();
+                    style={{
+                      flexDirection: "row",
+                      marginTop: 8,
+                      gap: 4,
                     }}
-                    log={false}
-                  />
+                  >
+                    <Text style={styles.timeSplitNumber}>{key + 1}</Text>
+
+                    <TimeInput
+                      time={item.split}
+                      ref={item.ref}
+                      onChange={(value) =>
+                        setFieldValue(`splits[${key}].split`, value)
+                      }
+                      containerStyle={styles.timeInput}
+                      mode={values.mode}
+                      onSubmitEditing={() => {
+                        if (key + 1 === values.splits.length)
+                          push(getNewTimeSplit());
+                        else values.splits[key + 1].ref?.current?.focus();
+                      }}
+                      log={false}
+                    />
+                  </View>
                 ))}
                 <Button
                   textColor={colors.secondary}
@@ -89,15 +99,20 @@ export default TimeCalc;
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 16,
     paddingTop: 8,
   },
   description: {
     textAlign: "center",
   },
   timeInput: {
-    justifyContent: "center",
-    marginTop: 8,
+    flex: 0.8,
+  },
+  timeSplitNumber: {
+    flex: 0.2,
+    textAlign: "center",
+    fontSize: 18,
+    paddingTop: 8,
+    opacity: 0.5,
   },
   addButton: {
     paddingVertical: 8,
@@ -108,6 +123,7 @@ const styles = StyleSheet.create({
   summary: {
     flexDirection: "row",
     justifyContent: "space-around",
+    paddingHorizontal: 4,
     paddingBottom: 25,
     borderTopColor: "#ccc",
     borderTopWidth: 1,

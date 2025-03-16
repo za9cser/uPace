@@ -92,92 +92,97 @@ const TimeInput = forwardRef(
     } = describeTimeMode(mode?.displayModes);
 
     return (
-      <View>
-        <View style={[styles.container, containerStyle]}>
-          {displayHours && (
+      <View style={[styles.container, containerStyle]}>
+        {displayHours && (
+          <TextInput
+            ref={hoursRef}
+            value={getValue(time.hours())}
+            onChangeText={handleHoursChange}
+            placeholder="hh"
+            style={styles.textInput}
+            keyboardType="decimal-pad"
+            returnKeyType="next"
+            onSubmitEditing={() =>
+              handleSubmitting(
+                hasMinutes && minutesRef,
+                hasSeconds && secondsRef,
+                hasDeciseconds && decisecondsRef
+              )
+            }
+            disabled={hasMode && !hasHours}
+            autoComplete="off"
+          />
+        )}
+        {displayMinutes && (
+          <>
+            {displayHours && (
+              <Text variant="bodyLarge" style={styles.separator}>
+                :
+              </Text>
+            )}
             <TextInput
-              ref={hoursRef}
-              value={getValue(time.hours())}
-              onChangeText={handleHoursChange}
-              placeholder="hh"
+              ref={minutesRef}
+              value={getValue(time.minutes())}
+              onChangeText={handleMinutesChange}
+              placeholder="mm"
               style={styles.textInput}
               keyboardType="decimal-pad"
               returnKeyType="next"
               onSubmitEditing={() =>
                 handleSubmitting(
-                  hasMinutes && minutesRef,
                   hasSeconds && secondsRef,
                   hasDeciseconds && decisecondsRef
                 )
               }
-              disabled={hasMode && !hasHours}
+              disabled={hasMode && !hasMinutes}
               autoComplete="off"
             />
-          )}
-          {displayMinutes && (
-            <>
-              {displayHours && <Text variant="bodyLarge">:</Text>}
-              <TextInput
-                ref={minutesRef}
-                value={getValue(time.minutes())}
-                onChangeText={handleMinutesChange}
-                placeholder="mm"
-                style={styles.textInput}
-                keyboardType="decimal-pad"
-                returnKeyType="next"
-                onSubmitEditing={() =>
-                  handleSubmitting(
-                    hasSeconds && secondsRef,
-                    hasDeciseconds && decisecondsRef
-                  )
-                }
-                disabled={hasMode && !hasMinutes}
-                autoComplete="off"
-              />
-            </>
-          )}
-          {displaySeconds && (
-            <>
-              {(displayHours || displayMinutes) && (
-                <Text variant="bodyLarge">:</Text>
-              )}
-              <TextInput
-                ref={secondsRef}
-                value={getValue(time.seconds())}
-                onChangeText={handleSecondsChange}
-                placeholder="ss"
-                style={styles.textInput}
-                keyboardType="decimal-pad"
-                returnKeyType="next"
-                onSubmitEditing={() =>
-                  handleSubmitting(hasDeciseconds && decisecondsRef)
-                }
-                disabled={hasMode && !hasSeconds}
-                autoComplete="off"
-              />
-            </>
-          )}
-          {displayDeciseconds && (
-            <>
-              {(displayHours || displayMinutes || displaySeconds) && (
-                <Text variant="bodyLarge">.</Text>
-              )}
-              <TextInput
-                ref={decisecondsRef}
-                value={getValue(time.milliseconds() / 100)}
-                onChangeText={handleDecisecondsChange}
-                placeholder="ds"
-                style={styles.textInput}
-                keyboardType={"decimal-pad"}
-                returnKeyType={onSubmitEditing ? "next" : "done"}
-                onSubmitEditing={() => onSubmitEditing?.()}
-                disabled={hasMode && !hasDeciseconds}
-                autoComplete="off"
-              />
-            </>
-          )}
-        </View>
-        {log && <Text>{time.toString()}</Text>}
+          </>
+        )}
+        {displaySeconds && (
+          <>
+            {(displayHours || displayMinutes) && (
+              <Text variant="bodyLarge" style={styles.separator}>
+                :
+              </Text>
+            )}
+            <TextInput
+              ref={secondsRef}
+              value={getValue(time.seconds())}
+              onChangeText={handleSecondsChange}
+              placeholder="ss"
+              style={styles.textInput}
+              keyboardType="decimal-pad"
+              returnKeyType="next"
+              onSubmitEditing={() =>
+                handleSubmitting(hasDeciseconds && decisecondsRef)
+              }
+              disabled={hasMode && !hasSeconds}
+              autoComplete="off"
+            />
+          </>
+        )}
+        {displayDeciseconds && (
+          <>
+            {(displayHours || displayMinutes || displaySeconds) && (
+              <Text variant="bodyLarge" style={{ marginHorizontal: 5 }}>
+                .
+              </Text>
+            )}
+            <TextInput
+              ref={decisecondsRef}
+              value={getValue(time.milliseconds() / 100)}
+              onChangeText={handleDecisecondsChange}
+              placeholder="ds"
+              style={styles.textInput}
+              keyboardType={"decimal-pad"}
+              returnKeyType={onSubmitEditing ? "next" : "done"}
+              onSubmitEditing={() => onSubmitEditing?.()}
+              disabled={hasMode && !hasDeciseconds}
+              autoComplete="off"
+            />
+          </>
+        )}
       </View>
     );
   }
@@ -191,9 +196,11 @@ const styles = StyleSheet.create({
   textInput: {
     height: 40,
     borderRadius: 5,
-    marginHorizontal: 5,
     textAlign: "center",
     fontSize: 18,
+  },
+  separator: {
+    marginHorizontal: 5,
   },
 });
 
