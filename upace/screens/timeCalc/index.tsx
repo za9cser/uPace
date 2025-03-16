@@ -50,22 +50,34 @@ const TimeCalc = () => {
             {({ push }) => (
               <View>
                 {values.splits.map((item, key) => (
-                  <TimeInput
+                  <View
                     key={key}
-                    time={item.split}
-                    ref={item.ref}
-                    onChange={(value) =>
-                      setFieldValue(`splits[${key}].split`, value)
-                    }
-                    containerStyle={styles.timeInput}
-                    mode={values.mode}
-                    onSubmitEditing={() => {
-                      if (key + 1 === values.splits.length)
-                        push(getNewTimeSplit());
-                      else values.splits[key + 1].ref?.current?.focus();
+                    style={{
+                      flexDirection: "row",
+                      marginTop: 8,
+                      gap: 4,
                     }}
-                    log={false}
-                  />
+                  >
+                    <View style={styles.timeSplitNumber}>
+                      <Text>{key + 1}</Text>
+                    </View>
+
+                    <TimeInput
+                      time={item.split}
+                      ref={item.ref}
+                      onChange={(value) =>
+                        setFieldValue(`splits[${key}].split`, value)
+                      }
+                      containerStyle={styles.timeInput}
+                      mode={values.mode}
+                      onSubmitEditing={() => {
+                        if (key + 1 === values.splits.length)
+                          push(getNewTimeSplit());
+                        else values.splits[key + 1].ref?.current?.focus();
+                      }}
+                      log={false}
+                    />
+                  </View>
                 ))}
                 <Button
                   textColor={colors.secondary}
@@ -89,16 +101,17 @@ export default TimeCalc;
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 16,
     paddingTop: 8,
   },
   description: {
     textAlign: "center",
   },
   timeInput: {
-    justifyContent: "center",
-    marginTop: 8,
+    borderColor: "red",
+    borderWidth: 1,
+    flex: 0.8,
   },
+  timeSplitNumber: { borderWidth: 1, flex: 0.2, textAlign: "right" },
   addButton: {
     paddingVertical: 8,
   },
