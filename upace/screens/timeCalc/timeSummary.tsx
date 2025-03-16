@@ -29,6 +29,7 @@ const TimeSummary = ({ containerStyle }: Props) => {
   }, moment.duration());
 
   const getTime = (timeSpan: moment.Duration) => {
+    if (timeSpan.asMilliseconds() === 0) return "0";
     const displayHours = timeSpan.hours() > 0;
     const hours = `${displayHours ? `${timeSpan.hours}:` : ""}`;
 
@@ -64,7 +65,10 @@ const TimeSummary = ({ containerStyle }: Props) => {
   const totalTime = getTime(totalTimeSpan);
 
   const copySplits = () => {
-    const result = splits.map((s) => getTime(s.split)).join(" - ");
+    const result = splits
+      .map((s) => getTime(s.split))
+      .filter((t) => t !== "0")
+      .join(" - ");
     Clipboard.setStringAsync(result);
 
     setFeedbackMessage("Splits and result copied");
