@@ -2,70 +2,65 @@ import { useFormikContext } from "formik";
 import React, { useEffect } from "react";
 import { View } from "react-native";
 import { SegmentedButtons, Text, TextInput } from "react-native-paper";
-import { PaceCalcValue } from "../paceCalcUtils";
 import { DistanceUnit } from "../../../lib/distanceUnit";
 import moment from "moment";
 import { TimeSplitsFormModel } from ".";
 
-const TimeSplitsForm = () => {
+type Props = {
+  distance: number | undefined;
+  pace: moment.Duration | undefined;
+};
+
+const TimeSplitsForm = ({ distance, pace }: Props) => {
   const { values, setFieldValue } = useFormikContext<TimeSplitsFormModel>();
-  const { values: paceCalcValues } = useFormikContext<PaceCalcValue>();
 
   useEffect(() => {
-    console.log("paceCalcValues", paceCalcValues);
+    console.log("distance", distance);
+    console.log("pace", pace);
     console.log("values", values);
 
-    if (
-      !(
-        paceCalcValues.distance &&
-        paceCalcValues.pace &&
-        values.lapDistance &&
-        values.lapUnit
-      )
-    )
-      return;
-    console.log("first");
+    if (!(distance && pace && values.lapDistance && values.lapUnit)) return;
+    // console.log("first");
     const lapDistance = parseFloat(values.lapDistance);
+    console.log("lapDistance", lapDistance);
     const isKmDistanceUnit = values.lapUnit === DistanceUnit.KM;
-    const calcLapDistance = isKmDistanceUnit
-      ? paceCalcValues.distance
-      : paceCalcValues.distance * 1000;
+    const calcLapDistance = isKmDistanceUnit ? distance : distance * 1000;
+    console.log("calcLapDistance", calcLapDistance);
     const distanceToCalcTime = isKmDistanceUnit
       ? lapDistance
       : lapDistance / 1000;
-    const paceSplitMilliseconds =
-      paceCalcValues.pace.asMilliseconds() * distanceToCalcTime;
+    const paceSplitMilliseconds = pace.asMilliseconds() * distanceToCalcTime;
     const paceSplit = moment.duration(paceSplitMilliseconds);
     // TODO: handle when distance is less or equal lapDistance
     let timeSplits: TimeSplit[] = [];
     let i = 0;
-    let totalDistance = 0;
+    let totalDistance = lapDistance;
     while (totalDistance <= calcLapDistance) {
-      totalDistance += lapDistance;
       timeSplits.push({
         number: ++i,
         totalDistance: totalDistance,
         totalTime: moment.duration(paceSplitMilliseconds * i),
         splitTime: paceSplit,
       } as TimeSplit);
+      totalDistance += lapDistance;
     }
-
-    const reminder = calcLapDistance - totalDistance;
-    if (reminder > 0)
+    console.log("totalDistance", totalDistance);
+    const reminder = calcLapDistance - (totalDistance - lapDistance);
+    console.log("reminder", reminder);
+    if (reminder > 0 && timeSplits.length > 0) {
+      const prevSplitTotalTime = timeSplits[timeSplits.length - 1].totalTime;
+      const reminderSplitTime = pace.asMilliseconds() * reminder;
+      const reminderTotalTime = prevSplitTotalTime.add(reminderSplitTime);
+      console.log("reminderTotalTime", reminderTotalTime);
       timeSplits.push({
         number: timeSplits.length + 1,
         totalDistance: calcLapDistance,
-        totalTime: paceCalcValues.time,
-        splitTime: moment.duration(0),
+        totalTime: reminderTotalTime,
+        splitTime: moment.duration(reminderSplitTime),
       } as TimeSplit);
-
+    }
     setFieldValue("timeSplits", timeSplits);
-  }, [
-    paceCalcValues.distance,
-    paceCalcValues.pace,
-    values.lapDistance,
-    values.lapUnit,
-  ]);
+  }, [distance, pace, values.lapDistance, values.lapUnit]);
 
   return (
     <View style={{ flexDirection: "row" }}>

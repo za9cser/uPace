@@ -7,10 +7,7 @@ import { SegmentedButtons, TextInput } from "react-native-paper";
 import { PaceCalcValue } from "../paceCalcUtils";
 import TimeSplitsFormModel from "./timeSplitsForm";
 
-type Props = {
-  distance: number;
-  pace: moment.Duration;
-};
+
 
 type TimeSplitsFormModel = {
   lapDistance?: string;
@@ -20,8 +17,8 @@ type TimeSplitsFormModel = {
 
 export type { TimeSplitsFormModel };
 
-const TimeSplits = ({ distance, pace }: Props) => {
-  const { values } = useFormikContext<PaceCalcValue>();
+const TimeSplits = () => {
+  const { values : paceCalcValues } = useFormikContext<PaceCalcValue>();
   const [timeSplits, setTimeSplits] = useState<TimeSplit[]>([]);
 
   const handleSubmit = (values: TimeSplitsFormModel) => {};
@@ -39,7 +36,7 @@ const TimeSplits = ({ distance, pace }: Props) => {
     >
       {({ setFieldValue, values }) => (
         <>
-          <TimeSplitsFormModel />
+          <TimeSplitsFormModel distance={paceCalcValues.distance} pace={paceCalcValues.pace}/>
           {values.timeSplits?.length > 0 &&
             values.timeSplits.map((timeSplit) => (
               <View style={{ flexDirection: "row" }} key={timeSplit.number}>
