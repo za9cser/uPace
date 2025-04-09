@@ -1,7 +1,7 @@
 import { useFormikContext } from "formik";
 import React, { useEffect } from "react";
 import { View } from "react-native";
-import { SegmentedButtons, Text, TextInput } from "react-native-paper";
+import { Button, SegmentedButtons, Text, TextInput } from "react-native-paper";
 import { DistanceUnit } from "../../../lib/distanceUnit";
 import moment from "moment";
 import { TimeSplitsFormModel } from ".";
@@ -15,6 +15,10 @@ const TimeSplitsForm = ({ distance, pace }: Props) => {
   const { values, setFieldValue } = useFormikContext<TimeSplitsFormModel>();
 
   useEffect(() => {
+    setFieldValue("timeSplits", []);
+  }, [distance, pace]);
+
+  const calcSplits = () => {
     console.log("distance", distance);
     console.log("pace", pace);
     console.log("values", values);
@@ -72,11 +76,13 @@ const TimeSplitsForm = ({ distance, pace }: Props) => {
       } as TimeSplit);
     }
     setFieldValue("timeSplits", timeSplits);
-  }, [distance, pace, values.lapDistance, values.lapUnit]);
+  };
 
   return (
     <View style={{ flexDirection: "row" }}>
-      <Text>Calc laps by</Text>
+      <Button onPress={() => calcSplits()} mode="contained-tonal">
+        Calc laps by
+      </Button>
       <TextInput
         label={"lap distance"}
         value={values.lapDistance}
