@@ -7,6 +7,7 @@ import { SegmentedButtons, TextInput } from "react-native-paper";
 import { PaceCalcValue } from "../paceCalcUtils";
 import TimeSplitsFormModel from "./timeSplitsForm";
 import { displayTimePart } from "../../../lib/durationUtils";
+import TimeSplitsTable from "./timeSplitsTable";
 
 type TimeSplitsFormModel = {
   lapDistance?: string;
@@ -39,26 +40,7 @@ const TimeSplits = () => {
             distance={paceCalcValues.distance}
             pace={paceCalcValues.pace}
           />
-          {values.timeSplits?.length > 0 &&
-            values.timeSplits.map((timeSplit) => {
-              const hours = timeSplit.totalTime.hours();
-              const hasHours = hours > 0;
-              return (
-                <View style={{ flexDirection: "row" }} key={timeSplit.number}>
-                  <Text style={{ flex: 2 }}>{timeSplit.number}</Text>
-                  <Text style={{ flex: 3 }}>{timeSplit.totalDistance}</Text>
-                  <Text style={{ flex: 3 }}>
-                    {hasHours ? `${hours}:` : ""}
-                    {displayTimePart(timeSplit.totalTime.minutes(), hasHours)}:
-                    {displayTimePart(timeSplit.totalTime.seconds())}
-                  </Text>
-                  <Text style={{ flex: 3 }}>
-                    {timeSplit.splitTime.minutes()}:
-                    {displayTimePart(timeSplit.splitTime.seconds())}
-                  </Text>
-                </View>
-              );
-            })}
+          <TimeSplitsTable />
         </>
       )}
     </Formik>
