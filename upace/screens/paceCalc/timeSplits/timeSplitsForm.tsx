@@ -50,7 +50,9 @@ const TimeSplitsForm = ({ distance, pace }: Props) => {
     if (reminder > 0 && timeSplits.length > 0) {
       const prevSplitTotalTime = timeSplits[timeSplits.length - 1].totalTime;
       const reminderSplitTime = pace.asMilliseconds() * reminder;
-      const reminderTotalTime = prevSplitTotalTime.add(reminderSplitTime);
+      const reminderTotalTime = moment
+        .duration(prevSplitTotalTime)
+        .add(reminderSplitTime);
       console.log("reminderTotalTime", reminderTotalTime);
       timeSplits.push({
         number: timeSplits.length + 1,
