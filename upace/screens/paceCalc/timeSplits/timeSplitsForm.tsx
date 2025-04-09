@@ -26,8 +26,10 @@ const TimeSplitsForm = ({ distance, pace }: Props) => {
         values.lapDistance &&
         values.lapUnit
       )
-    )
+    ) {
+      setFieldValue("timeSplits", []);
       return;
+    }
     // console.log("first");
     const lapDistance = parseFloat(values.lapDistance);
     console.log("lapDistance", lapDistance);
