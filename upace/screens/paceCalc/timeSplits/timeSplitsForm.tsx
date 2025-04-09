@@ -79,6 +79,8 @@ const TimeSplitsForm = ({ distance, pace }: Props) => {
         label={"lap distance"}
         value={values.lapDistance}
         onChangeText={(value) => setFieldValue("lapDistance", value)}
+        keyboardType="number-pad"
+        autoComplete="off"
       />
       <SegmentedButtons
         value={values.lapUnit}
