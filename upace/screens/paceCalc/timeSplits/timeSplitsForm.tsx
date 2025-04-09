@@ -19,7 +19,15 @@ const TimeSplitsForm = ({ distance, pace }: Props) => {
     console.log("pace", pace);
     console.log("values", values);
 
-    if (!(distance && pace && values.lapDistance && values.lapUnit)) return;
+    if (
+      !(
+        distance &&
+        pace?.asMilliseconds() &&
+        values.lapDistance &&
+        values.lapUnit
+      )
+    )
+      return;
     // console.log("first");
     const lapDistance = parseFloat(values.lapDistance);
     console.log("lapDistance", lapDistance);
