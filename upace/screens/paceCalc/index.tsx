@@ -22,9 +22,10 @@ const PaceCalc = () => {
       shouldValidate?: boolean
     ) => Promise<void | FormikErrors<PaceCalcState>>
   ) => {
-    if (values.pace.asSeconds() === 0 || !values.distance) return;
+    const paceSeconds = values.pace.asSeconds();
+    if (paceSeconds === 0 || !values.distance) return;
 
-    const timeSeconds = values.pace.asSeconds() * values.distance;
+    const timeSeconds = paceSeconds * values.distance;
     const time = moment.duration(timeSeconds, "s");
     setFieldValue("time", time);
   };
@@ -37,9 +38,10 @@ const PaceCalc = () => {
       shouldValidate?: boolean
     ) => Promise<void | FormikErrors<PaceCalcState>>
   ) => {
-    if (values.time.asSeconds() === 0 || !values.distance) return;
+    const timeSeconds = values.time.asSeconds();
+    if (timeSeconds === 0 || !values.distance) return;
 
-    const paceSeconds = values.time.asSeconds() / values.distance;
+    const paceSeconds = timeSeconds / values.distance;
     const pace = moment.duration(paceSeconds, "s");
     setFieldValue("pace", pace);
   };
@@ -52,9 +54,11 @@ const PaceCalc = () => {
       shouldValidate?: boolean
     ) => Promise<void | FormikErrors<PaceCalcState>>
   ) => {
-    if (values.time.asSeconds() === 0 || values.pace.asSeconds() === 0) return;
+    const timeSeconds = values.time.asSeconds();
+    const paceSeconds = values.pace.asSeconds();
+    if (timeSeconds === 0 || paceSeconds === 0) return;
 
-    const distance = values.time.asSeconds() / values.pace.asSeconds();
+    const distance = timeSeconds / paceSeconds;
     setFieldValue("distance", distance.toFixed(2));
   };
 
@@ -103,7 +107,7 @@ const PaceCalc = () => {
                 style={[styles.timeInput, styles.distance]}
               />
             </PaceCalcInput>
-            <TimeSplits distance={values.distance || 0} pace={values.pace} />
+            <TimeSplits />
           </ScrollView>
         )}
       </Formik>
