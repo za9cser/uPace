@@ -55,11 +55,13 @@ const TimeSplitsForm = ({ distance, pace }: Props) => {
       totalDistance += lapDistance;
     }
     console.log("totalDistance", totalDistance);
-    const reminder = calcLapDistance - (totalDistance - lapDistance);
-    console.log("reminder", reminder);
-    if (reminder > 0 && timeSplits.length > 0) {
+    const remainingDistance = calcLapDistance - (totalDistance - lapDistance);
+    console.log("reminder", remainingDistance);
+    if (remainingDistance > 0 && timeSplits.length > 0) {
       const prevSplitTotalTime = timeSplits[timeSplits.length - 1].totalTime;
-      const reminderSplitTime = paceMilliseconds * reminder;
+      const reminderSplitTime =
+        paceMilliseconds *
+        (isKmDistanceUnit ? remainingDistance : remainingDistance / 1000);
       const reminderTotalTime = moment
         .duration(prevSplitTotalTime)
         .add(reminderSplitTime);
