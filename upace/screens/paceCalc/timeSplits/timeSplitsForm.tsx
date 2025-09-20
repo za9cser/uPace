@@ -11,6 +11,11 @@ type Props = {
   pace: moment.Duration | undefined;
 };
 
+const UNIT_BUTTONS = [
+  { label: "km", value: DistanceUnit.KM },
+  { label: "m", value: DistanceUnit.M },
+];
+
 const TimeSplitsForm = ({ distance, pace }: Props) => {
   const { values, setFieldValue } = useFormikContext<TimeSplitsFormModel>();
 
@@ -103,10 +108,7 @@ const TimeSplitsForm = ({ distance, pace }: Props) => {
             );
           }
         }}
-        buttons={[
-          { label: "km", value: DistanceUnit.KM },
-          { label: "m", value: DistanceUnit.M },
-        ]}
+        buttons={UNIT_BUTTONS}
       />
     </View>
   );
