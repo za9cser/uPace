@@ -12,8 +12,16 @@ type Props = {
 };
 
 const UNIT_BUTTONS = [
-  { label: "km", value: DistanceUnit.KM },
-  { label: "m", value: DistanceUnit.M },
+  {
+    label: "km",
+    value: DistanceUnit.KM,
+    style: { paddingVertical: 10 },
+  },
+  {
+    label: "m",
+    value: DistanceUnit.M,
+    style: { paddingVertical: 10 },
+  },
 ];
 
 const TimeSplitsForm = ({ distance, pace }: Props) => {
@@ -46,7 +54,6 @@ const TimeSplitsForm = ({ distance, pace }: Props) => {
       : lapDistance / 1000;
     const paceSplitMilliseconds = paceMilliseconds * distanceToCalcTime;
     const paceSplit = moment.duration(paceSplitMilliseconds);
-    // TODO: handle when distance is less or equal lapDistance
     let timeSplits: TimeSplit[] = [];
     let i = 0;
     let totalDistance = lapDistance;
@@ -82,34 +89,55 @@ const TimeSplitsForm = ({ distance, pace }: Props) => {
   };
 
   return (
-    <View style={{ flexDirection: "row" }}>
-      <Button onPress={() => calcSplits()} mode="contained-tonal">
-        Calc laps by
-      </Button>
-      <TextInput
-        label={"lap distance"}
-        value={values.lapDistance}
-        onChangeText={(value) => setFieldValue("lapDistance", value)}
-        keyboardType="number-pad"
-        autoComplete="off"
-      />
-      <SegmentedButtons
-        value={values.lapUnit}
-        onValueChange={(value) => {
-          setFieldValue("lapUnit", value);
-          if (values.lapDistance) {
-            const distance = parseFloat(values.lapDistance);
-            setFieldValue(
-              "lapDistance",
-              (value === DistanceUnit.M
-                ? distance * 1000
-                : distance / 1000
-              ).toString()
-            );
-          }
-        }}
-        buttons={UNIT_BUTTONS}
-      />
+    <View style={{ marginTop: 10 }}>
+      <Text style={{ textAlign: "center" }} variant="titleMedium">
+        Calc laps time
+      </Text>
+      <View>
+        <View
+          style={{
+            flex: 1,
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 5,
+          }}
+        >
+          <TextInput
+            label={"lap distance"}
+            value={values.lapDistance}
+            onChangeText={(value) => setFieldValue("lapDistance", value)}
+            keyboardType="number-pad"
+            autoComplete="off"
+            style={{ textAlign: "center" }}
+          />
+          <SegmentedButtons
+            value={values.lapUnit}
+            onValueChange={(value) => {
+              setFieldValue("lapUnit", value);
+              if (values.lapDistance) {
+                const distance = parseFloat(values.lapDistance);
+                setFieldValue(
+                  "lapDistance",
+                  (value === DistanceUnit.M
+                    ? distance * 1000
+                    : distance / 1000
+                  ).toString()
+                );
+              }
+            }}
+            buttons={UNIT_BUTTONS}
+            style={{ width: "25%" }}
+          />
+        </View>
+        <Button
+          onPress={() => calcSplits()}
+          mode="contained-tonal"
+          style={{ marginTop: 10 }}
+        >
+          Calc laps
+        </Button>
+      </View>
     </View>
   );
 };
