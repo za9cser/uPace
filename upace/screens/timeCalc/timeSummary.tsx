@@ -6,6 +6,7 @@ import { Button, Portal, Snackbar, useTheme } from "react-native-paper";
 import { describeTimeMode } from "./modeSelect/describeTimeMode";
 import { getNewTimeSplit, TimeCalcState } from "./timeCalcUtils";
 import moment from "moment";
+import { displayTimePart } from "../../lib/durationUtils";
 
 type Props = { containerStyle?: StyleProp<ViewStyle> };
 
@@ -34,11 +35,7 @@ const TimeSummary = ({ containerStyle }: Props) => {
     const hours = `${displayHours ? `${timeSpan.hours}:` : ""}`;
 
     let minutes = "";
-    if (displayHours)
-      minutes =
-        timeSpan.minutes() < 10
-          ? `0${timeSpan.minutes()}`
-          : timeSpan.minutes().toString();
+    if (displayHours) minutes = displayTimePart(timeSpan.minutes());
     else if (hasMinutes || timeSpan.minutes() > 0)
       minutes = timeSpan.minutes().toString();
 
@@ -46,11 +43,10 @@ const TimeSummary = ({ containerStyle }: Props) => {
 
     let seconds = "";
     if (hasSeconds || timeSpan.seconds() > 0 || hasDeciseconds)
-      seconds = `${displayMinutes ? ":" : ""}${
-        displayMinutes && timeSpan.seconds() < 10
-          ? `0${timeSpan.seconds()}`
-          : timeSpan.seconds()
-      }`;
+      seconds = `${displayMinutes ? ":" : ""}${displayTimePart(
+        timeSpan.seconds(),
+        displayMinutes
+      )}`;
 
     const displaySeconds = seconds !== "";
 

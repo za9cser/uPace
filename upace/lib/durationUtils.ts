@@ -1,0 +1,1 @@
+export const displayTimePart = (timePart: number, condition: boolean = true) => timePart < 10 && condition ? `0${timePart}` : timePart.toString();
