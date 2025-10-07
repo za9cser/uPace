@@ -32,10 +32,6 @@ const TimeSplitsForm = ({ distance, pace }: Props) => {
   }, [distance, pace]);
 
   const calcSplits = () => {
-    console.log("distance", distance);
-    console.log("pace", pace);
-    console.log("values", values);
-
     const paceMilliseconds = pace?.asMilliseconds();
     if (
       !(distance && paceMilliseconds && values.lapDistance && values.lapUnit)
@@ -43,17 +39,15 @@ const TimeSplitsForm = ({ distance, pace }: Props) => {
       setFieldValue("timeSplits", []);
       return;
     }
-    // console.log("first");
     const lapDistance = parseFloat(values.lapDistance);
-    console.log("lapDistance", lapDistance);
     const isKmDistanceUnit = values.lapUnit === DistanceUnit.KM;
     const calcLapDistance = isKmDistanceUnit ? distance : distance * 1000;
-    console.log("calcLapDistance", calcLapDistance);
     const distanceToCalcTime = isKmDistanceUnit
       ? lapDistance
       : lapDistance / 1000;
     const paceSplitMilliseconds = paceMilliseconds * distanceToCalcTime;
     const paceSplit = moment.duration(paceSplitMilliseconds);
+
     let timeSplits: TimeSplit[] = [];
     let i = 0;
     let totalDistance = lapDistance;
@@ -66,9 +60,8 @@ const TimeSplitsForm = ({ distance, pace }: Props) => {
       } as TimeSplit);
       totalDistance += lapDistance;
     }
-    console.log("totalDistance", totalDistance);
+
     const remainingDistance = calcLapDistance - (totalDistance - lapDistance);
-    console.log("reminder", remainingDistance);
     if (remainingDistance > 0 && timeSplits.length > 0) {
       const prevSplitTotalTime = timeSplits[timeSplits.length - 1].totalTime;
       const reminderSplitTime =

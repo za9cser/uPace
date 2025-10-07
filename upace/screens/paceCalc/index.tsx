@@ -63,55 +63,53 @@ const PaceCalc = () => {
   };
 
   return (
-    <>
-      <Formik initialValues={initialValues} onSubmit={() => {}}>
-        {({ setFieldValue, values }) => (
-          <ScrollView
-            style={styles.container}
-            keyboardShouldPersistTaps="handled"
+    <Formik initialValues={initialValues} onSubmit={() => {}}>
+      {({ setFieldValue, values }) => (
+        <ScrollView
+          style={styles.container}
+          keyboardShouldPersistTaps="handled"
+        >
+          <Text style={styles.description} variant="titleMedium">
+            Enter two values to calculate the third
+          </Text>
+          <PaceCalcInput
+            buttonCaption={"Time"}
+            onCalc={() => handleCalcTime(values, setFieldValue)}
           >
-            <Text style={styles.description} variant="titleMedium">
-              Enter two values to calculate the third
-            </Text>
-            <PaceCalcInput
-              buttonCaption={"Time"}
-              onCalc={() => handleCalcTime(values, setFieldValue)}
-            >
-              <TimeInput
-                mode={timeMode}
-                time={values.time}
-                onChange={(value) => setFieldValue("time", value)}
-                containerStyle={styles.timeInput}
-              />
-            </PaceCalcInput>
-            <PaceCalcInput
-              buttonCaption={"Pace"}
-              onCalc={() => handleCalcPace(values, setFieldValue)}
-            >
-              <TimeInput
-                mode={paceMode}
-                time={values.pace}
-                onChange={(value) => setFieldValue("pace", value)}
-                containerStyle={styles.timeInput}
-              />
-            </PaceCalcInput>
-            <PaceCalcInput
-              buttonCaption={"Distance"}
-              onCalc={() => handleCalcDistance(values, setFieldValue)}
-            >
-              <TextInput
-                value={values.distance?.toString() ?? ""}
-                placeholder="km"
-                onChangeText={(value) => setFieldValue("distance", value)}
-                keyboardType="decimal-pad"
-                style={[styles.timeInput, styles.distance]}
-              />
-            </PaceCalcInput>
-            <TimeSplits />
-          </ScrollView>
-        )}
-      </Formik>
-    </>
+            <TimeInput
+              mode={timeMode}
+              time={values.time}
+              onChange={(value) => setFieldValue("time", value)}
+              containerStyle={styles.timeInput}
+            />
+          </PaceCalcInput>
+          <PaceCalcInput
+            buttonCaption={"Pace"}
+            onCalc={() => handleCalcPace(values, setFieldValue)}
+          >
+            <TimeInput
+              mode={paceMode}
+              time={values.pace}
+              onChange={(value) => setFieldValue("pace", value)}
+              containerStyle={styles.timeInput}
+            />
+          </PaceCalcInput>
+          <PaceCalcInput
+            buttonCaption={"Distance"}
+            onCalc={() => handleCalcDistance(values, setFieldValue)}
+          >
+            <TextInput
+              value={values.distance?.toString() ?? ""}
+              placeholder="km"
+              onChangeText={(value) => setFieldValue("distance", value)}
+              keyboardType="decimal-pad"
+              style={[styles.timeInput, styles.distance]}
+            />
+          </PaceCalcInput>
+          <TimeSplits />
+        </ScrollView>
+      )}
+    </Formik>
   );
 };
 
