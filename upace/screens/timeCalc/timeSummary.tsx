@@ -32,7 +32,7 @@ const TimeSummary = ({ containerStyle }: Props) => {
   const getTime = (timeSpan: moment.Duration) => {
     if (timeSpan.asMilliseconds() === 0) return "0";
     const displayHours = timeSpan.hours() > 0;
-    const hours = `${displayHours ? `${timeSpan.hours}:` : ""}`;
+    const hours = `${displayHours ? `${timeSpan.hours()}:` : ""}`;
 
     let minutes = "";
     if (displayHours) minutes = displayTimePart(timeSpan.minutes());
