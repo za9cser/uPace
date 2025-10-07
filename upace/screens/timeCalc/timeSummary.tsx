@@ -31,20 +31,23 @@ const TimeSummary = ({ containerStyle }: Props) => {
 
   const getTime = (timeSpan: moment.Duration) => {
     if (timeSpan.asMilliseconds() === 0) return "0";
-    const displayHours = timeSpan.hours() > 0;
-    const hours = `${displayHours ? `${timeSpan.hours()}:` : ""}`;
+    const timeSpanHours = timeSpan.hours();
+    const displayHours = timeSpanHours > 0;
+    const hours = `${displayHours ? `${timeSpanHours}:` : ""}`;
 
     let minutes = "";
-    if (displayHours) minutes = displayTimePart(timeSpan.minutes());
-    else if (hasMinutes || timeSpan.minutes() > 0)
-      minutes = timeSpan.minutes().toString();
+    const timeSpanMinutes = timeSpan.minutes();
+    if (displayHours) minutes = displayTimePart(timeSpanMinutes);
+    else if (hasMinutes || timeSpanMinutes > 0)
+      minutes = timeSpanMinutes.toString();
 
     const displayMinutes = minutes !== "";
 
     let seconds = "";
-    if (hasSeconds || timeSpan.seconds() > 0 || hasDeciseconds)
+    const timeSpanSeconds = timeSpan.seconds();
+    if (hasSeconds || timeSpanSeconds > 0 || hasDeciseconds)
       seconds = `${displayMinutes ? ":" : ""}${displayTimePart(
-        timeSpan.seconds(),
+        timeSpanSeconds,
         displayMinutes
       )}`;
 
@@ -67,7 +70,7 @@ const TimeSummary = ({ containerStyle }: Props) => {
       .join(" - ");
     Clipboard.setStringAsync(result);
 
-    setFeedbackMessage("Splits and result copied");
+    setFeedbackMessage("Splits copied");
     setIsFeedbackOpen(true);
   };
 
