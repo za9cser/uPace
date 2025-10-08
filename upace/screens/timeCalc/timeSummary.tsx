@@ -92,17 +92,15 @@ const TimeSummary = ({ containerStyle }: Props) => {
   return (
     <>
       <View style={[styles.summary, containerStyle]}>
-        <View style={{ flex: 1, flexDirection: "row" }}>
-          <Button icon="content-copy" onPress={copySplits}>
-            Splits
-          </Button>
-          <Button icon="content-copy" onPress={copyResult}>
-            Result
-          </Button>
-          <Button icon="block-helper" textColor={colors.error} onPress={clear}>
-            Clear
-          </Button>
-        </View>
+        <Button icon="content-copy" onPress={copySplits}>
+          Splits
+        </Button>
+        <Button icon="content-copy" onPress={copyResult}>
+          Result
+        </Button>
+        <Button icon="block-helper" textColor={colors.error} onPress={clear}>
+          Clear
+        </Button>
         <View>
           <Text style={[styles.text, { color: colors.primary }]}>
             {totalTime.toString()}
