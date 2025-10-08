@@ -4,22 +4,20 @@
     "slug": "upace",
     "version": "1.3.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "cover",
-      "backgroundColor": "#000"
-    },
-    "assetBundlePatterns": ["**/*"],
+    "icon": "./assets/icon-origin.png",
+    "scheme": "upace",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
     "ios": {
       "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#000"
+        "backgroundColor": "#000000",
+        "foregroundImage": "./assets/images/android-upace-icon-foreground.png"
       },
+      "edgeToEdgeEnabled": true,
+      "predictiveBackGestureEnabled": false,
       "package": "com.za9cser.upaceapp",
       "versionCode": 12
     },
@@ -31,6 +29,7 @@
         "projectId": "2a850d7f-7982-4092-a4d4-54fafeb9f961"
       }
     },
-    "owner": "za9cser"
+    "owner": "za9cser",
+    "plugins": ["expo-font"]
   }
 }

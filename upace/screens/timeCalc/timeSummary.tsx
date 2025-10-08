@@ -91,22 +91,32 @@ const TimeSummary = ({ containerStyle }: Props) => {
 
   return (
     <>
-      <View style={[styles.summary, containerStyle]}>
-        <View style={{ flex: 1, flexDirection: "row" }}>
-          <Button icon="content-copy" onPress={copySplits}>
-            Splits
-          </Button>
-          <Button icon="content-copy" onPress={copyResult}>
-            Result
-          </Button>
-          <Button icon="block-helper" textColor={colors.error} onPress={clear}>
-            Clear
-          </Button>
-        </View>
+      <View style={containerStyle}>
         <View>
-          <Text style={[styles.text, { color: colors.primary }]}>
+          <Text style={[styles.text, { color: colors.primary, flex: 3 }]}>
             {totalTime.toString()}
           </Text>
+        </View>
+        <View style={styles.summary}>
+          <Button
+            icon="content-copy"
+            contentStyle={{ paddingHorizontal: 0 }}
+            onPress={copySplits}
+            style={{ flex: 1 }}
+          >
+            Splits
+          </Button>
+          <Button icon="content-copy" onPress={copyResult} style={{ flex: 1 }}>
+            Result
+          </Button>
+          <Button
+            icon="block-helper"
+            textColor={colors.error}
+            onPress={clear}
+            style={{ flex: 1 }}
+          >
+            Clear
+          </Button>
         </View>
       </View>
 
@@ -130,8 +140,7 @@ const styles = StyleSheet.create({
   summary: {
     flex: 1,
     flexDirection: "row",
-    alignItems: "center",
   },
   buttons: { flex: 1, flexDirection: "row" },
-  text: { textAlign: "right", fontWeight: "600", fontSize: 20 },
+  text: { textAlign: "center", fontWeight: "600", fontSize: 24 },
 });

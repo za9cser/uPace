@@ -121,8 +121,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   summary: {
-    flexDirection: "row",
-    justifyContent: "space-around",
     paddingHorizontal: 8,
     paddingBottom: 25,
     borderTopColor: "#ccc",
