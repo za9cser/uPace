@@ -1,4 +1,3 @@
 *.apk
 *.aab
-
-/uPaceNew
+node_modules/
