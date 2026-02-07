@@ -1,7 +1,7 @@
-import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import { TextInput, Text } from 'react-native-paper';
-import { useCustomTheme } from '../theme/ThemeContext';
+import React from "react";
+import { View, StyleSheet } from "react-native";
+import { TextInput, Text } from "react-native-paper";
+import { useCustomTheme } from "../theme/ThemeContext";
 
 interface TimeInputProps {
   label: string;
@@ -30,9 +30,6 @@ export const TimeInput: React.FC<TimeInputProps> = ({
 
   return (
     <View style={styles.container}>
-      <Text variant="labelSmall" style={{ color: theme.colors.textSecondary, marginBottom: 4 }}>
-        {label}
-      </Text>
       <TextInput
         value={value.toString()}
         onChangeText={handleChange}
@@ -45,7 +42,10 @@ export const TimeInput: React.FC<TimeInputProps> = ({
         selectTextOnFocus
       />
       {error && (
-        <Text variant="labelSmall" style={{ color: theme.colors.error, marginTop: 4 }}>
+        <Text
+          variant="labelSmall"
+          style={{ color: theme.colors.error, marginTop: 4 }}
+        >
           {error}
         </Text>
       )}
@@ -55,17 +55,17 @@ export const TimeInput: React.FC<TimeInputProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: 'center',
+    alignItems: "center",
     flex: 1,
   },
   input: {
     width: 60,
     height: 50,
-    textAlign: 'center',
+    textAlign: "center",
   },
   inputContent: {
-    textAlign: 'center',
+    textAlign: "center",
     fontSize: 18,
-    fontWeight: '600',
+    fontWeight: "600",
   },
 });

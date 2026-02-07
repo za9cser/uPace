@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { View, ScrollView, StyleSheet } from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, ScrollView, StyleSheet, Animated } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
   Card,
@@ -8,9 +8,11 @@ import {
   IconButton,
   useTheme,
   Snackbar,
+  TouchableRipple,
 } from "react-native-paper";
 import { Formik } from "formik";
 import * as Clipboard from "expo-clipboard";
+import { LinearGradient } from "expo-linear-gradient";
 import { ScreenHeader } from "../../components/ScreenHeader";
 import { TimeInput } from "../../components/TimeInput";
 import { useCustomTheme } from "../../theme/ThemeContext";
@@ -36,6 +38,15 @@ export default function TimeCalculatorScreen() {
     message: "",
     type: "info" as "info" | "success" | "warning" | "error",
   });
+  const [fadeAnim] = useState(new Animated.Value(0));
+
+  useEffect(() => {
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 500,
+      useNativeDriver: true,
+    }).start();
+  }, []);
 
   const showSnackbar = (
     message: string,
@@ -142,19 +153,23 @@ export default function TimeCalculatorScreen() {
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
-        <ScreenHeader
-          title="Time Calculator"
-          subtitle="Add time splits and calculate their sum"
-        />
+        <Animated.View style={{ opacity: fadeAnim, gap: 16 }}>
+          <ScreenHeader
+            title="Time Calculator"
+            subtitle="Add time splits and calculate their sum"
+          />
 
-        {/* Summary Options */}
-        <Card style={styles.card}>
-          <Card.Content>
+          {/* Summary Options */}
+          <View style={styles.sectionContainer}>
             <Text
-              variant="titleMedium"
-              style={{ color: theme.colors.text, marginBottom: 12 }}
+              variant="labelMedium"
+              style={{
+                color: theme.colors.textSecondary,
+                marginBottom: 8,
+                marginLeft: 4,
+              }}
             >
-              Include in Summary
+              INCLUDE IN SUMMARY
             </Text>
             <View style={styles.optionsRow}>
               {(
@@ -166,146 +181,194 @@ export default function TimeCalculatorScreen() {
               ).map((option) => (
                 <Button
                   key={option}
-                  mode={summaryOptions[option] ? "contained" : "outlined"}
+                  mode={summaryOptions[option] ? "contained" : "text"}
                   onPress={() => toggleOption(option)}
-                  style={styles.optionButton}
+                  style={[
+                    styles.optionButton,
+                    summaryOptions[option] && {
+                      backgroundColor: "white",
+                      elevation: 2,
+                    },
+                  ]}
                   contentStyle={styles.optionButtonContent}
-                  labelStyle={{ fontSize: 12, marginHorizontal: 8 }}
+                  labelStyle={{
+                    fontSize: 12,
+                    marginHorizontal: 0,
+                    fontWeight: "600",
+                    color: summaryOptions[option]
+                      ? theme.colors.primary
+                      : theme.colors.textSecondary,
+                  }}
                   compact
                 >
                   {option
                     .replace("include", "")
-                    .replace("Minutes", "Min")
-                    .replace("Seconds", "Sec")
-                    .replace("Deciseconds", "Dec")}
+                    .replace("Minutes", "MIN")
+                    .replace("Seconds", "SEC")
+                    .replace("Deciseconds", "DEC")}
                 </Button>
               ))}
             </View>
-          </Card.Content>
-        </Card>
-
-        {/* Result Display */}
-        <Card style={[styles.card, { backgroundColor: theme.colors.primary }]}>
-          <Card.Content style={styles.resultContent}>
-            <Text
-              variant="labelLarge"
-              style={{ color: "white", opacity: 0.9, marginBottom: 8 }}
-            >
-              Total Time
-            </Text>
-            <Text
-              variant="displayLarge"
-              style={{ color: "white", fontWeight: "bold" }}
-            >
-              {formatResult()}
-            </Text>
-          </Card.Content>
-        </Card>
-
-        {/* Add Split Form */}
-        <Card style={styles.card}>
-          <Card.Content style={styles.addSplitContent}>
-            <Formik
-              initialValues={{ minutes: 0, seconds: 0, deciseconds: 0 }}
-              onSubmit={addSplit}
-            >
-              {({ handleSubmit, values, setFieldValue }) => (
-                <View style={styles.addSplitForm}>
-                  <View style={styles.inputRow}>
-                    <TimeInput
-                      label="Min"
-                      value={values.minutes}
-                      onChange={(value) => setFieldValue("minutes", value)}
-                      max={99}
-                    />
-                    <TimeInput
-                      label="Sec"
-                      value={values.seconds}
-                      onChange={(value) => setFieldValue("seconds", value)}
-                      max={59}
-                    />
-                    <TimeInput
-                      label="Dec"
-                      value={values.deciseconds}
-                      onChange={(value) => setFieldValue("deciseconds", value)}
-                      max={9}
-                    />
-                  </View>
-                  <Button
-                    mode="contained"
-                    onPress={() => handleSubmit()}
-                    style={styles.addButton}
-                    contentStyle={styles.addButtonContent}
-                  >
-                    Add
-                  </Button>
-                </View>
-              )}
-            </Formik>
-          </Card.Content>
-        </Card>
-
-        {/* Splits List */}
-        {splits.length > 0 && (
-          <View style={styles.splitsContainer}>
-            {splits.map((split, index) => (
-              <Card key={split.id} style={styles.card}>
-                <Card.Content style={styles.splitContent}>
-                  <View style={styles.splitInfo}>
-                    <Text
-                      variant="titleMedium"
-                      style={{ color: theme.colors.primary }}
-                    >
-                      #{index + 1}
-                    </Text>
-                    <Text
-                      variant="headlineSmall"
-                      style={{ color: theme.colors.text }}
-                    >
-                      {split.minutes.toString().padStart(2, "0")}:
-                      {split.seconds.toString().padStart(2, "0")}.
-                      {split.deciseconds}
-                    </Text>
-                  </View>
-                  <IconButton
-                    icon="delete"
-                    size={20}
-                    onPress={() => removeSplit(split.id)}
-                  />
-                </Card.Content>
-              </Card>
-            ))}
           </View>
-        )}
 
-        {/* Action Buttons */}
-        <View style={styles.actionButtons}>
-          <Button
-            mode="outlined"
-            onPress={copySplitsToClipboard}
-            disabled={splits.length === 0}
-            style={styles.actionButton}
-          >
-            Copy Splits
-          </Button>
-          <Button
-            mode="outlined"
-            onPress={copyResultToClipboard}
-            disabled={splits.length === 0}
-            style={styles.actionButton}
-          >
-            Copy Result
-          </Button>
-          <Button
-            mode="outlined"
-            onPress={clearAll}
-            disabled={splits.length === 0}
-            textColor={theme.colors.error}
-            style={styles.actionButton}
-          >
-            Clear All
-          </Button>
-        </View>
+          {/* Result Display */}
+          <Card style={[styles.card, styles.totalCard]}>
+            <LinearGradient
+              colors={[theme.colors.primary, theme.colors.primaryDark]}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 1 }}
+              style={styles.totalGradient}
+            >
+              <Card.Content style={styles.resultContent}>
+                <Text
+                  variant="labelLarge"
+                  style={{
+                    color: "rgba(255,255,255,0.9)",
+                    marginBottom: 4,
+                    letterSpacing: 1.5,
+                    fontSize: 13,
+                  }}
+                >
+                  TOTAL TIME
+                </Text>
+                <Text
+                  variant="displayLarge"
+                  style={{
+                    color: "white",
+                    fontWeight: "800",
+                    letterSpacing: 1,
+                  }}
+                >
+                  {formatResult()}
+                </Text>
+                <View style={styles.totalActions}>
+                  <IconButton
+                    icon="content-copy"
+                    iconColor="white"
+                    size={20}
+                    onPress={copyResultToClipboard}
+                    style={styles.totalActionIcon}
+                  />
+                  <IconButton
+                    icon="refresh"
+                    iconColor="white"
+                    size={20}
+                    onPress={clearAll}
+                    style={styles.totalActionIcon}
+                  />
+                </View>
+              </Card.Content>
+            </LinearGradient>
+          </Card>
+
+          {/* Add Split Form */}
+          <Card style={styles.card}>
+            <Card.Content style={styles.addSplitContent}>
+              <Formik
+                initialValues={{ minutes: 0, seconds: 0, deciseconds: 0 }}
+                onSubmit={addSplit}
+              >
+                {({ handleSubmit, values, setFieldValue }) => (
+                  <View style={styles.addSplitForm}>
+                    <View style={styles.inputRow}>
+                      <TimeInput
+                        label="MIN"
+                        value={values.minutes}
+                        onChange={(value) => setFieldValue("minutes", value)}
+                        max={99}
+                      />
+                      <TimeInput
+                        label="SEC"
+                        value={values.seconds}
+                        onChange={(value) => setFieldValue("seconds", value)}
+                        max={59}
+                      />
+                      <TimeInput
+                        label="DEC"
+                        value={values.deciseconds}
+                        onChange={(value) =>
+                          setFieldValue("deciseconds", value)
+                        }
+                        max={9}
+                      />
+                    </View>
+                    <Button
+                      mode="contained"
+                      onPress={() => handleSubmit()}
+                      style={styles.addButton}
+                      contentStyle={styles.addButtonContent}
+                      labelStyle={{ fontSize: 16, fontWeight: "600" }}
+                    >
+                      Add
+                    </Button>
+                  </View>
+                )}
+              </Formik>
+            </Card.Content>
+          </Card>
+
+          {/* Splits List */}
+          {splits.length > 0 && (
+            <View style={styles.splitsContainer}>
+              {splits.map((split, index) => (
+                <Card key={split.id} style={styles.card}>
+                  <Card.Content style={styles.splitContent}>
+                    <View style={styles.splitInfo}>
+                      <Text
+                        variant="titleMedium"
+                        style={{ color: theme.colors.primary }}
+                      >
+                        #{index + 1}
+                      </Text>
+                      <Text
+                        variant="headlineSmall"
+                        style={{ color: theme.colors.text }}
+                      >
+                        {split.minutes.toString().padStart(2, "0")}:
+                        {split.seconds.toString().padStart(2, "0")}.
+                        {split.deciseconds}
+                      </Text>
+                    </View>
+                    <IconButton
+                      icon="delete"
+                      size={20}
+                      onPress={() => removeSplit(split.id)}
+                    />
+                  </Card.Content>
+                </Card>
+              ))}
+            </View>
+          )}
+
+          {/* Action Buttons */}
+          <View style={styles.actionButtons}>
+            <Button
+              mode="outlined"
+              onPress={copySplitsToClipboard}
+              disabled={splits.length === 0}
+              style={styles.actionButton}
+            >
+              Copy Splits
+            </Button>
+            <Button
+              mode="outlined"
+              onPress={copyResultToClipboard}
+              disabled={splits.length === 0}
+              style={styles.actionButton}
+            >
+              Copy Result
+            </Button>
+            <Button
+              mode="outlined"
+              onPress={clearAll}
+              disabled={splits.length === 0}
+              textColor={theme.colors.error}
+              style={styles.actionButton}
+            >
+              Clear All
+            </Button>
+          </View>
+        </Animated.View>
       </ScrollView>
 
       <Snackbar
@@ -327,29 +390,65 @@ const styles = StyleSheet.create({
   scrollContent: {
     padding: 16,
     paddingBottom: 32,
+    gap: 16,
+  },
+  sectionContainer: {
+    marginBottom: 8,
   },
   card: {
-    marginBottom: 16,
-    borderRadius: 12,
+    borderRadius: 16,
+    backgroundColor: "white",
+    borderWidth: 1,
+    borderColor: "rgba(0,0,0,0.08)",
+  },
+  totalCard: {
+    elevation: 8,
+    shadowColor: "#FF6B35",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 12,
+    borderRadius: 24,
+    overflow: "hidden",
+    borderWidth: 0,
+  },
+  totalGradient: {
+    padding: 0,
+  },
+  resultContent: {
+    alignItems: "center",
+    paddingVertical: 32,
+    paddingHorizontal: 24,
+  },
+  totalActions: {
+    flexDirection: "row",
+    position: "absolute",
+    right: 8,
+    top: 8,
+  },
+  totalActionIcon: {
+    margin: 0,
+    backgroundColor: "rgba(255,255,255,0.15)",
   },
   optionsRow: {
     flexDirection: "row",
     gap: 8,
+    backgroundColor: "rgba(0,0,0,0.03)",
+    padding: 4,
+    borderRadius: 12,
   },
   optionButton: {
     flex: 1,
     marginRight: 0,
     marginBottom: 0,
+    borderRadius: 8,
+    borderWidth: 0,
   },
   optionButtonContent: {
     height: 36,
   },
-  resultContent: {
-    alignItems: "center",
-    paddingVertical: 24,
-  },
   addSplitContent: {
-    paddingVertical: 8,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
   },
   addSplitForm: {
     flexDirection: "row",
@@ -359,26 +458,28 @@ const styles = StyleSheet.create({
   inputRow: {
     flex: 1,
     flexDirection: "row",
-    justifyContent: "space-around",
-    gap: 8,
+    justifyContent: "space-between",
+    gap: 12,
   },
   addButton: {
     marginBottom: 0,
     marginRight: 0,
-    borderRadius: 8,
+    borderRadius: 12,
+    elevation: 2,
   },
   addButtonContent: {
-    height: 50,
+    height: 52,
+    paddingHorizontal: 8,
   },
   splitsContainer: {
-    marginBottom: 16,
     gap: 8,
   },
   splitContent: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingVertical: 4,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
   },
   splitInfo: {
     flexDirection: "row",
@@ -386,7 +487,7 @@ const styles = StyleSheet.create({
     gap: 16,
   },
   actionButtons: {
-    gap: 12,
+    display: "none",
   },
   actionButton: {
     marginBottom: 8,
