@@ -276,12 +276,14 @@ export default function TimeCalculatorScreen() {
                         value={values.minutes}
                         onChange={(value) => setFieldValue("minutes", value)}
                         max={99}
+                        placeholder="mm"
                       />
                       <TimeInput
                         label="SEC"
                         value={values.seconds}
                         onChange={(value) => setFieldValue("seconds", value)}
                         max={59}
+                        placeholder="ss"
                       />
                       <TimeInput
                         label="DEC"
@@ -290,6 +292,7 @@ export default function TimeCalculatorScreen() {
                           setFieldValue("deciseconds", value)
                         }
                         max={9}
+                        placeholder="d"
                       />
                     </View>
                     <Button

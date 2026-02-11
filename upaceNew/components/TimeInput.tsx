@@ -10,6 +10,7 @@ interface TimeInputProps {
   max?: number;
   min?: number;
   error?: string;
+  placeholder?: string;
 }
 
 export const TimeInput: React.FC<TimeInputProps> = ({
@@ -19,6 +20,7 @@ export const TimeInput: React.FC<TimeInputProps> = ({
   max = 99,
   min = 0,
   error,
+  placeholder,
 }) => {
   const theme = useCustomTheme();
 
@@ -30,12 +32,14 @@ export const TimeInput: React.FC<TimeInputProps> = ({
 
   return (
     <View style={styles.container}>
+      <Text style={styles.label}>{label}</Text>
       <TextInput
-        value={value.toString()}
+        value={value === 0 ? "" : value.toString()}
         onChangeText={handleChange}
         keyboardType="numeric"
         maxLength={2}
         mode="outlined"
+        placeholder={placeholder}
         style={styles.input}
         contentStyle={styles.inputContent}
         error={!!error}
@@ -57,6 +61,11 @@ const styles = StyleSheet.create({
   container: {
     alignItems: "center",
     flex: 1,
+  },
+  label: {
+    marginBottom: 4,
+    fontSize: 12,
+    fontWeight: "500",
   },
   input: {
     width: 60,
