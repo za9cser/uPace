@@ -1,4 +1,3 @@
-import React from "react";
 import { View, StyleSheet, Keyboard } from "react-native";
 import { Card, Button } from "react-native-paper";
 import { TimeInput } from "../TimeInput";

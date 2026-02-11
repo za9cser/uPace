@@ -1,10 +1,15 @@
-import React from "react";
 import { View, StyleSheet } from "react-native";
 import { Text, Button } from "react-native-paper";
 import { useCustomTheme } from "@/theme/ThemeContext";
 import { SummaryOptions } from "@/types";
 import { useFormikContext } from "formik";
 import { TimeCalcFormValues } from "@/lib/timeCalc/types/TimeCalcFormValues";
+
+const SUMMARY_OPTIONS = [
+  { key: "includeMinutes", label: "MIN" },
+  { key: "includeSeconds", label: "SEC" },
+  { key: "includeDeciseconds", label: "DEC" },
+] as const;
 
 export const SummaryOptionsComponent = () => {
   const theme = useCustomTheme();
@@ -36,18 +41,16 @@ export const SummaryOptionsComponent = () => {
           { backgroundColor: theme.colors.inputBackground },
         ]}
       >
-        {(
-          ["includeMinutes", "includeSeconds", "includeDeciseconds"] as const
-        ).map((option) => {
-          const selected = summaryOptions[option];
+        {SUMMARY_OPTIONS.map((option) => {
+          const enabled = summaryOptions[option.key];
           return (
             <Button
-              key={option}
-              mode={selected ? "contained" : "outlined"}
-              onPress={() => toggleOption(option)}
+              key={option.key}
+              mode={enabled ? "contained" : "outlined"}
+              onPress={() => toggleOption(option.key)}
               style={[
                 styles.optionButton,
-                selected && {
+                enabled && {
                   backgroundColor: theme.colors.card,
                   elevation: 2,
                 },
@@ -57,17 +60,13 @@ export const SummaryOptionsComponent = () => {
                 fontSize: 12,
                 marginHorizontal: 0,
                 fontWeight: "600",
-                color: selected
+                color: enabled
                   ? theme.colors.primary
                   : theme.colors.textSecondary,
               }}
               compact
             >
-              {option
-                .replace("include", "")
-                .replace("Minutes", "MIN")
-                .replace("Seconds", "SEC")
-                .replace("Deciseconds", "DEC")}
+              {option.label}
             </Button>
           );
         })}
