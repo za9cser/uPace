@@ -1,19 +1,17 @@
 import { useState, useEffect } from "react";
 import { ScrollView, StyleSheet, Animated } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Formik, FieldArray } from "formik";
+import { Formik } from "formik";
 import { ScreenHeader } from "@/components/ScreenHeader";
 import { useCustomTheme } from "@/theme/ThemeContext";
-import { TimeSplit } from "@/types";
 import SummaryOptionsComponent from "@/components/timeCalc/SummaryOptions";
 import TotalTimeComponent from "@/components/timeCalc/TotalTime";
 import NewSplitComponent from "@/components/timeCalc/NewSplit";
 import SplitListComponent from "@/components/timeCalc/SplitList";
-import { useSnackbar } from "@/context/SnackbarContext";
 
 export default function TimeCalculatorScreen() {
   const theme = useCustomTheme();
-  const { showSnackbar } = useSnackbar();
+
   const [fadeAnim] = useState(new Animated.Value(0));
 
   useEffect(() => {
@@ -23,9 +21,6 @@ export default function TimeCalculatorScreen() {
       useNativeDriver: true,
     }).start();
   }, []);
-
-  const handleAddSplit = () =>
-    showSnackbar("Split added successfully", "success");
 
   return (
     <SafeAreaView
@@ -55,37 +50,17 @@ export default function TimeCalculatorScreen() {
                 includeDeciseconds: true,
               },
             }}
-            onSubmit={handleAddSplit}
+            onSubmit={() => {}}
           >
-            {({ values, setFieldValue }) => (
-              <FieldArray
-                name="splits"
-                render={({ push }) => (
-                  <>
-                    <SummaryOptionsComponent />
+            <>
+              <SummaryOptionsComponent />
 
-                    <TotalTimeComponent />
+              <TotalTimeComponent />
 
-                    <NewSplitComponent
-                      onAddSplit={() => {
-                        const newSplit: TimeSplit = {
-                          id: Date.now().toString(),
-                          minutes: values.minutes,
-                          seconds: values.seconds,
-                          deciseconds: values.deciseconds,
-                        };
-                        push(newSplit);
-                        setFieldValue("minutes", 0);
-                        setFieldValue("seconds", 0);
-                        setFieldValue("deciseconds", 0);
-                      }}
-                    />
+              <NewSplitComponent />
 
-                    <SplitListComponent />
-                  </>
-                )}
-              />
-            )}
+              <SplitListComponent />
+            </>
           </Formik>
         </Animated.View>
       </ScrollView>

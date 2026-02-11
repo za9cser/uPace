@@ -15,7 +15,7 @@ const SplitListComponent = () => {
   return (
     <FieldArray
       name="splits"
-      render={(arrayHelpers) => (
+      render={({ remove }) => (
         <View style={styles.splitsContainer}>
           {splits.map((split, index) => (
             <Card
@@ -48,7 +48,7 @@ const SplitListComponent = () => {
                 <IconButton
                   icon="delete"
                   size={20}
-                  onPress={() => arrayHelpers.remove(index)}
+                  onPress={() => remove(index)}
                 />
               </Card.Content>
             </Card>
