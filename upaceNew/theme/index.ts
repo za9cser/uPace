@@ -146,8 +146,9 @@ const fontConfig = {
 };
 
 export const getTheme = (colorMode: ColorMode): MD3Theme => {
-  const colors = colorMode === "dark" ? darkColors : lightColors;
-  const baseTheme = colorMode === "dark" ? MD3DarkTheme : MD3LightTheme;
+  const isDark = colorMode === "dark";
+  const colors = isDark ? darkColors : lightColors;
+  const baseTheme = isDark ? MD3DarkTheme : MD3LightTheme;
 
   return {
     ...baseTheme,

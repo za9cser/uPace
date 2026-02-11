@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { View, ScrollView, StyleSheet, Animated } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
@@ -8,7 +8,6 @@ import {
   IconButton,
   useTheme,
   Snackbar,
-  TouchableRipple,
 } from "react-native-paper";
 import { Formik } from "formik";
 import * as Clipboard from "expo-clipboard";
@@ -66,9 +65,8 @@ export default function TimeCalculatorScreen() {
     resetForm();
   };
 
-  const removeSplit = (id: string) => {
+  const removeSplit = (id: string) =>
     setSplits(splits.filter((split) => split.id !== id));
-  };
 
   const calculateTotal = (): {
     minutes: number;
@@ -105,32 +103,13 @@ export default function TimeCalculatorScreen() {
       .padStart(2, "0")}.${deciseconds}`;
   };
 
-  const copySplitsToClipboard = async () => {
-    if (splits.length === 0) {
-      showSnackbar("Add some splits first", "warning");
-      return;
-    }
-
-    const splitsText = splits
-      .map(
-        (split, index) =>
-          `Split ${index + 1}: ${split.minutes}m ${split.seconds}s ${
-            split.deciseconds
-          }d`
-      )
-      .join("\n");
-
-    await Clipboard.setStringAsync(splitsText);
-    showSnackbar("Splits copied to clipboard", "success");
-  };
-
   const copyResultToClipboard = async () => {
     const result = formatResult();
     await Clipboard.setStringAsync(result);
     showSnackbar("Result copied to clipboard", "success");
   };
 
-  const copySplitsWithSummaryOptions = async () => {
+  const copySplitsToClipboard = async () => {
     if (splits.length === 0) {
       showSnackbar("Add some splits first", "warning");
       return;
@@ -158,7 +137,7 @@ export default function TimeCalculatorScreen() {
             summaryOptions.includeMinutes &&
             summaryOptions.includeDeciseconds
           ) {
-            return `${parts[0]}.${parts[1]}`;
+            return `${parts[0]}:00.${parts[1]}`;
           } else {
             return `${parts[0]}.${parts[1]}`;
           }
@@ -186,8 +165,6 @@ export default function TimeCalculatorScreen() {
     });
   };
 
-  const total = calculateTotal();
-  console.log("paperTheme", paperTheme);
   return (
     <SafeAreaView
       style={[styles.container, { backgroundColor: theme.colors.background }]}
@@ -311,7 +288,7 @@ export default function TimeCalculatorScreen() {
                     icon="file-document-outline"
                     iconColor="white"
                     size={20}
-                    onPress={copySplitsWithSummaryOptions}
+                    onPress={copySplitsToClipboard}
                     style={styles.totalActionIcon}
                   />
                   <IconButton

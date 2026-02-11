@@ -7,7 +7,6 @@ import { getTheme } from "../theme";
 
 function AppContent() {
   const { colorMode } = useAppTheme();
-  const theme = getTheme(colorMode);
 
   return (
     <>

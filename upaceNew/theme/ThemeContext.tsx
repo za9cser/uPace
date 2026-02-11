@@ -1,6 +1,6 @@
-import React, { createContext, useContext, useState } from 'react';
-import { useTheme as usePaperTheme } from 'react-native-paper';
-import { ColorMode, customColors, spacing } from './index';
+import React, { createContext, useContext, useState } from "react";
+import { useTheme as usePaperTheme } from "react-native-paper";
+import { ColorMode, customColors, spacing } from "./index";
 
 interface ThemeContextType {
   colorMode: ColorMode;
@@ -10,22 +10,21 @@ interface ThemeContextType {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-export const ThemeProvider: React.FC<{ children: React.ReactNode; initialMode?: ColorMode }> = ({
-  children,
-  initialMode = 'light',
-}) => {
+export const ThemeProvider: React.FC<{
+  children: React.ReactNode;
+  initialMode?: ColorMode;
+}> = ({ children, initialMode = "light" }) => {
   const [currentMode, setCurrentMode] = useState<ColorMode>(initialMode);
 
-  const toggleColorMode = () => {
-    setCurrentMode((prev) => (prev === 'light' ? 'dark' : 'light'));
-  };
+  const toggleColorMode = () =>
+    setCurrentMode((prev) => (prev === "light" ? "dark" : "light"));
 
-  const setColorMode = (mode: ColorMode) => {
-    setCurrentMode(mode);
-  };
+  const setColorMode = (mode: ColorMode) => setCurrentMode(mode);
 
   return (
-    <ThemeContext.Provider value={{ colorMode: currentMode, toggleColorMode, setColorMode }}>
+    <ThemeContext.Provider
+      value={{ colorMode: currentMode, toggleColorMode, setColorMode }}
+    >
       {children}
     </ThemeContext.Provider>
   );
@@ -34,7 +33,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode; initialMode?: 
 export const useAppTheme = () => {
   const context = useContext(ThemeContext);
   if (!context) {
-    throw new Error('useAppTheme must be used within ThemeProvider');
+    throw new Error("useAppTheme must be used within ThemeProvider");
   }
   return context;
 };
