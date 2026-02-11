@@ -13,7 +13,7 @@ import {
 import { TimeCalcFormValues } from "@/lib/timeCalc/types/TimeCalcFormValues";
 import { useSnackbar } from "@/context/SnackbarContext";
 
-export const TotalTimeComponent = () => {
+const TotalTimeComponent = () => {
   const theme = useCustomTheme();
   const { values, setFieldValue } = useFormikContext<TimeCalcFormValues>();
   const { showSnackbar } = useSnackbar();
@@ -106,6 +106,8 @@ export const TotalTimeComponent = () => {
     </Card>
   );
 };
+
+export default TotalTimeComponent;
 
 const styles = StyleSheet.create({
   card: {

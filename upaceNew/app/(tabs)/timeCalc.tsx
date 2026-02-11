@@ -5,10 +5,10 @@ import { Formik, FieldArray } from "formik";
 import { ScreenHeader } from "@/components/ScreenHeader";
 import { useCustomTheme } from "@/theme/ThemeContext";
 import { TimeSplit } from "@/types";
-import { SummaryOptionsComponent } from "@/components/timeCalc/SummaryOptions";
-import { TotalTimeComponent } from "@/components/timeCalc/TotalTime";
-import { NewSplitComponent } from "@/components/timeCalc/NewSplit";
-import { SplitsListComponent } from "@/components/timeCalc/SplitsList";
+import SummaryOptionsComponent from "@/components/timeCalc/SummaryOptions";
+import TotalTimeComponent from "@/components/timeCalc/TotalTime";
+import NewSplitComponent from "@/components/timeCalc/NewSplit";
+import SplitListComponent from "@/components/timeCalc/SplitList";
 import { useSnackbar } from "@/context/SnackbarContext";
 
 export default function TimeCalculatorScreen() {
@@ -81,7 +81,7 @@ export default function TimeCalculatorScreen() {
                       }}
                     />
 
-                    <SplitsListComponent />
+                    <SplitListComponent />
                   </>
                 )}
               />

@@ -5,7 +5,7 @@ import { useFormikContext } from "formik";
 import { FieldArray } from "formik";
 import { TimeCalcFormValues } from "@/lib/timeCalc/types/TimeCalcFormValues";
 
-export const SplitsListComponent = () => {
+const SplitListComponent = () => {
   const theme = useCustomTheme();
   const { values } = useFormikContext<TimeCalcFormValues>();
   const splits = values.splits;
@@ -58,6 +58,8 @@ export const SplitsListComponent = () => {
     />
   );
 };
+
+export default SplitListComponent;
 
 const styles = StyleSheet.create({
   splitsContainer: {

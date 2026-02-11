@@ -9,7 +9,7 @@ interface NewSplitProps {
   onAddSplit: () => void;
 }
 
-export const NewSplitComponent = ({ onAddSplit }: NewSplitProps) => {
+const NewSplitComponent = ({ onAddSplit }: NewSplitProps) => {
   const theme = useCustomTheme();
   const { values, setFieldValue } = useFormikContext<TimeCalcFormValues>();
 
@@ -68,6 +68,8 @@ export const NewSplitComponent = ({ onAddSplit }: NewSplitProps) => {
     </Card>
   );
 };
+
+export default NewSplitComponent;
 
 const styles = StyleSheet.create({
   card: {

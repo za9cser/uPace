@@ -12,7 +12,7 @@ import {
 import * as Clipboard from "expo-clipboard";
 import { ScreenHeader } from "../../components/ScreenHeader";
 import { useCustomTheme } from "../../theme/ThemeContext";
-import { PaceInputs, LapSplit, LapDistance } from "../../types";
+import { LapSplit, LapDistance } from "../../types";
 import { useSnackbar } from "../../context/SnackbarContext";
 
 interface PaceFormValues {

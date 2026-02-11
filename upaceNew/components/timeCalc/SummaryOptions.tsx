@@ -11,7 +11,7 @@ const SUMMARY_OPTIONS = [
   { key: "includeDeciseconds", label: "DEC" },
 ] as const;
 
-export const SummaryOptionsComponent = () => {
+const SummaryOptionsComponent = () => {
   const theme = useCustomTheme();
   const { values, setFieldValue } = useFormikContext<TimeCalcFormValues>();
   const summaryOptions = values.summaryOptions;
@@ -74,6 +74,8 @@ export const SummaryOptionsComponent = () => {
     </View>
   );
 };
+
+export default SummaryOptionsComponent;
 
 const styles = StyleSheet.create({
   sectionContainer: {
