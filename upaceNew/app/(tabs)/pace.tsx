@@ -8,13 +8,12 @@ import {
   Button,
   IconButton,
   DataTable,
-  useTheme,
-  Snackbar,
 } from "react-native-paper";
 import * as Clipboard from "expo-clipboard";
 import { ScreenHeader } from "../../components/ScreenHeader";
 import { useCustomTheme } from "../../theme/ThemeContext";
 import { PaceInputs, LapSplit, LapDistance } from "../../types";
+import { useSnackbar } from "../../context/SnackbarContext";
 
 interface PaceFormValues {
   time: string;
@@ -24,7 +23,7 @@ interface PaceFormValues {
 
 export default function PaceCalculatorScreen() {
   const theme = useCustomTheme();
-  const paperTheme = useTheme();
+  const { showSnackbar } = useSnackbar();
   const [lapDistances, setLapDistances] = useState<LapDistance[]>([
     { id: "1", value: "" },
   ]);
@@ -34,18 +33,6 @@ export default function PaceCalculatorScreen() {
     pace: "",
     distance: "",
   });
-  const [snackbar, setSnackbar] = useState({
-    visible: false,
-    message: "",
-    type: "info" as "info" | "success" | "warning" | "error",
-  });
-
-  const showSnackbar = (
-    message: string,
-    type: "info" | "success" | "warning" | "error" = "info"
-  ) => {
-    setSnackbar({ visible: true, message, type });
-  };
 
   const parseTime = (timeStr: string): number => {
     const parts = timeStr.split(":").map(Number);
@@ -382,15 +369,6 @@ export default function PaceCalculatorScreen() {
           </Card>
         )}
       </ScrollView>
-
-      <Snackbar
-        visible={snackbar.visible}
-        onDismiss={() => setSnackbar({ ...snackbar, visible: false })}
-        duration={3000}
-        theme={paperTheme}
-      >
-        {snackbar.message}
-      </Snackbar>
     </SafeAreaView>
   );
 }

@@ -11,19 +11,12 @@ import {
   copySplitsToClipboard,
   clearAll,
 } from "../services/timeCalcHandlers";
+import { useSnackbar } from "../../../../context/SnackbarContext";
 
-interface TotalTimeProps {
-  showSnackbar: (
-    message: string,
-    type?: "info" | "success" | "warning" | "error"
-  ) => void;
-}
-
-export const TotalTimeComponent: React.FC<TotalTimeProps> = ({
-  showSnackbar,
-}) => {
+export const TotalTimeComponent: React.FC = () => {
   const theme = useCustomTheme();
   const { values, setFieldValue } = useFormikContext<TimeCalcFormValues>();
+  const { showSnackbar } = useSnackbar();
 
   const handleCopyResult = async () => {
     await copyResultToClipboard(values);

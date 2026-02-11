@@ -1,40 +1,26 @@
-import { Stack } from "expo-router";
-import { StatusBar } from "expo-status-bar";
-import { PaperProvider } from "react-native-paper";
-import { SafeAreaProvider } from "react-native-safe-area-context";
-import { ThemeProvider, useAppTheme } from "../theme/ThemeContext";
-import { getTheme } from "../theme";
-
-function AppContent() {
-  const { colorMode } = useAppTheme();
-
-  return (
-    <>
-      <StatusBar style={colorMode === "dark" ? "light" : "dark"} />
-      <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="(tabs)" />
-      </Stack>
-    </>
-  );
-}
-
-function ThemedApp() {
-  const { colorMode } = useAppTheme();
-  const theme = getTheme(colorMode);
-
-  return (
-    <SafeAreaProvider>
-      <PaperProvider theme={theme}>
-        <AppContent />
-      </PaperProvider>
-    </SafeAreaProvider>
-  );
-}
+import React from "react";
+import { ThemeProvider } from "../theme/ThemeContext";
+import { SnackbarProvider } from "../context/SnackbarContext";
+import { useColorScheme } from "react-native";
+import {
+  DarkTheme,
+  DefaultTheme,
+  ThemeProvider as NavThemeProvider,
+} from "@react-navigation/native";
+import { Slot } from "expo-router";
 
 export default function RootLayout() {
+  const colorScheme = useColorScheme();
+
   return (
-    <ThemeProvider>
-      <ThemedApp />
+    <ThemeProvider initialMode={colorScheme === "dark" ? "dark" : "light"}>
+      <NavThemeProvider
+        value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+      >
+        <SnackbarProvider>
+          <Slot />
+        </SnackbarProvider>
+      </NavThemeProvider>
     </ThemeProvider>
   );
 }

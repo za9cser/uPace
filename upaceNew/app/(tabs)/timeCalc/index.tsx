@@ -1,17 +1,8 @@
 import { useState, useEffect } from "react";
 import { View, ScrollView, StyleSheet, Animated, Keyboard } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import {
-  Card,
-  Text,
-  Button,
-  IconButton,
-  useTheme,
-  Snackbar,
-} from "react-native-paper";
+import { Card, Text, Button, IconButton } from "react-native-paper";
 import { Formik, FieldArray } from "formik";
-import * as Clipboard from "expo-clipboard";
-import { LinearGradient } from "expo-linear-gradient";
 import { ScreenHeader } from "../../../components/ScreenHeader";
 import { TimeInput } from "../../../components/TimeInput";
 import { useCustomTheme } from "../../../theme/ThemeContext";
@@ -21,15 +12,11 @@ import { TotalTimeComponent } from "./components/TotalTime";
 import { NewSplitComponent } from "./components/NewSplit";
 import { SplitsListComponent } from "./components/SplitsList";
 import { TimeCalcFormValues } from "./services/timeCalcHandlers";
+import { useSnackbar } from "../../../context/SnackbarContext";
 
 export default function TimeCalculatorScreen() {
   const theme = useCustomTheme();
-  const paperTheme = useTheme();
-  const [snackbar, setSnackbar] = useState({
-    visible: false,
-    message: "",
-    type: "info" as "info" | "success" | "warning" | "error",
-  });
+  const { showSnackbar } = useSnackbar();
   const [fadeAnim] = useState(new Animated.Value(0));
 
   useEffect(() => {
@@ -39,13 +26,6 @@ export default function TimeCalculatorScreen() {
       useNativeDriver: true,
     }).start();
   }, []);
-
-  const showSnackbar = (
-    message: string,
-    type: "info" | "success" | "warning" | "error" = "info"
-  ) => {
-    setSnackbar({ visible: true, message, type });
-  };
 
   const handleAddSplit = (values: TimeCalcFormValues, { resetForm }: any) => {
     // Show success message
@@ -91,7 +71,7 @@ export default function TimeCalculatorScreen() {
                     <SummaryOptionsComponent />
 
                     {/* Result Display */}
-                    <TotalTimeComponent showSnackbar={showSnackbar} />
+                    <TotalTimeComponent />
 
                     {/* Add Split Form */}
                     <NewSplitComponent
@@ -118,15 +98,6 @@ export default function TimeCalculatorScreen() {
           </Formik>
         </Animated.View>
       </ScrollView>
-
-      <Snackbar
-        visible={snackbar.visible}
-        onDismiss={() => setSnackbar({ ...snackbar, visible: false })}
-        duration={3000}
-        theme={paperTheme}
-      >
-        {snackbar.message}
-      </Snackbar>
     </SafeAreaView>
   );
 }
