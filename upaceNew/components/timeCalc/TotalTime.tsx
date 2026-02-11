@@ -13,7 +13,7 @@ import {
 import { TimeCalcFormValues } from "@/lib/timeCalc/types/TimeCalcFormValues";
 import { useSnackbar } from "@/context/SnackbarContext";
 
-export const TotalTimeComponent: React.FC = () => {
+export const TotalTimeComponent = () => {
   const theme = useCustomTheme();
   const { values, setFieldValue } = useFormikContext<TimeCalcFormValues>();
   const { showSnackbar } = useSnackbar();

@@ -10,10 +10,12 @@ interface ThemeContextType {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-export const ThemeProvider: React.FC<{
+type Props = {
   children: React.ReactNode;
   initialMode?: ColorMode;
-}> = ({ children, initialMode = "light" }) => {
+};
+
+export const ThemeProvider = ({ children, initialMode = "light" }: Props) => {
   const [currentMode, setCurrentMode] = useState<ColorMode>(initialMode);
 
   const toggleColorMode = () =>

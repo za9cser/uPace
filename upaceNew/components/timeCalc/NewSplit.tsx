@@ -10,7 +10,7 @@ interface NewSplitProps {
   onAddSplit: () => void;
 }
 
-export const NewSplitComponent: React.FC<NewSplitProps> = ({ onAddSplit }) => {
+export const NewSplitComponent = ({ onAddSplit }: NewSplitProps) => {
   const theme = useCustomTheme();
   const { values, setFieldValue } = useFormikContext<TimeCalcFormValues>();
 

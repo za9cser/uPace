@@ -6,7 +6,7 @@ import { SummaryOptions } from "@/types";
 import { useFormikContext } from "formik";
 import { TimeCalcFormValues } from "@/lib/timeCalc/types/TimeCalcFormValues";
 
-export const SummaryOptionsComponent: React.FC = () => {
+export const SummaryOptionsComponent = () => {
   const theme = useCustomTheme();
   const { values, setFieldValue } = useFormikContext<TimeCalcFormValues>();
   const summaryOptions = values.summaryOptions;

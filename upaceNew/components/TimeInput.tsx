@@ -13,7 +13,7 @@ interface TimeInputProps {
   placeholder?: string;
 }
 
-export const TimeInput: React.FC<TimeInputProps> = ({
+export const TimeInput = ({
   label,
   value,
   onChange,
@@ -21,7 +21,7 @@ export const TimeInput: React.FC<TimeInputProps> = ({
   min = 0,
   error,
   placeholder,
-}) => {
+}: TimeInputProps) => {
   const theme = useCustomTheme();
 
   const handleChange = (text: string) => {

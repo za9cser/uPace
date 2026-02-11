@@ -1,19 +1,16 @@
-import React from "react";
 import { View, StyleSheet } from "react-native";
 import { Card, Text, IconButton } from "react-native-paper";
 import { useCustomTheme } from "@/theme/ThemeContext";
-import { useFormikContext, useField } from "formik";
+import { useFormikContext } from "formik";
 import { FieldArray } from "formik";
 import { TimeCalcFormValues } from "@/lib/timeCalc/types/TimeCalcFormValues";
 
-export const SplitsListComponent: React.FC = () => {
+export const SplitsListComponent = () => {
   const theme = useCustomTheme();
   const { values } = useFormikContext<TimeCalcFormValues>();
   const splits = values.splits;
 
-  if (splits.length === 0) {
-    return null;
-  }
+  if (splits.length === 0) return null;
 
   return (
     <FieldArray

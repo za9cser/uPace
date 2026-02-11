@@ -9,10 +9,7 @@ interface ScreenHeaderProps {
   subtitle?: string;
 }
 
-export const ScreenHeader: React.FC<ScreenHeaderProps> = ({
-  title,
-  subtitle,
-}) => {
+export const ScreenHeader = ({ title, subtitle }: ScreenHeaderProps) => {
   const theme = useCustomTheme();
 
   return (
