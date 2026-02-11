@@ -4,7 +4,7 @@ import { Card, Button } from "react-native-paper";
 import { TimeInput } from "../TimeInput";
 import { useCustomTheme } from "../../theme/ThemeContext";
 import { useFormikContext } from "formik";
-import { TimeCalcFormValues } from "@/lib/timeCalc/services/TimeCalcFormValues";
+import { TimeCalcFormValues } from "@/lib/timeCalc/types/TimeCalcFormValues";
 
 interface NewSplitProps {
   onAddSplit: () => void;
@@ -12,8 +12,7 @@ interface NewSplitProps {
 
 export const NewSplitComponent: React.FC<NewSplitProps> = ({ onAddSplit }) => {
   const theme = useCustomTheme();
-  const { values, setFieldValue, handleSubmit } =
-    useFormikContext<TimeCalcFormValues>();
+  const { values, setFieldValue } = useFormikContext<TimeCalcFormValues>();
 
   return (
     <Card

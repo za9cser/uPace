@@ -2,16 +2,16 @@ import React from "react";
 import { View, StyleSheet } from "react-native";
 import { Card, Text, IconButton } from "react-native-paper";
 import { LinearGradient } from "expo-linear-gradient";
-import { useCustomTheme } from "../../theme/ThemeContext";
+import { useCustomTheme } from "@/theme/ThemeContext";
 import { useFormikContext } from "formik";
 import {
   formatResult,
   copyResultToClipboard,
   copySplitsToClipboard,
   clearAll,
-} from "../../lib/timeCalc/services/timeCalcHandlers";
-import { TimeCalcFormValues } from "@/lib/timeCalc/services/TimeCalcFormValues";
-import { useSnackbar } from "../../context/SnackbarContext";
+} from "@/lib/timeCalc/services/timeCalcHandlers";
+import { TimeCalcFormValues } from "@/lib/timeCalc/types/TimeCalcFormValues";
+import { useSnackbar } from "@/context/SnackbarContext";
 
 export const TotalTimeComponent: React.FC = () => {
   const theme = useCustomTheme();
@@ -30,11 +30,7 @@ export const TotalTimeComponent: React.FC = () => {
     }
 
     const result = await copySplitsToClipboard(values);
-    if (result.success) {
-      showSnackbar(result.message, "success");
-    } else {
-      showSnackbar(result.message, "warning");
-    }
+    showSnackbar(result.message, result.success ? "success" : "warning");
   };
 
   const handleClearAll = () => {

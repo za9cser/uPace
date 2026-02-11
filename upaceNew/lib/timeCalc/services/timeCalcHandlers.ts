@@ -1,5 +1,5 @@
 import * as Clipboard from "expo-clipboard";
-import { TimeCalcFormValues } from "./TimeCalcFormValues";
+import { TimeCalcFormValues } from "../types/TimeCalcFormValues";
 
 // Time calculation utilities
 export const calculateTotal = (

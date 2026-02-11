@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useState } from "react";
-import { Snackbar } from "react-native-paper";
-import { useTheme } from "react-native-paper";
+import { Snackbar, useTheme } from "react-native-paper";
 
 interface SnackbarContextType {
   showSnackbar: (
@@ -13,9 +12,11 @@ const SnackbarContext = createContext<SnackbarContextType | undefined>(
   undefined
 );
 
-export const SnackbarProvider: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
+type Props = {
+  children: React.ReactNode;
+};
+
+export const SnackbarProvider = ({ children }: Props) => {
   const paperTheme = useTheme();
   const [snackbar, setSnackbar] = useState({
     visible: false,

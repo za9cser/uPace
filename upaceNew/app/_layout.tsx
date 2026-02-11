@@ -1,4 +1,3 @@
-import React from "react";
 import { ThemeProvider } from "../theme/ThemeContext";
 import { SnackbarProvider } from "../context/SnackbarContext";
 import { useColorScheme } from "react-native";
@@ -12,11 +11,10 @@ import { Slot } from "expo-router";
 export default function RootLayout() {
   const colorScheme = useColorScheme();
 
+  const isDark = colorScheme === "dark";
   return (
-    <ThemeProvider initialMode={colorScheme === "dark" ? "dark" : "light"}>
-      <NavThemeProvider
-        value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
-      >
+    <ThemeProvider initialMode={isDark ? "dark" : "light"}>
+      <NavThemeProvider value={isDark ? DarkTheme : DefaultTheme}>
         <SnackbarProvider>
           <Slot />
         </SnackbarProvider>

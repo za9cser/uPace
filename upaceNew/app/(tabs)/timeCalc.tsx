@@ -1,18 +1,15 @@
 import { useState, useEffect } from "react";
-import { View, ScrollView, StyleSheet, Animated, Keyboard } from "react-native";
+import { ScrollView, StyleSheet, Animated } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Card, Text, Button, IconButton } from "react-native-paper";
 import { Formik, FieldArray } from "formik";
-import { ScreenHeader } from "../../../components/ScreenHeader";
-import { TimeInput } from "../../../components/TimeInput";
-import { useCustomTheme } from "../../../theme/ThemeContext";
-import { TimeSplit, SummaryOptions } from "../../../types";
-import { SummaryOptionsComponent } from "../../../components/timeCalc/SummaryOptions";
-import { TotalTimeComponent } from "../../../components/timeCalc/TotalTime";
-import { NewSplitComponent } from "../../../components/timeCalc/NewSplit";
-import { SplitsListComponent } from "../../../components/timeCalc/SplitsList";
-import { TimeCalcFormValues } from "@/lib/timeCalc/services/TimeCalcFormValues";
-import { useSnackbar } from "../../../context/SnackbarContext";
+import { ScreenHeader } from "@/components/ScreenHeader";
+import { useCustomTheme } from "@/theme/ThemeContext";
+import { TimeSplit } from "@/types";
+import { SummaryOptionsComponent } from "@/components/timeCalc/SummaryOptions";
+import { TotalTimeComponent } from "@/components/timeCalc/TotalTime";
+import { NewSplitComponent } from "@/components/timeCalc/NewSplit";
+import { SplitsListComponent } from "@/components/timeCalc/SplitsList";
+import { useSnackbar } from "@/context/SnackbarContext";
 
 export default function TimeCalculatorScreen() {
   const theme = useCustomTheme();
@@ -27,10 +24,8 @@ export default function TimeCalculatorScreen() {
     }).start();
   }, []);
 
-  const handleAddSplit = (values: TimeCalcFormValues, { resetForm }: any) => {
-    // Show success message
+  const handleAddSplit = () =>
     showSnackbar("Split added successfully", "success");
-  };
 
   return (
     <SafeAreaView
@@ -65,15 +60,12 @@ export default function TimeCalculatorScreen() {
             {({ values, setFieldValue }) => (
               <FieldArray
                 name="splits"
-                render={(arrayHelpers) => (
+                render={({ push }) => (
                   <>
-                    {/* Summary Options */}
                     <SummaryOptionsComponent />
 
-                    {/* Result Display */}
                     <TotalTimeComponent />
 
-                    {/* Add Split Form */}
                     <NewSplitComponent
                       onAddSplit={() => {
                         const newSplit: TimeSplit = {
@@ -82,14 +74,13 @@ export default function TimeCalculatorScreen() {
                           seconds: values.seconds,
                           deciseconds: values.deciseconds,
                         };
-                        arrayHelpers.push(newSplit);
+                        push(newSplit);
                         setFieldValue("minutes", 0);
                         setFieldValue("seconds", 0);
                         setFieldValue("deciseconds", 0);
                       }}
                     />
 
-                    {/* Splits List */}
                     <SplitsListComponent />
                   </>
                 )}

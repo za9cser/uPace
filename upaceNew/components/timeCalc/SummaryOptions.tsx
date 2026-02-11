@@ -1,10 +1,10 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
 import { Text, Button } from "react-native-paper";
-import { useCustomTheme } from "../../theme/ThemeContext";
-import { SummaryOptions } from "../../types";
+import { useCustomTheme } from "@/theme/ThemeContext";
+import { SummaryOptions } from "@/types";
 import { useFormikContext } from "formik";
-import { TimeCalcFormValues } from "@/lib/timeCalc/services/TimeCalcFormValues";
+import { TimeCalcFormValues } from "@/lib/timeCalc/types/TimeCalcFormValues";
 
 export const SummaryOptionsComponent: React.FC = () => {
   const theme = useCustomTheme();
@@ -38,36 +38,39 @@ export const SummaryOptionsComponent: React.FC = () => {
       >
         {(
           ["includeMinutes", "includeSeconds", "includeDeciseconds"] as const
-        ).map((option) => (
-          <Button
-            key={option}
-            mode={summaryOptions[option] ? "contained" : "outlined"}
-            onPress={() => toggleOption(option)}
-            style={[
-              styles.optionButton,
-              summaryOptions[option] && {
-                backgroundColor: theme.colors.card,
-                elevation: 2,
-              },
-            ]}
-            contentStyle={styles.optionButtonContent}
-            labelStyle={{
-              fontSize: 12,
-              marginHorizontal: 0,
-              fontWeight: "600",
-              color: summaryOptions[option]
-                ? theme.colors.primary
-                : theme.colors.textSecondary,
-            }}
-            compact
-          >
-            {option
-              .replace("include", "")
-              .replace("Minutes", "MIN")
-              .replace("Seconds", "SEC")
-              .replace("Deciseconds", "DEC")}
-          </Button>
-        ))}
+        ).map((option) => {
+          const selected = summaryOptions[option];
+          return (
+            <Button
+              key={option}
+              mode={selected ? "contained" : "outlined"}
+              onPress={() => toggleOption(option)}
+              style={[
+                styles.optionButton,
+                selected && {
+                  backgroundColor: theme.colors.card,
+                  elevation: 2,
+                },
+              ]}
+              contentStyle={styles.optionButtonContent}
+              labelStyle={{
+                fontSize: 12,
+                marginHorizontal: 0,
+                fontWeight: "600",
+                color: selected
+                  ? theme.colors.primary
+                  : theme.colors.textSecondary,
+              }}
+              compact
+            >
+              {option
+                .replace("include", "")
+                .replace("Minutes", "MIN")
+                .replace("Seconds", "SEC")
+                .replace("Deciseconds", "DEC")}
+            </Button>
+          );
+        })}
       </View>
     </View>
   );
