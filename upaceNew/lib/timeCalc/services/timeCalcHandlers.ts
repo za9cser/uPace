@@ -1,13 +1,5 @@
 import * as Clipboard from "expo-clipboard";
-import { TimeSplit, SummaryOptions } from "../../../../types";
-
-export interface TimeCalcFormValues {
-  minutes: number;
-  seconds: number;
-  deciseconds: number;
-  splits: TimeSplit[];
-  summaryOptions: SummaryOptions;
-}
+import { TimeCalcFormValues } from "./TimeCalcFormValues";
 
 // Time calculation utilities
 export const calculateTotal = (

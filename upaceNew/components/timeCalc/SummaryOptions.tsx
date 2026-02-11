@@ -1,10 +1,10 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
 import { Text, Button } from "react-native-paper";
-import { useCustomTheme } from "../../../../theme/ThemeContext";
-import { SummaryOptions } from "../../../../types";
+import { useCustomTheme } from "../../theme/ThemeContext";
+import { SummaryOptions } from "../../types";
 import { useFormikContext } from "formik";
-import { TimeCalcFormValues } from "../services/timeCalcHandlers";
+import { TimeCalcFormValues } from "@/lib/timeCalc/services/TimeCalcFormValues";
 
 export const SummaryOptionsComponent: React.FC = () => {
   const theme = useCustomTheme();

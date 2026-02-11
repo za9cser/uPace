@@ -1,11 +1,11 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
 import { Card, Text, IconButton } from "react-native-paper";
-import { useCustomTheme } from "../../../../theme/ThemeContext";
-import { TimeSplit } from "../../../../types";
+import { useCustomTheme } from "../../theme/ThemeContext";
+import { TimeSplit } from "../../types";
 import { useFormikContext, useField } from "formik";
 import { FieldArray } from "formik";
-import { TimeCalcFormValues } from "../services/timeCalcHandlers";
+import { TimeCalcFormValues } from "@/lib/timeCalc/services/TimeCalcFormValues";
 
 export const SplitsListComponent: React.FC = () => {
   const theme = useCustomTheme();

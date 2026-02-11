@@ -1,10 +1,10 @@
 import React from "react";
 import { View, StyleSheet, Keyboard } from "react-native";
 import { Card, Button } from "react-native-paper";
-import { TimeInput } from "../../../../components/TimeInput";
-import { useCustomTheme } from "../../../../theme/ThemeContext";
+import { TimeInput } from "../TimeInput";
+import { useCustomTheme } from "../../theme/ThemeContext";
 import { useFormikContext } from "formik";
-import { TimeCalcFormValues } from "../services/timeCalcHandlers";
+import { TimeCalcFormValues } from "@/lib/timeCalc/services/TimeCalcFormValues";
 
 interface NewSplitProps {
   onAddSplit: () => void;

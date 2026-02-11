@@ -2,16 +2,16 @@ import React from "react";
 import { View, StyleSheet } from "react-native";
 import { Card, Text, IconButton } from "react-native-paper";
 import { LinearGradient } from "expo-linear-gradient";
-import { useCustomTheme } from "../../../../theme/ThemeContext";
+import { useCustomTheme } from "../../theme/ThemeContext";
 import { useFormikContext } from "formik";
 import {
-  TimeCalcFormValues,
   formatResult,
   copyResultToClipboard,
   copySplitsToClipboard,
   clearAll,
-} from "../services/timeCalcHandlers";
-import { useSnackbar } from "../../../../context/SnackbarContext";
+} from "../../lib/timeCalc/services/timeCalcHandlers";
+import { TimeCalcFormValues } from "@/lib/timeCalc/services/TimeCalcFormValues";
+import { useSnackbar } from "../../context/SnackbarContext";
 
 export const TotalTimeComponent: React.FC = () => {
   const theme = useCustomTheme();

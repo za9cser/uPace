@@ -7,11 +7,11 @@ import { ScreenHeader } from "../../../components/ScreenHeader";
 import { TimeInput } from "../../../components/TimeInput";
 import { useCustomTheme } from "../../../theme/ThemeContext";
 import { TimeSplit, SummaryOptions } from "../../../types";
-import { SummaryOptionsComponent } from "./components/SummaryOptions";
-import { TotalTimeComponent } from "./components/TotalTime";
-import { NewSplitComponent } from "./components/NewSplit";
-import { SplitsListComponent } from "./components/SplitsList";
-import { TimeCalcFormValues } from "./services/timeCalcHandlers";
+import { SummaryOptionsComponent } from "../../../components/timeCalc/SummaryOptions";
+import { TotalTimeComponent } from "../../../components/timeCalc/TotalTime";
+import { NewSplitComponent } from "../../../components/timeCalc/NewSplit";
+import { SplitsListComponent } from "../../../components/timeCalc/SplitsList";
+import { TimeCalcFormValues } from "@/lib/timeCalc/services/TimeCalcFormValues";
 import { useSnackbar } from "../../../context/SnackbarContext";
 
 export default function TimeCalculatorScreen() {
