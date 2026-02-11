@@ -56,9 +56,12 @@ export const NewSplitComponent: React.FC<NewSplitProps> = ({ onAddSplit }) => {
               Keyboard.dismiss();
               onAddSplit();
             }}
-            style={styles.addButton}
+            style={[
+              styles.addButton,
+              { backgroundColor: theme.colors.primary },
+            ]}
             contentStyle={styles.addButtonContent}
-            labelStyle={{ fontSize: 16, fontWeight: "600" }}
+            labelStyle={styles.addButtonLabel}
           >
             Add
           </Button>
@@ -99,5 +102,10 @@ const styles = StyleSheet.create({
   addButtonContent: {
     height: 52,
     paddingHorizontal: 8,
+  },
+  addButtonLabel: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: "white",
   },
 });
