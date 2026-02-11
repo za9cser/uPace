@@ -245,7 +245,15 @@ export default function PaceCalculatorScreen() {
         />
 
         {/* Inputs */}
-        <Card style={styles.card}>
+        <Card
+          style={[
+            styles.card,
+            {
+              backgroundColor: theme.colors.card,
+              borderColor: theme.colors.border,
+            },
+          ]}
+        >
           <Card.Content>
             <TextInput
               label="Time (HH:MM:SS)"
@@ -276,7 +284,15 @@ export default function PaceCalculatorScreen() {
         </Card>
 
         {/* Lap Distances */}
-        <Card style={styles.card}>
+        <Card
+          style={[
+            styles.card,
+            {
+              backgroundColor: theme.colors.card,
+              borderColor: theme.colors.border,
+            },
+          ]}
+        >
           <Card.Content>
             <Text
               variant="titleLarge"
@@ -324,7 +340,15 @@ export default function PaceCalculatorScreen() {
 
         {/* Results Table */}
         {lapSplits.length > 0 && (
-          <Card style={styles.card}>
+          <Card
+            style={[
+              styles.card,
+              {
+                backgroundColor: theme.colors.card,
+                borderColor: theme.colors.border,
+              },
+            ]}
+          >
             <Card.Content>
               <View style={styles.tableHeader}>
                 <Text variant="titleLarge" style={{ color: theme.colors.text }}>

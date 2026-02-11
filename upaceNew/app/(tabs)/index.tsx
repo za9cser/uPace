@@ -215,7 +215,12 @@ export default function TimeCalculatorScreen() {
             >
               INCLUDE IN SUMMARY
             </Text>
-            <View style={styles.optionsRow}>
+            <View
+              style={[
+                styles.optionsRow,
+                { backgroundColor: theme.colors.inputBackground },
+              ]}
+            >
               {(
                 [
                   "includeMinutes",
@@ -225,12 +230,12 @@ export default function TimeCalculatorScreen() {
               ).map((option) => (
                 <Button
                   key={option}
-                  mode={summaryOptions[option] ? "contained" : "text"}
+                  mode={summaryOptions[option] ? "contained" : "outlined"}
                   onPress={() => toggleOption(option)}
                   style={[
                     styles.optionButton,
                     summaryOptions[option] && {
-                      backgroundColor: "white",
+                      backgroundColor: theme.colors.card,
                       elevation: 2,
                     },
                   ]}
@@ -256,7 +261,16 @@ export default function TimeCalculatorScreen() {
           </View>
 
           {/* Result Display */}
-          <Card style={[styles.card, styles.totalCard]}>
+          <Card
+            style={[
+              styles.card,
+              styles.totalCard,
+              {
+                backgroundColor: theme.colors.card,
+                borderColor: theme.colors.border,
+              },
+            ]}
+          >
             <LinearGradient
               colors={[theme.colors.primary, theme.colors.primaryDark]}
               start={{ x: 0, y: 0 }}
@@ -313,7 +327,15 @@ export default function TimeCalculatorScreen() {
           </Card>
 
           {/* Add Split Form */}
-          <Card style={styles.card}>
+          <Card
+            style={[
+              styles.card,
+              {
+                backgroundColor: theme.colors.card,
+                borderColor: theme.colors.border,
+              },
+            ]}
+          >
             <Card.Content style={styles.addSplitContent}>
               <Formik
                 initialValues={{ minutes: 0, seconds: 0, deciseconds: 0 }}
@@ -365,7 +387,16 @@ export default function TimeCalculatorScreen() {
           {splits.length > 0 && (
             <View style={styles.splitsContainer}>
               {splits.map((split, index) => (
-                <Card key={split.id} style={styles.card}>
+                <Card
+                  key={split.id}
+                  style={[
+                    styles.card,
+                    {
+                      backgroundColor: theme.colors.card,
+                      borderColor: theme.colors.border,
+                    },
+                  ]}
+                >
                   <Card.Content style={styles.splitContent}>
                     <View style={styles.splitInfo}>
                       <Text
