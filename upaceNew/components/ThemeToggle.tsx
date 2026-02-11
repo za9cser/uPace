@@ -1,14 +1,15 @@
-import React from 'react';
-import { IconButton } from 'react-native-paper';
-import { useAppTheme } from '../theme/ThemeContext';
+import React from "react";
+import { IconButton } from "react-native-paper";
+import { useAppTheme, useCustomTheme } from "../theme/ThemeContext";
 
 export const ThemeToggle: React.FC = () => {
   const { colorMode, toggleColorMode } = useAppTheme();
+  const theme = useCustomTheme();
 
   return (
     <IconButton
-      icon={colorMode === 'dark' ? 'weather-sunny' : 'weather-night'}
-      iconColor={colorMode === 'dark' ? '#FFA500' : '#4A90E2'}
+      icon={colorMode === "dark" ? "weather-sunny" : "weather-night"}
+      iconColor={theme.colors.primary}
       size={24}
       onPress={toggleColorMode}
       style={{ margin: 0 }}
