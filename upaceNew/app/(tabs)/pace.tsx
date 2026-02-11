@@ -363,7 +363,7 @@ export default function PaceCalculatorScreen() {
         visible={snackbar.visible}
         onDismiss={() => setSnackbar({ ...snackbar, visible: false })}
         duration={3000}
-        style={{ backgroundColor: paperTheme.colors.surface }}
+        theme={paperTheme}
       >
         {snackbar.message}
       </Snackbar>

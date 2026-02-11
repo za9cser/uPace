@@ -130,6 +130,50 @@ export default function TimeCalculatorScreen() {
     showSnackbar("Result copied to clipboard", "success");
   };
 
+  const copySplitsWithSummaryOptions = async () => {
+    if (splits.length === 0) {
+      showSnackbar("Add some splits first", "warning");
+      return;
+    }
+
+    const splitsText = splits
+      .map((split) => {
+        const parts = [];
+        if (summaryOptions.includeMinutes) {
+          parts.push(split.minutes.toString().padStart(2, "0"));
+        }
+        if (summaryOptions.includeSeconds) {
+          parts.push(split.seconds.toString().padStart(2, "0"));
+        }
+        if (summaryOptions.includeDeciseconds) {
+          parts.push(split.deciseconds.toString());
+        }
+
+        if (parts.length === 3) {
+          return `${parts[0]}:${parts[1]}.${parts[2]}`;
+        } else if (parts.length === 2) {
+          if (summaryOptions.includeMinutes && summaryOptions.includeSeconds) {
+            return `${parts[0]}:${parts[1]}`;
+          } else if (
+            summaryOptions.includeMinutes &&
+            summaryOptions.includeDeciseconds
+          ) {
+            return `${parts[0]}.${parts[1]}`;
+          } else {
+            return `${parts[0]}.${parts[1]}`;
+          }
+        } else if (parts.length === 1) {
+          return parts[0];
+        }
+        return "";
+      })
+      .filter((part) => part.length > 0)
+      .join(" - ");
+
+    await Clipboard.setStringAsync(splitsText);
+    showSnackbar("Splits copied to clipboard", "success");
+  };
+
   const clearAll = () => {
     setSplits([]);
     showSnackbar("All splits cleared", "info");
@@ -143,7 +187,7 @@ export default function TimeCalculatorScreen() {
   };
 
   const total = calculateTotal();
-
+  console.log("paperTheme", paperTheme);
   return (
     <SafeAreaView
       style={[styles.container, { backgroundColor: theme.colors.background }]}
@@ -250,6 +294,13 @@ export default function TimeCalculatorScreen() {
                     style={styles.totalActionIcon}
                   />
                   <IconButton
+                    icon="file-document-outline"
+                    iconColor="white"
+                    size={20}
+                    onPress={copySplitsWithSummaryOptions}
+                    style={styles.totalActionIcon}
+                  />
+                  <IconButton
                     icon="refresh"
                     iconColor="white"
                     size={20}
@@ -342,35 +393,6 @@ export default function TimeCalculatorScreen() {
               ))}
             </View>
           )}
-
-          {/* Action Buttons */}
-          <View style={styles.actionButtons}>
-            <Button
-              mode="outlined"
-              onPress={copySplitsToClipboard}
-              disabled={splits.length === 0}
-              style={styles.actionButton}
-            >
-              Copy Splits
-            </Button>
-            <Button
-              mode="outlined"
-              onPress={copyResultToClipboard}
-              disabled={splits.length === 0}
-              style={styles.actionButton}
-            >
-              Copy Result
-            </Button>
-            <Button
-              mode="outlined"
-              onPress={clearAll}
-              disabled={splits.length === 0}
-              textColor={theme.colors.error}
-              style={styles.actionButton}
-            >
-              Clear All
-            </Button>
-          </View>
         </Animated.View>
       </ScrollView>
 
@@ -378,7 +400,7 @@ export default function TimeCalculatorScreen() {
         visible={snackbar.visible}
         onDismiss={() => setSnackbar({ ...snackbar, visible: false })}
         duration={3000}
-        style={{ backgroundColor: paperTheme.colors.surface }}
+        theme={paperTheme}
       >
         {snackbar.message}
       </Snackbar>
@@ -427,6 +449,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     right: 8,
     top: 8,
+    gap: 8,
   },
   totalActionIcon: {
     margin: 0,
@@ -488,11 +511,5 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 16,
-  },
-  actionButtons: {
-    display: "none",
-  },
-  actionButton: {
-    marginBottom: 8,
   },
 });
