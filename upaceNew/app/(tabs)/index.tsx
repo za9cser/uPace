@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { View, ScrollView, StyleSheet, Animated } from "react-native";
+import { View, ScrollView, StyleSheet, Animated, Keyboard } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
   Card,
@@ -173,6 +173,7 @@ export default function TimeCalculatorScreen() {
       <ScrollView
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
       >
         <Animated.View style={{ opacity: fadeAnim, gap: 16 }}>
           <ScreenHeader
@@ -347,7 +348,10 @@ export default function TimeCalculatorScreen() {
                     </View>
                     <Button
                       mode="contained"
-                      onPress={() => handleSubmit()}
+                      onPress={() => {
+                        Keyboard.dismiss();
+                        handleSubmit();
+                      }}
                       style={styles.addButton}
                       contentStyle={styles.addButtonContent}
                       labelStyle={{ fontSize: 16, fontWeight: "600" }}
