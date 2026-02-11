@@ -1,6 +1,6 @@
-import { Tabs } from 'expo-router';
-import { Text } from 'react-native';
-import { useCustomTheme } from '../../theme/ThemeContext';
+import { Tabs } from "expo-router";
+import { Text } from "react-native";
+import { useCustomTheme } from "../../theme/ThemeContext";
 
 export default function TabsLayout() {
   const theme = useCustomTheme();
@@ -18,21 +18,22 @@ export default function TabsLayout() {
         },
         tabBarLabelStyle: {
           fontSize: 12,
-          fontWeight: '600',
+          fontWeight: "600",
         },
       }}
+      initialRouteName="timeCalc/index"
     >
       <Tabs.Screen
-        name="index"
+        name="timeCalc/index"
         options={{
-          title: 'Time Calc',
+          title: "Time Calc",
           tabBarIcon: () => <Text style={{ fontSize: 24 }}>⏱</Text>,
         }}
       />
       <Tabs.Screen
         name="pace"
         options={{
-          title: 'Pace Calc',
+          title: "Pace Calc",
           tabBarIcon: () => <Text style={{ fontSize: 24 }}>🏃</Text>,
         }}
       />

@@ -12,10 +12,10 @@ import {
 import { Formik } from "formik";
 import * as Clipboard from "expo-clipboard";
 import { LinearGradient } from "expo-linear-gradient";
-import { ScreenHeader } from "../../components/ScreenHeader";
-import { TimeInput } from "../../components/TimeInput";
-import { useCustomTheme } from "../../theme/ThemeContext";
-import { TimeSplit, SummaryOptions } from "../../types";
+import { ScreenHeader } from "../../../components/ScreenHeader";
+import { TimeInput } from "../../../components/TimeInput";
+import { useCustomTheme } from "../../../theme/ThemeContext";
+import { TimeSplit, SummaryOptions } from "../../../types";
 
 interface TimeSplitForm {
   minutes: number;
