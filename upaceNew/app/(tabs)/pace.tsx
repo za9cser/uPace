@@ -11,7 +11,7 @@ import {
 } from "react-native-paper";
 import * as Clipboard from "expo-clipboard";
 import { ScreenHeader } from "../../components/ScreenHeader";
-import { useCustomTheme } from "../../theme/themeContext";
+import { useCustomTheme } from "../../theme/ThemeContext";
 import { LapSplit, LapDistance } from "../../types";
 import { useSnackbar } from "../../context/SnackbarContext";
 

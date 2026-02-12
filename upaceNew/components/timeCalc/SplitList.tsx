@@ -1,9 +1,9 @@
 import { View, StyleSheet } from "react-native";
 import { Card, Text, IconButton } from "react-native-paper";
-import { useCustomTheme } from "@/theme/themeContext";
+import { useCustomTheme } from "@/theme/ThemeContext";
 import { useFormikContext } from "formik";
 import { FieldArray } from "formik";
-import { TimeCalcFormValues } from "@/lib/timeCalc/types/timeCalcFormValues";
+import { TimeCalcFormValues } from "@/lib/timeCalc/types/TimeCalcFormValues";
 
 const SplitList = () => {
   const theme = useCustomTheme();

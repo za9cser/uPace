@@ -1,9 +1,9 @@
 import { View, StyleSheet } from "react-native";
 import { Text, Button } from "react-native-paper";
-import { useCustomTheme } from "@/theme/themeContext";
+import { useCustomTheme } from "@/theme/ThemeContext";
 import { SummaryOptions } from "@/types";
 import { useFormikContext } from "formik";
-import { TimeCalcFormValues } from "@/lib/timeCalc/types/timeCalcFormValues";
+import { TimeCalcFormValues } from "@/lib/timeCalc/types/TimeCalcFormValues";
 
 const SUMMARY_OPTIONS = [
   { key: "includeMinutes", label: "MIN" },
