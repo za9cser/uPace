@@ -1,11 +1,11 @@
 import { View, StyleSheet } from "react-native";
 import { Card, Text, IconButton } from "react-native-paper";
-import { useCustomTheme } from "@/theme/ThemeContext";
+import { useCustomTheme } from "@/theme/themeContext";
 import { useFormikContext } from "formik";
 import { FieldArray } from "formik";
-import { TimeCalcFormValues } from "@/lib/timeCalc/types/TimeCalcFormValues";
+import { TimeCalcFormValues } from "@/lib/timeCalc/types/timeCalcFormValues";
 
-const SplitListComponent = () => {
+const SplitList = () => {
   const theme = useCustomTheme();
   const { values } = useFormikContext<TimeCalcFormValues>();
   const splits = values.splits;
@@ -59,7 +59,7 @@ const SplitListComponent = () => {
   );
 };
 
-export default SplitListComponent;
+export default SplitList;
 
 const styles = StyleSheet.create({
   splitsContainer: {

@@ -1,6 +1,6 @@
 import { Tabs } from "expo-router";
 import { Text } from "react-native";
-import { useCustomTheme } from "@/theme/ThemeContext";
+import { useCustomTheme } from "@/theme/themeContext";
 
 export default function TabsLayout() {
   const theme = useCustomTheme();

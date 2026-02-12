@@ -3,11 +3,11 @@ import { ScrollView, StyleSheet, Animated } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Formik } from "formik";
 import { ScreenHeader } from "@/components/ScreenHeader";
-import { useCustomTheme } from "@/theme/ThemeContext";
-import SummaryOptionsComponent from "@/components/timeCalc/SummaryOptions";
-import TotalTimeComponent from "@/components/timeCalc/TotalTime";
-import NewSplitComponent from "@/components/timeCalc/NewSplit";
-import SplitListComponent from "@/components/timeCalc/SplitList";
+import { useCustomTheme } from "@/theme/themeContext";
+import SummaryOptions from "@/components/timeCalc/SummaryOptions";
+import TotalTime from "@/components/timeCalc/TotalTime";
+import NewSplit from "@/components/timeCalc/NewSplit";
+import SplitList from "@/components/timeCalc/SplitList";
 
 export default function TimeCalculatorScreen() {
   const theme = useCustomTheme();
@@ -53,13 +53,13 @@ export default function TimeCalculatorScreen() {
             onSubmit={() => {}}
           >
             <>
-              <SummaryOptionsComponent />
+              <SummaryOptions />
 
-              <TotalTimeComponent />
+              <TotalTime />
 
-              <NewSplitComponent />
+              <NewSplit />
 
-              <SplitListComponent />
+              <SplitList />
             </>
           </Formik>
         </Animated.View>

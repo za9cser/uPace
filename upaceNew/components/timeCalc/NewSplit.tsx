@@ -1,13 +1,13 @@
 import { View, StyleSheet, Keyboard } from "react-native";
 import { Card, Button } from "react-native-paper";
 import { TimeInput } from "../TimeInput";
-import { useCustomTheme } from "../../theme/ThemeContext";
+import { useCustomTheme } from "../../theme/themeContext";
 import { useFormikContext, FieldArray } from "formik";
-import { TimeCalcFormValues } from "@/lib/timeCalc/types/TimeCalcFormValues";
+import { TimeCalcFormValues } from "@/lib/timeCalc/types/timeCalcFormValues";
 import { TimeSplit } from "@/types";
 import { useSnackbar } from "@/context/SnackbarContext";
 
-const NewSplitComponent = () => {
+const NewSplit = () => {
   const { showSnackbar } = useSnackbar();
   const theme = useCustomTheme();
   const { values, setFieldValue } = useFormikContext<TimeCalcFormValues>();
@@ -83,7 +83,7 @@ const NewSplitComponent = () => {
   );
 };
 
-export default NewSplitComponent;
+export default NewSplit;
 
 const styles = StyleSheet.create({
   card: {

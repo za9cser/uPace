@@ -1,9 +1,9 @@
 import { View, StyleSheet } from "react-native";
 import { Text, Button } from "react-native-paper";
-import { useCustomTheme } from "@/theme/ThemeContext";
+import { useCustomTheme } from "@/theme/themeContext";
 import { SummaryOptions } from "@/types";
 import { useFormikContext } from "formik";
-import { TimeCalcFormValues } from "@/lib/timeCalc/types/TimeCalcFormValues";
+import { TimeCalcFormValues } from "@/lib/timeCalc/types/timeCalcFormValues";
 
 const SUMMARY_OPTIONS = [
   { key: "includeMinutes", label: "MIN" },
@@ -11,7 +11,7 @@ const SUMMARY_OPTIONS = [
   { key: "includeDeciseconds", label: "DEC" },
 ] as const;
 
-const SummaryOptionsComponent = () => {
+const SummaryOptions = () => {
   const theme = useCustomTheme();
   const { values, setFieldValue } = useFormikContext<TimeCalcFormValues>();
   const summaryOptions = values.summaryOptions;
@@ -75,7 +75,7 @@ const SummaryOptionsComponent = () => {
   );
 };
 
-export default SummaryOptionsComponent;
+export default SummaryOptions;
 
 const styles = StyleSheet.create({
   sectionContainer: {

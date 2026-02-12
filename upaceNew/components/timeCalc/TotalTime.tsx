@@ -2,7 +2,7 @@ import React from "react";
 import { View, StyleSheet } from "react-native";
 import { Card, Text, IconButton } from "react-native-paper";
 import { LinearGradient } from "expo-linear-gradient";
-import { useCustomTheme } from "@/theme/ThemeContext";
+import { useCustomTheme } from "@/theme/themeContext";
 import { useFormikContext } from "formik";
 import {
   formatResult,
@@ -10,10 +10,10 @@ import {
   copySplitsToClipboard,
   clearAll,
 } from "@/lib/timeCalc/services/timeCalcHandlers";
-import { TimeCalcFormValues } from "@/lib/timeCalc/types/TimeCalcFormValues";
+import { TimeCalcFormValues } from "@/lib/timeCalc/types/timeCalcFormValues";
 import { useSnackbar } from "@/context/SnackbarContext";
 
-const TotalTimeComponent = () => {
+const TotalTime = () => {
   const theme = useCustomTheme();
   const { values, setFieldValue } = useFormikContext<TimeCalcFormValues>();
   const { showSnackbar } = useSnackbar();
@@ -107,7 +107,7 @@ const TotalTimeComponent = () => {
   );
 };
 
-export default TotalTimeComponent;
+export default TotalTime;
 
 const styles = StyleSheet.create({
   card: {

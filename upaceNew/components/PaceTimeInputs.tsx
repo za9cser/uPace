@@ -1,7 +1,7 @@
 import React from "react";
 import { View, StyleSheet, Text } from "react-native";
 import { TimeInput } from "./TimeInput";
-import { useCustomTheme } from "../theme/ThemeContext";
+import { useCustomTheme } from "../theme/themeContext";
 
 interface PaceTimeInputsProps {
   hours: number;

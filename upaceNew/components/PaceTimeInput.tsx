@@ -1,6 +1,6 @@
 import React from "react";
 import { View, StyleSheet, TextInput, Text } from "react-native";
-import { useCustomTheme } from "../theme/ThemeContext";
+import { useCustomTheme } from "../theme/themeContext";
 
 interface PaceTimeInputProps {
   label: string;
