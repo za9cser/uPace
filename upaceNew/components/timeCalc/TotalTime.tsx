@@ -57,25 +57,10 @@ const TotalTime = () => {
         style={styles.totalGradient}
       >
         <Card.Content style={styles.resultContent}>
-          <Text
-            variant="labelLarge"
-            style={{
-              color: "rgba(255,255,255,0.9)",
-              marginBottom: 4,
-              letterSpacing: 1.5,
-              fontSize: 13,
-            }}
-          >
+          <Text variant="labelLarge" style={styles.title}>
             TOTAL TIME
           </Text>
-          <Text
-            variant="displayLarge"
-            style={{
-              color: "white",
-              fontWeight: "800",
-              letterSpacing: 1,
-            }}
-          >
+          <Text variant="displayLarge" style={styles.result}>
             {formatResult(values)}
           </Text>
           <View style={styles.totalActions}>
@@ -144,5 +129,16 @@ const styles = StyleSheet.create({
   totalActionIcon: {
     margin: 0,
     backgroundColor: "rgba(255,255,255,0.15)",
+  },
+  title: {
+    color: "rgba(255,255,255,0.9)",
+    marginBottom: 4,
+    letterSpacing: 1.5,
+    fontSize: 13,
+  },
+  result: {
+    color: "white",
+    fontWeight: "800",
+    letterSpacing: 1,
   },
 });

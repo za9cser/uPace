@@ -1,5 +1,4 @@
-import { useState, useEffect } from "react";
-import { ScrollView, StyleSheet, Animated } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Formik } from "formik";
 import { ScreenHeader } from "@/components/ScreenHeader";
@@ -12,16 +11,6 @@ import SplitList from "@/components/timeCalc/SplitList";
 export default function TimeCalculatorScreen() {
   const theme = useCustomTheme();
 
-  const [fadeAnim] = useState(new Animated.Value(0));
-
-  useEffect(() => {
-    Animated.timing(fadeAnim, {
-      toValue: 1,
-      duration: 500,
-      useNativeDriver: true,
-    }).start();
-  }, []);
-
   return (
     <SafeAreaView
       style={[styles.container, { backgroundColor: theme.colors.background }]}
@@ -32,37 +21,35 @@ export default function TimeCalculatorScreen() {
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="handled"
       >
-        <Animated.View style={{ opacity: fadeAnim, gap: 16 }}>
-          <ScreenHeader
-            title="Time Calculator"
-            subtitle="Add time splits and calculate their sum"
-          />
+        <ScreenHeader
+          title="Time Calculator"
+          subtitle="Add time splits and calculate their sum"
+        />
 
-          <Formik
-            initialValues={{
-              minutes: 0,
-              seconds: 0,
-              deciseconds: 0,
-              splits: [],
-              summaryOptions: {
-                includeMinutes: true,
-                includeSeconds: true,
-                includeDeciseconds: true,
-              },
-            }}
-            onSubmit={() => {}}
-          >
-            <>
-              <SummaryOptions />
+        <Formik
+          initialValues={{
+            minutes: 0,
+            seconds: 0,
+            deciseconds: 0,
+            splits: [],
+            summaryOptions: {
+              includeMinutes: true,
+              includeSeconds: true,
+              includeDeciseconds: true,
+            },
+          }}
+          onSubmit={() => {}}
+        >
+          <>
+            <SummaryOptions />
 
-              <TotalTime />
+            <TotalTime />
 
-              <NewSplit />
+            <NewSplit />
 
-              <SplitList />
-            </>
-          </Formik>
-        </Animated.View>
+            <SplitList />
+          </>
+        </Formik>
       </ScrollView>
     </SafeAreaView>
   );

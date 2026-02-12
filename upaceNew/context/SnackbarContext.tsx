@@ -27,13 +27,8 @@ export const SnackbarProvider = ({ children }: Props) => {
   const showSnackbar = (
     message: string,
     type: "info" | "success" | "warning" | "error" = "info"
-  ) => {
-    setSnackbar({ visible: true, message, type });
-  };
-
-  const hideSnackbar = () => {
-    setSnackbar({ ...snackbar, visible: false });
-  };
+  ) => setSnackbar({ visible: true, message, type });
+  const hideSnackbar = () => setSnackbar({ ...snackbar, visible: false });
 
   return (
     <SnackbarContext.Provider value={{ showSnackbar }}>

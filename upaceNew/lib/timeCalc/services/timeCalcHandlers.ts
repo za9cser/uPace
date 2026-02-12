@@ -45,9 +45,8 @@ export const copyResultToClipboard = async (values: TimeCalcFormValues) => {
 };
 
 export const copySplitsToClipboard = async (values: TimeCalcFormValues) => {
-  if (values.splits.length === 0) {
+  if (values.splits.length === 0)
     return { success: false, message: "Add some splits first" };
-  }
 
   const splitsText = values.splits
     .map((split) => {
@@ -90,9 +89,7 @@ export const copySplitsToClipboard = async (values: TimeCalcFormValues) => {
   return { success: true, message: "Splits copied to clipboard" };
 };
 
-export const clearAll = (values: TimeCalcFormValues) => {
-  return {
-    ...values,
-    splits: [],
-  };
-};
+export const clearAll = (values: TimeCalcFormValues) => ({
+  ...values,
+  splits: [],
+});

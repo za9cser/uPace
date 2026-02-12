@@ -56,14 +56,14 @@ const SummaryOptions = () => {
                 },
               ]}
               contentStyle={styles.optionButtonContent}
-              labelStyle={{
-                fontSize: 12,
-                marginHorizontal: 0,
-                fontWeight: "600",
-                color: enabled
-                  ? theme.colors.primary
-                  : theme.colors.textSecondary,
-              }}
+              labelStyle={[
+                styles.summaryLabel,
+                {
+                  color: enabled
+                    ? theme.colors.primary
+                    : theme.colors.textSecondary,
+                },
+              ]}
               compact
             >
               {option.label}
@@ -97,5 +97,10 @@ const styles = StyleSheet.create({
   },
   optionButtonContent: {
     height: 36,
+  },
+  summaryLabel: {
+    fontSize: 12,
+    marginHorizontal: 0,
+    fontWeight: "600",
   },
 });
