@@ -1,4 +1,8 @@
-import { PaceCalcFormValues } from "../types/PaceCalcFormValues";
+import {
+  PaceCalcFormValues,
+  TimeObject,
+  PaceObject,
+} from "../types/PaceCalcFormValues";
 import { calculateMissingValue } from "./paceCalcHandlers";
 import { Keyboard } from "react-native";
 
@@ -16,9 +20,9 @@ export const handleCalculateField = (
 
   // Clear the target field to calculate it
   if (targetField === "time") {
-    tempValues.time = "";
+    tempValues.time = { hours: 0, minutes: 0, seconds: 0 };
   } else if (targetField === "pace") {
-    tempValues.pace = "";
+    tempValues.pace = { minutes: 0, seconds: 0 };
   } else if (targetField === "distance") {
     tempValues.distance = "";
   }
@@ -27,10 +31,7 @@ export const handleCalculateField = (
   const calculated = calculateMissingValue(tempValues);
 
   // Update the target field with the calculated value
-  if (
-    calculated[targetField] &&
-    calculated[targetField] !== tempValues[targetField]
-  ) {
+  if (calculated[targetField]) {
     setFieldValue(targetField, calculated[targetField]);
   }
 };
@@ -38,7 +39,7 @@ export const handleCalculateField = (
 // Handle field change with auto-calculation
 export const handleFieldChange = (
   field: keyof PaceCalcFormValues,
-  value: string,
+  value: string | TimeObject | PaceObject,
   values: PaceCalcFormValues,
   setFieldValue: (field: string, value: any) => void
 ) => {
@@ -50,10 +51,10 @@ export const handleFieldChange = (
     values.time,
     values.pace,
     values.distance,
-  ].filter((v) => v && v.trim() !== "").length;
+  ].filter((v) => v && isFilled(v)).length;
 
   // If we're clearing a field (going from 3 to 2 filled fields), don't auto-calculate
-  if (value.trim() === "" && previousFilledCount === 3) {
+  if (!isFilled(value) && previousFilledCount === 3) {
     return;
   }
 
@@ -66,26 +67,26 @@ export const handleFieldChange = (
     tempValues.time,
     tempValues.pace,
     tempValues.distance,
-  ].filter((v) => v && v.trim() !== "").length;
+  ].filter((v) => v && isFilled(v)).length;
 
   // Auto-calculate only when we have exactly 2 filled fields
   if (currentFilledCount === 2) {
     if (
-      tempValues.time &&
+      isFilled(tempValues.time) &&
       calculated.time &&
-      calculated.time !== tempValues.time
+      !isTimeEqual(tempValues.time, calculated.time)
     ) {
       setFieldValue("time", calculated.time);
     }
     if (
-      tempValues.pace &&
+      isFilled(tempValues.pace) &&
       calculated.pace &&
-      calculated.pace !== tempValues.pace
+      !isPaceEqual(tempValues.pace, calculated.pace)
     ) {
       setFieldValue("pace", calculated.pace);
     }
     if (
-      tempValues.distance &&
+      isFilled(tempValues.distance) &&
       calculated.distance &&
       calculated.distance !== tempValues.distance
     ) {
@@ -94,22 +95,98 @@ export const handleFieldChange = (
   }
 };
 
+// Handle time field change
+export const handleTimeFieldChange = (
+  field: keyof TimeObject,
+  value: number,
+  currentTime: TimeObject,
+  values: PaceCalcFormValues,
+  setFieldValue: (field: string, value: any) => void
+) => {
+  // Create a new time object with the updated field
+  const newTime = { ...currentTime, [field]: value };
+
+  // Use the general field change handler
+  handleFieldChange("time", newTime, values, setFieldValue);
+};
+
+// Handle pace field change
+export const handlePaceFieldChange = (
+  field: keyof PaceObject,
+  value: number,
+  currentPace: PaceObject,
+  values: PaceCalcFormValues,
+  setFieldValue: (field: string, value: any) => void
+) => {
+  // Create a new pace object with the updated field
+  const newPace = { ...currentPace, [field]: value };
+
+  // Use the general field change handler
+  handleFieldChange("pace", newPace, values, setFieldValue);
+};
+
+// Check if a field is filled
+const isFilled = (value: string | TimeObject | PaceObject): boolean => {
+  if (typeof value === "string") {
+    return value.trim() !== "";
+  } else if (isTimeObject(value)) {
+    // For time objects, check if any field has a non-zero value
+    return value.hours > 0 || value.minutes > 0 || value.seconds > 0;
+  } else if (isPaceObject(value)) {
+    // For pace objects, check if any field has a non-zero value
+    return value.minutes > 0 || value.seconds > 0;
+  }
+  return false;
+};
+
+// Type guards
+const isTimeObject = (value: any): value is TimeObject => {
+  return (
+    value &&
+    typeof value === "object" &&
+    "hours" in value &&
+    "minutes" in value &&
+    "seconds" in value
+  );
+};
+
+const isPaceObject = (value: any): value is PaceObject => {
+  return (
+    value &&
+    typeof value === "object" &&
+    "minutes" in value &&
+    "seconds" in value
+  );
+};
+
+// Compare time objects
+const isTimeEqual = (time1: TimeObject, time2: TimeObject): boolean => {
+  return (
+    time1.hours === time2.hours &&
+    time1.minutes === time2.minutes &&
+    time1.seconds === time2.seconds
+  );
+};
+
+// Compare pace objects
+const isPaceEqual = (pace1: PaceObject, pace2: PaceObject): boolean => {
+  return pace1.minutes === pace2.minutes && pace1.seconds === pace2.seconds;
+};
+
 // Parse time values from Formik
-export const parseTimeValues = (timeStr: string) => {
-  const timeParts = timeStr ? timeStr.split(":").map(Number) : [0, 0, 0];
+export const parseTimeValues = (timeObj: TimeObject) => {
   return {
-    hours: timeParts[0] || 0,
-    minutes: timeParts[1] || 0,
-    seconds: timeParts[2] || 0,
+    hours: timeObj.hours || 0,
+    minutes: timeObj.minutes || 0,
+    seconds: timeObj.seconds || 0,
   };
 };
 
 // Parse pace values from Formik
-export const parsePaceValues = (paceStr: string) => {
-  const paceParts = paceStr ? paceStr.split(":").map(Number) : [0, 0];
+export const parsePaceValues = (paceObj: PaceObject) => {
   return {
-    minutes: paceParts[0] || 0,
-    seconds: paceParts[1] || 0,
+    minutes: paceObj.minutes || 0,
+    seconds: paceObj.seconds || 0,
   };
 };
 
@@ -118,13 +195,14 @@ export const formatTimeValue = (
   hours: number,
   minutes: number,
   seconds: number
-) => {
-  return `${hours.toString().padStart(2, "0")}:${minutes
-    .toString()
-    .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+): TimeObject => {
+  return { hours, minutes, seconds };
 };
 
 // Format pace values
-export const formatPaceValue = (minutes: number, seconds: number) => {
-  return `${minutes}:${seconds.toString().padStart(2, "0")}`;
+export const formatPaceValue = (
+  minutes: number,
+  seconds: number
+): PaceObject => {
+  return { minutes, seconds };
 };

@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ScreenHeader } from "@/components/ScreenHeader";
 import { useCustomTheme } from "@/theme/ThemeContext";
@@ -9,8 +9,8 @@ import LapCalc from "@/components/paceCalc/LapCalc";
 import PaceInputs from "@/components/paceCalc/PaceInputs";
 
 const initialValues: PaceCalcFormValues = {
-  time: "",
-  pace: "",
+  time: { hours: 0, minutes: 0, seconds: 0 },
+  pace: { minutes: 0, seconds: 0 },
   distance: "",
   lapDistances: [{ id: "1", value: "" }],
   lapSplits: [],

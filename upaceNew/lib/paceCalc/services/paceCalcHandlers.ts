@@ -1,52 +1,68 @@
 import * as Clipboard from "expo-clipboard";
-import { PaceCalcFormValues } from "../types/PaceCalcFormValues";
+import {
+  PaceCalcFormValues,
+  TimeObject,
+  PaceObject,
+} from "../types/PaceCalcFormValues";
 import { LapSplit, LapDistance } from "@/types";
 
-// Time parsing and formatting utilities
-export const parseTime = (timeStr: string): number => {
-  const parts = timeStr.split(":").map(Number);
-  if (parts.length !== 3) return 0;
-  return parts[0] * 3600 + parts[1] * 60 + parts[2];
+// Check if a time object is effectively "empty" (all zeros)
+const isTimeEmpty = (time: TimeObject): boolean => {
+  return time.hours === 0 && time.minutes === 0 && time.seconds === 0;
 };
 
-export const formatTime = (seconds: number): string => {
+// Check if a pace object is effectively "empty" (all zeros)
+const isPaceEmpty = (pace: PaceObject): boolean => {
+  return pace.minutes === 0 && pace.seconds === 0;
+};
+
+// Time parsing and formatting utilities
+export const parseTime = (time: TimeObject): number | null => {
+  // Check if it's an empty time object
+  if (isTimeEmpty(time)) {
+    return null;
+  }
+  return time.hours * 3600 + time.minutes * 60 + time.seconds;
+};
+
+export const formatTime = (seconds: number): TimeObject => {
   const hours = Math.floor(seconds / 3600);
   const minutes = Math.floor((seconds % 3600) / 60);
   const secs = Math.floor(seconds % 60);
-  return `${hours.toString().padStart(2, "0")}:${minutes
-    .toString()
-    .padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
+  return { hours, minutes, seconds: secs };
 };
 
-export const parsePace = (paceStr: string): number => {
-  const parts = paceStr.split(":").map(Number);
-  if (parts.length !== 2) return 0;
-  return parts[0] * 60 + parts[1];
+export const parsePace = (pace: PaceObject): number | null => {
+  // Check if it's an empty pace object
+  if (isPaceEmpty(pace)) {
+    return null;
+  }
+  return pace.minutes * 60 + pace.seconds;
 };
 
-export const formatPace = (secondsPerKm: number): string => {
+export const formatPace = (secondsPerKm: number): PaceObject => {
   const minutes = Math.floor(secondsPerKm / 60);
   const secs = Math.floor(secondsPerKm % 60);
-  return `${minutes}:${secs.toString().padStart(2, "0")}`;
+  return { minutes, seconds: secs };
 };
 
 // Main calculation logic
 export const calculateMissingValue = (
   values: PaceCalcFormValues
 ): PaceCalcFormValues => {
-  const timeSeconds =
-    values.time && values.time.trim() ? parseTime(values.time) : null;
-  const paceSeconds =
-    values.pace && values.pace.trim() ? parsePace(values.pace) : null;
+  const timeSeconds = values.time ? parseTime(values.time) : null;
+  const paceSeconds = values.pace ? parsePace(values.pace) : null;
   const distance =
     values.distance && values.distance.trim()
       ? parseFloat(values.distance)
       : null;
 
+  // Count how many fields are filled (not null and greater than 0)
   const filledCount = [timeSeconds, paceSeconds, distance].filter(
     (v) => v !== null && v > 0
   ).length;
 
+  // We can only calculate if exactly 2 fields are filled
   if (filledCount !== 2) {
     return values;
   }
@@ -54,6 +70,7 @@ export const calculateMissingValue = (
   const newValues = { ...values };
 
   if (timeSeconds !== null && paceSeconds !== null && distance === null) {
+    // Calculate distance from time and pace
     const calculatedDistance = timeSeconds / paceSeconds;
     newValues.distance = calculatedDistance.toFixed(2);
   } else if (
@@ -61,6 +78,7 @@ export const calculateMissingValue = (
     distance !== null &&
     paceSeconds === null
   ) {
+    // Calculate pace from time and distance
     const calculatedPace = timeSeconds / distance;
     newValues.pace = formatPace(calculatedPace);
   } else if (
@@ -68,6 +86,7 @@ export const calculateMissingValue = (
     distance !== null &&
     timeSeconds === null
   ) {
+    // Calculate time from pace and distance
     const calculatedTime = paceSeconds * distance;
     newValues.time = formatTime(calculatedTime);
   }
@@ -114,12 +133,24 @@ export const calculateLapSplits = (values: PaceCalcFormValues): LapSplit[] => {
     splits.push({
       n: index + 1,
       distance: Math.round(cumulativeDistance * 100) / 100,
-      totalTime: formatTime(cumulativeTime),
-      splitTime: formatPace(lapTime),
+      totalTime: formatTimeToString(formatTime(cumulativeTime)),
+      splitTime: formatPaceToString(formatPace(lapTime)),
     });
   });
 
   return splits;
+};
+
+// Format time object to string for display
+export const formatTimeToString = (time: TimeObject): string => {
+  return `${time.hours.toString().padStart(2, "0")}:${time.minutes
+    .toString()
+    .padStart(2, "0")}:${time.seconds.toString().padStart(2, "0")}`;
+};
+
+// Format pace object to string for display
+export const formatPaceToString = (pace: PaceObject): string => {
+  return `${pace.minutes}:${pace.seconds.toString().padStart(2, "0")}`;
 };
 
 // Lap distance management

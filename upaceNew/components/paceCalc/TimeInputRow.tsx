@@ -1,4 +1,3 @@
-import React from "react";
 import { View, StyleSheet } from "react-native";
 import { useFormikContext } from "formik";
 import { TimeInput } from "../TimeInput";
@@ -6,9 +5,8 @@ import TimePaceDistanceButton from "./TimePaceDistanceButton";
 import { PaceCalcFormValues } from "@/lib/paceCalc/types/PaceCalcFormValues";
 import {
   handleCalculateField,
-  handleFieldChange,
+  handleTimeFieldChange,
   parseTimeValues,
-  formatTimeValue,
 } from "@/lib/paceCalc/services/paceInputUtils";
 
 const TimeInputRow = () => {
@@ -22,28 +20,10 @@ const TimeInputRow = () => {
   } = parseTimeValues(values.time);
 
   const handleTimeChange = (
-    field: "hours" | "minutes" | "seconds",
+    field: keyof PaceCalcFormValues["time"],
     value: number
   ) => {
-    let newHours = timeHours;
-    let newMinutes = timeMinutes;
-    let newSeconds = timeSeconds;
-
-    switch (field) {
-      case "hours":
-        newHours = value;
-        break;
-      case "minutes":
-        newMinutes = value;
-        break;
-      case "seconds":
-        newSeconds = value;
-        break;
-    }
-
-    const formattedTime = formatTimeValue(newHours, newMinutes, newSeconds);
-
-    handleFieldChange("time", formattedTime, values, setFieldValue);
+    handleTimeFieldChange(field, value, values.time, values, setFieldValue);
   };
 
   const handleCalculate = () => {

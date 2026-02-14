@@ -1,5 +1,4 @@
-import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
 import { Card } from "react-native-paper";
 import { useCustomTheme } from "../../theme/ThemeContext";
 import TimeInputRow from "./TimeInputRow";
