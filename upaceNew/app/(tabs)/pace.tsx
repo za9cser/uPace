@@ -29,6 +29,7 @@ export default function PaceCalculatorScreen() {
       <ScrollView
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
       >
         <ScreenHeader
           title="Pace Calculator"

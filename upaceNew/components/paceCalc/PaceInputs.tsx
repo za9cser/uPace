@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { StyleSheet, View } from "react-native";
+import React from "react";
+import { StyleSheet, View, Keyboard } from "react-native";
 import { Card, TextInput, Button } from "react-native-paper";
 import { useCustomTheme } from "../../theme/ThemeContext";
 import { useFormikContext } from "formik";
@@ -11,32 +11,70 @@ const PaceInputs = () => {
   const theme = useCustomTheme();
   const { values, setFieldValue } = useFormikContext<PaceCalcFormValues>();
 
-  // State for time input values
-  const [timeHours, setTimeHours] = useState(0);
-  const [timeMinutes, setTimeMinutes] = useState(0);
-  const [timeSeconds, setTimeSeconds] = useState(0);
+  // Parse time values from Formik
+  const timeParts = values.time
+    ? values.time.split(":").map(Number)
+    : [0, 0, 0];
+  const timeHours = timeParts[0] || 0;
+  const timeMinutes = timeParts[1] || 0;
+  const timeSeconds = timeParts[2] || 0;
 
-  // State for pace input values
-  const [paceMinutes, setPaceMinutes] = useState(0);
-  const [paceSeconds, setPaceSeconds] = useState(0);
+  // Parse pace values from Formik
+  const paceParts = values.pace ? values.pace.split(":").map(Number) : [0, 0];
+  const paceMinutes = paceParts[0] || 0;
+  const paceSeconds = paceParts[1] || 0;
 
-  const handleTimeChange = () => {
-    const formattedTime = `${timeHours
+  const handleTimeChange = (
+    field: "hours" | "minutes" | "seconds",
+    value: number
+  ) => {
+    let newHours = timeHours;
+    let newMinutes = timeMinutes;
+    let newSeconds = timeSeconds;
+
+    switch (field) {
+      case "hours":
+        newHours = value;
+        break;
+      case "minutes":
+        newMinutes = value;
+        break;
+      case "seconds":
+        newSeconds = value;
+        break;
+    }
+
+    const formattedTime = `${newHours.toString().padStart(2, "0")}:${newMinutes
       .toString()
-      .padStart(2, "0")}:${timeMinutes
-      .toString()
-      .padStart(2, "0")}:${timeSeconds.toString().padStart(2, "0")}`;
+      .padStart(2, "0")}:${newSeconds.toString().padStart(2, "0")}`;
+
     handleFieldChange("time", formattedTime);
   };
 
-  const handlePaceChange = () => {
-    const formattedPace = `${paceMinutes}:${paceSeconds
+  const handlePaceChange = (field: "minutes" | "seconds", value: number) => {
+    let newMinutes = paceMinutes;
+    let newSeconds = paceSeconds;
+
+    switch (field) {
+      case "minutes":
+        newMinutes = value;
+        break;
+      case "seconds":
+        newSeconds = value;
+        break;
+    }
+
+    const formattedPace = `${newMinutes}:${newSeconds
       .toString()
       .padStart(2, "0")}`;
+
     handleFieldChange("pace", formattedPace);
   };
 
   const handleCalculate = (targetField: "time" | "pace" | "distance") => {
+    // Dismiss keyboard first
+    Keyboard.dismiss();
+
     // Create a temporary object with current values
     const tempValues = { ...values };
 
@@ -52,22 +90,6 @@ const PaceInputs = () => {
       calculated[targetField] !== tempValues[targetField]
     ) {
       setFieldValue(targetField, calculated[targetField]);
-
-      // Update input states if target is time or pace
-      if (targetField === "time" && calculated.time) {
-        const timeParts = calculated.time.split(":").map(Number);
-        if (timeParts.length === 3) {
-          setTimeHours(timeParts[0]);
-          setTimeMinutes(timeParts[1]);
-          setTimeSeconds(timeParts[2]);
-        }
-      } else if (targetField === "pace" && calculated.pace) {
-        const paceParts = calculated.pace.split(":").map(Number);
-        if (paceParts.length === 2) {
-          setPaceMinutes(paceParts[0]);
-          setPaceSeconds(paceParts[1]);
-        }
-      }
     }
   };
 
@@ -77,38 +99,37 @@ const PaceInputs = () => {
   ) => {
     setFieldValue(field, value);
 
+    // Only auto-calculate when we have exactly 2 filled fields and we're adding a new value
+    // Don't auto-calculate when clearing a field
+    const previousFilledCount = [
+      values.time,
+      values.pace,
+      values.distance,
+    ].filter((v) => v && v.trim() !== "").length;
+
+    // If we're clearing a field (going from 3 to 2 filled fields), don't auto-calculate
+    if (value.trim() === "" && previousFilledCount === 3) {
+      return;
+    }
+
     // Create a temporary object to calculate missing values
     const tempValues = { ...values, [field]: value };
     const calculated = calculateMissingValue(tempValues);
 
     // Only update fields that have been calculated and are different
-    const filledCount = [
+    const currentFilledCount = [
       tempValues.time,
       tempValues.pace,
       tempValues.distance,
     ].filter((v) => v && v.trim() !== "").length;
 
-    if (filledCount >= 2) {
+    // Auto-calculate only when we have exactly 2 filled fields
+    if (currentFilledCount === 2) {
       if (!tempValues.time.trim() && calculated.time !== tempValues.time) {
         setFieldValue("time", calculated.time);
-
-        // Update time input states
-        const timeParts = calculated.time.split(":").map(Number);
-        if (timeParts.length === 3) {
-          setTimeHours(timeParts[0]);
-          setTimeMinutes(timeParts[1]);
-          setTimeSeconds(timeParts[2]);
-        }
       }
       if (!tempValues.pace.trim() && calculated.pace !== tempValues.pace) {
         setFieldValue("pace", calculated.pace);
-
-        // Update pace input states
-        const paceParts = calculated.pace.split(":").map(Number);
-        if (paceParts.length === 2) {
-          setPaceMinutes(paceParts[0]);
-          setPaceSeconds(paceParts[1]);
-        }
       }
       if (
         !tempValues.distance.trim() &&
@@ -149,10 +170,7 @@ const PaceInputs = () => {
               <TimeInput
                 label=""
                 value={timeHours}
-                onChange={(value) => {
-                  setTimeHours(value);
-                  setTimeout(handleTimeChange, 0);
-                }}
+                onChange={(value) => handleTimeChange("hours", value)}
                 max={23}
                 placeholder="hh"
                 min={0}
@@ -162,10 +180,7 @@ const PaceInputs = () => {
               <TimeInput
                 label=""
                 value={timeMinutes}
-                onChange={(value) => {
-                  setTimeMinutes(value);
-                  setTimeout(handleTimeChange, 0);
-                }}
+                onChange={(value) => handleTimeChange("minutes", value)}
                 max={59}
                 placeholder="mm"
                 min={0}
@@ -175,10 +190,7 @@ const PaceInputs = () => {
               <TimeInput
                 label=""
                 value={timeSeconds}
-                onChange={(value) => {
-                  setTimeSeconds(value);
-                  setTimeout(handleTimeChange, 0);
-                }}
+                onChange={(value) => handleTimeChange("seconds", value)}
                 max={59}
                 placeholder="ss"
                 min={0}
@@ -207,10 +219,7 @@ const PaceInputs = () => {
               <TimeInput
                 label=""
                 value={paceMinutes}
-                onChange={(value) => {
-                  setPaceMinutes(value);
-                  setTimeout(handlePaceChange, 0);
-                }}
+                onChange={(value) => handlePaceChange("minutes", value)}
                 max={59}
                 placeholder="mm"
                 min={0}
@@ -220,10 +229,7 @@ const PaceInputs = () => {
               <TimeInput
                 label=""
                 value={paceSeconds}
-                onChange={(value) => {
-                  setPaceSeconds(value);
-                  setTimeout(handlePaceChange, 0);
-                }}
+                onChange={(value) => handlePaceChange("seconds", value)}
                 max={59}
                 placeholder="ss"
                 min={0}
