@@ -2,12 +2,12 @@ import { Button } from "react-native-paper";
 import { useCustomTheme } from "../../theme/ThemeContext";
 import { StyleSheet } from "react-native";
 
-interface TimePaceDistanceButtonProps {
+interface Props {
   label: string;
   onPress: () => void;
 }
 
-const CalcButton = ({ label, onPress }: TimePaceDistanceButtonProps) => {
+const CalcButton = ({ label, onPress }: Props) => {
   const theme = useCustomTheme();
 
   return (

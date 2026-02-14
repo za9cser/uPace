@@ -1,7 +1,7 @@
 import { View, StyleSheet, Keyboard } from "react-native";
 import { Card, Button } from "react-native-paper";
 import { TimeInput } from "../TimeInput";
-import { useCustomTheme } from "../../theme/ThemeContext";
+import { useCustomTheme } from "@/theme/ThemeContext";
 import { useFormikContext, FieldArray } from "formik";
 import { TimeCalcFormValues } from "@/lib/timeCalc/types/TimeCalcFormValues";
 import { TimeSplit } from "@/types";
