@@ -3,7 +3,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Formik } from "formik";
 import { ScreenHeader } from "@/components/ScreenHeader";
 import { useCustomTheme } from "@/theme/ThemeContext";
-import SummaryOptionsCard from "@/components/timeCalc/SummaryOptionsCARD";
+import SummaryOptionsCard from "@/components/timeCalc/SummaryOptionsCard";
 import TotalTime from "@/components/timeCalc/TotalTime";
 import NewSplit from "@/components/timeCalc/NewSplit";
 import SplitList from "@/components/timeCalc/SplitList";
