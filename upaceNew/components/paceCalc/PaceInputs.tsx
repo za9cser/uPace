@@ -10,25 +10,21 @@ const PaceInputs = () => {
   const theme = useCustomTheme();
 
   return (
-    <>
-      <Card
-        style={[
-          styles.card,
-          {
-            backgroundColor: theme.colors.card,
-            borderColor: theme.colors.border,
-          },
-        ]}
-      >
-        <Card.Content style={styles.cardContent}>
-          <TimeInputRow />
-          <PaceInputRow />
-          <DistanceInputRow />
-        </Card.Content>
-      </Card>
-
-      <LapSplitCalculator />
-    </>
+    <Card
+      style={[
+        styles.card,
+        {
+          backgroundColor: theme.colors.card,
+          borderColor: theme.colors.border,
+        },
+      ]}
+    >
+      <Card.Content style={styles.cardContent}>
+        <TimeInputRow />
+        <PaceInputRow />
+        <DistanceInputRow />
+      </Card.Content>
+    </Card>
   );
 };
 

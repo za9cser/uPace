@@ -5,6 +5,7 @@ import { useCustomTheme } from "@/theme/ThemeContext";
 import { Formik } from "formik";
 import { PaceCalcFormValues } from "@/lib/paceCalc/types/PaceCalcFormValues";
 import PaceInputs from "@/components/paceCalc/PaceInputs";
+import LapSplitCalculator from "@/components/paceCalc/lapSplit/LapSplitCalculator";
 
 const initialValues: PaceCalcFormValues = {
   time: { hours: 0, minutes: 0, seconds: 0 },
@@ -38,6 +39,7 @@ export default function PaceCalculatorScreen() {
         >
           <>
             <PaceInputs />
+            <LapSplitCalculator />
           </>
         </Formik>
       </ScrollView>
