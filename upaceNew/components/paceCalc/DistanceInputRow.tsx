@@ -1,7 +1,7 @@
 import { View, StyleSheet } from "react-native";
 import { TextInput } from "react-native-paper";
 import { useFormikContext } from "formik";
-import TimePaceDistanceButton from "./TimePaceDistanceButton";
+import CalcButton from "./CalcButton";
 import { PaceCalcFormValues } from "@/lib/paceCalc/types/PaceCalcFormValues";
 import {
   handleCalculateField,
@@ -21,7 +21,7 @@ const DistanceInputRow = () => {
 
   return (
     <View style={[styles.inputRow, { paddingTop: 12 }]}>
-      <TimePaceDistanceButton label="Distance" onPress={handleCalculate} />
+      <CalcButton label="Distance" onPress={handleCalculate} />
       <View style={styles.distanceInputContainer}>
         <TextInput
           value={values.distance}

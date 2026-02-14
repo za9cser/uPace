@@ -7,10 +7,7 @@ interface TimePaceDistanceButtonProps {
   onPress: () => void;
 }
 
-const TimePaceDistanceButton = ({
-  label,
-  onPress,
-}: TimePaceDistanceButtonProps) => {
+const CalcButton = ({ label, onPress }: TimePaceDistanceButtonProps) => {
   const theme = useCustomTheme();
 
   return (
@@ -30,7 +27,7 @@ const TimePaceDistanceButton = ({
   );
 };
 
-export default TimePaceDistanceButton;
+export default CalcButton;
 
 const styles = StyleSheet.create({
   inputLabelButton: {
