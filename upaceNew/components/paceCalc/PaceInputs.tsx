@@ -254,19 +254,29 @@ const PaceInputs = () => {
           </Button>
           <View style={styles.distanceInputContainer}>
             <TextInput
-              label="Distance (km)"
               value={values.distance}
               onChangeText={(text) => handleFieldChange("distance", text)}
               placeholder="0.00"
               keyboardType="decimal-pad"
               mode="outlined"
-              style={styles.distanceInput}
+              style={[
+                styles.distanceInput,
+                {
+                  backgroundColor: theme.colors.inputBackground,
+                },
+              ]}
               theme={{
                 colors: {
                   text: theme.colors.text,
                   placeholder: theme.colors.textSecondary,
+                  primary: theme.colors.primary,
+                  background: theme.colors.inputBackground,
+                  surface: theme.colors.card,
+                  outline: theme.colors.border,
                 },
               }}
+              textColor={theme.colors.text}
+              placeholderTextColor={theme.colors.textSecondary}
             />
           </View>
         </View>
@@ -281,6 +291,7 @@ const styles = StyleSheet.create({
   card: {
     borderRadius: 16,
     marginBottom: 16,
+    borderWidth: 1,
   },
   cardContent: {
     paddingVertical: 12,

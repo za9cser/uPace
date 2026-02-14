@@ -1,14 +1,12 @@
-import { ScrollView, StyleSheet } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ScreenHeader } from "@/components/ScreenHeader";
 import { useCustomTheme } from "@/theme/ThemeContext";
-import { Formik, FormikHelpers } from "formik";
+import { Formik } from "formik";
 import { PaceCalcFormValues } from "@/lib/paceCalc/types/PaceCalcFormValues";
-import { calculateMissingValue } from "@/lib/paceCalc/services/paceCalcHandlers";
 import LapDistances from "@/components/paceCalc/LapDistances";
 import LapCalc from "@/components/paceCalc/LapCalc";
 import PaceInputs from "@/components/paceCalc/PaceInputs";
-import { useSnackbar } from "@/context/SnackbarContext";
 
 const initialValues: PaceCalcFormValues = {
   time: "",

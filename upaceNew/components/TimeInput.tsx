@@ -31,7 +31,7 @@ export const TimeInput = ({
 
   return (
     <View style={styles.container}>
-      <Text style={styles.label}>{label}</Text>
+      <Text style={[styles.label, { color: theme.colors.text }]}>{label}</Text>
       <TextInput
         value={value === 0 ? "" : value.toString()}
         onChangeText={handleChange}
@@ -39,10 +39,25 @@ export const TimeInput = ({
         maxLength={2}
         mode="outlined"
         placeholder={placeholder}
-        style={styles.input}
-        contentStyle={styles.inputContent}
+        style={[
+          styles.input,
+          {
+            backgroundColor: theme.colors.inputBackground,
+          },
+        ]}
+        contentStyle={[styles.inputContent, { color: theme.colors.text }]}
         error={!!error}
-        selectTextOnFocus
+        theme={{
+          colors: {
+            primary: theme.colors.primary,
+            placeholder: theme.colors.textSecondary,
+            text: theme.colors.text,
+            background: theme.colors.inputBackground,
+            surface: theme.colors.card,
+            outline: theme.colors.border,
+          },
+        }}
+        placeholderTextColor={theme.colors.textSecondary}
       />
       {error && (
         <Text
