@@ -7,19 +7,17 @@ import {
   handleCalculateField,
   handleFieldChange,
 } from "@/lib/paceCalc/services/paceInputUtils";
-import { useCustomTheme } from "../../theme/ThemeContext";
+import { useCustomTheme } from "@/theme/ThemeContext";
 
 const DistanceInputRow = () => {
   const theme = useCustomTheme();
   const { values, setFieldValue } = useFormikContext<PaceCalcFormValues>();
 
-  const handleCalculate = () => {
+  const handleCalculate = () =>
     handleCalculateField(values, setFieldValue, "distance");
-  };
 
-  const handleFieldChangeLocal = (value: string) => {
+  const handleFieldChangeLocal = (value: string) =>
     handleFieldChange("distance", value, values, setFieldValue);
-  };
 
   return (
     <View style={[styles.inputRow, { paddingTop: 12 }]}>

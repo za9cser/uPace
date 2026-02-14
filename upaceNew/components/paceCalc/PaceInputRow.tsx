@@ -20,13 +20,10 @@ const PaceInputRow = () => {
   const handlePaceChange = (
     field: keyof PaceCalcFormValues["pace"],
     value: number
-  ) => {
-    handlePaceFieldChange(field, value, values.pace, values, setFieldValue);
-  };
+  ) => handlePaceFieldChange(field, value, values.pace, values, setFieldValue);
 
-  const handleCalculate = () => {
+  const handleCalculate = () =>
     handleCalculateField(values, setFieldValue, "pace");
-  };
 
   return (
     <View style={styles.inputRow}>

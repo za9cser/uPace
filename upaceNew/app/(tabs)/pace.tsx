@@ -4,8 +4,6 @@ import { ScreenHeader } from "@/components/ScreenHeader";
 import { useCustomTheme } from "@/theme/ThemeContext";
 import { Formik } from "formik";
 import { PaceCalcFormValues } from "@/lib/paceCalc/types/PaceCalcFormValues";
-import LapDistances from "@/components/paceCalc/LapDistances";
-import LapCalc from "@/components/paceCalc/LapCalc";
 import PaceInputs from "@/components/paceCalc/PaceInputs";
 
 const initialValues: PaceCalcFormValues = {
@@ -38,18 +36,9 @@ export default function PaceCalculatorScreen() {
           initialValues={initialValues}
           onSubmit={() => {}}
         >
-          {(formik) => (
-            <>
-              {/* Inputs */}
-              <PaceInputs />
-
-              {/* Lap Distances */}
-              <LapDistances />
-
-              {/* Results Table */}
-              {formik.values.lapSplits.length > 0 && <LapCalc />}
-            </>
-          )}
+          <>
+            <PaceInputs />
+          </>
         </Formik>
       </ScrollView>
     </SafeAreaView>

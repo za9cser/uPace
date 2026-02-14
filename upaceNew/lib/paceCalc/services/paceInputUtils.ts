@@ -19,12 +19,16 @@ export const handleCalculateField = (
   const tempValues = { ...values };
 
   // Clear the target field to calculate it
-  if (targetField === "time") {
-    tempValues.time = { hours: 0, minutes: 0, seconds: 0 };
-  } else if (targetField === "pace") {
-    tempValues.pace = { minutes: 0, seconds: 0 };
-  } else if (targetField === "distance") {
-    tempValues.distance = "";
+  switch (targetField) {
+    case "time":
+      tempValues.time = { hours: 0, minutes: 0, seconds: 0 };
+      break;
+    case "pace":
+      tempValues.pace = { minutes: 0, seconds: 0 };
+      break;
+    case "distance":
+      tempValues.distance = "";
+      break;
   }
 
   // Calculate the missing value
@@ -135,6 +139,30 @@ const isFilled = (value: string | TimeObject | PaceObject): boolean => {
   } else if (isPaceObject(value)) {
     // For pace objects, check if any field has a non-zero value
     return value.minutes > 0 || value.seconds > 0;
+  }
+  return false;
+};
+
+// Check if two values are equal
+const isValueEqual = (
+  value1: any,
+  value2: any,
+  fieldType: "time" | "pace" | "distance"
+): boolean => {
+  if (fieldType === "time" && isTimeObject(value1) && isTimeObject(value2)) {
+    return isTimeEqual(value1, value2);
+  } else if (
+    fieldType === "pace" &&
+    isPaceObject(value1) &&
+    isPaceObject(value2)
+  ) {
+    return isPaceEqual(value1, value2);
+  } else if (
+    fieldType === "distance" &&
+    typeof value1 === "string" &&
+    typeof value2 === "string"
+  ) {
+    return value1 === value2;
   }
   return false;
 };
