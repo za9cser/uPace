@@ -34,8 +34,6 @@ const LapSplitTable = ({ splits }: Props) => {
             {
               backgroundColor:
                 index % 2 === 0 ? theme.colors.card : theme.colors.surface,
-              borderBottomWidth: index === splits.length - 1 ? 1 : 0,
-              borderBottomColor: theme.colors.border,
             },
           ]}
         >
@@ -61,10 +59,7 @@ export default LapSplitTable;
 
 const styles = StyleSheet.create({
   container: {
-    borderRadius: 12,
     overflow: "hidden",
-    borderWidth: 1,
-    borderColor: "rgba(0,0,0,0.1)",
   },
   tableHeader: {
     flexDirection: "row",
@@ -83,8 +78,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     paddingVertical: 12,
     paddingHorizontal: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: "rgba(0,0,0,0.05)",
   },
   cellText: {
     flex: 1,

@@ -1,4 +1,4 @@
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Text, Keyboard } from "react-native";
 import { Card, TextInput } from "react-native-paper";
 import { useFormikContext } from "formik";
 import { PaceCalcFormValues } from "@/lib/paceCalc/types/PaceCalcFormValues";
@@ -12,8 +12,9 @@ const LapSplitCalculator = () => {
   const { values, setFieldValue } = useFormikContext<PaceCalcFormValues>();
 
   const handleCalculateSplits = () => {
+    Keyboard.dismiss();
     // Get the lap distance from the first input
-    const lapDistanceStr = values.lapDistances[0]?.value || "";
+    const lapDistanceStr = values.lapDistances[0]?.value;
     if (!lapDistanceStr) return;
 
     const lapDistance = parseFloat(lapDistanceStr);
@@ -57,11 +58,17 @@ const LapSplitCalculator = () => {
       ]}
     >
       <Card.Content style={styles.cardContent}>
+        <Text style={[styles.title, { color: theme.colors.text }]}>
+          Lap Splits
+        </Text>
+        <Text
+          style={[styles.description, { color: theme.colors.textSecondary }]}
+        >
+          Calculate splits for your laps based on your pace
+        </Text>
+
         <View style={styles.inputRow}>
-          <CalcButton
-            label="Calculate Splits"
-            onPress={handleCalculateSplits}
-          />
+          <CalcButton label="Calc" onPress={handleCalculateSplits} />
           <View style={styles.lapDistanceInputContainer}>
             <TextInput
               value={values.lapDistances[0]?.value || ""}
@@ -110,6 +117,15 @@ const styles = StyleSheet.create({
   cardContent: {
     paddingVertical: 12,
     paddingHorizontal: 16,
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: "600",
+    marginBottom: 4,
+  },
+  description: {
+    fontSize: 14,
+    marginBottom: 12,
   },
   inputRow: {
     flexDirection: "row",
