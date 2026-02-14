@@ -1,6 +1,6 @@
 import React from "react";
 import { IconButton } from "react-native-paper";
-import { useAppTheme, useCustomTheme } from "../theme/themeContext";
+import { useAppTheme, useCustomTheme } from "../theme/ThemeContext";
 
 export const ThemeToggle = () => {
   const { colorMode, toggleColorMode } = useAppTheme();

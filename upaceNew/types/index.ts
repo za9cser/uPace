@@ -28,3 +28,14 @@ export interface LapDistance {
   id: string;
   value: string;
 }
+
+export interface TimeObject {
+  hours: number;
+  minutes: number;
+  seconds: number;
+}
+
+export interface PaceObject {
+  minutes: number;
+  seconds: number;
+}

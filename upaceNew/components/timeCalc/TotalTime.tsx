@@ -2,7 +2,7 @@ import React from "react";
 import { View, StyleSheet } from "react-native";
 import { Card, Text, IconButton } from "react-native-paper";
 import { LinearGradient } from "expo-linear-gradient";
-import { useCustomTheme } from "@/theme/themeContext";
+import { useCustomTheme } from "@/theme/ThemeContext";
 import { useFormikContext } from "formik";
 import {
   formatResult,
@@ -10,7 +10,7 @@ import {
   copySplitsToClipboard,
   clearAll,
 } from "@/lib/timeCalc/services/timeCalcHandlers";
-import { TimeCalcFormValues } from "@/lib/timeCalc/types/timeCalcFormValues";
+import { TimeCalcFormValues } from "@/lib/timeCalc/types/TimeCalcFormValues";
 import { useSnackbar } from "@/context/SnackbarContext";
 
 const TotalTime = () => {

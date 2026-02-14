@@ -2,8 +2,8 @@ import { ScrollView, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Formik } from "formik";
 import { ScreenHeader } from "@/components/ScreenHeader";
-import { useCustomTheme } from "@/theme/themeContext";
-import SummaryOptions from "@/components/timeCalc/SummaryOptions";
+import { useCustomTheme } from "@/theme/ThemeContext";
+import SummaryOptionsCard from "@/components/timeCalc/SummaryOptionsCard";
 import TotalTime from "@/components/timeCalc/TotalTime";
 import NewSplit from "@/components/timeCalc/NewSplit";
 import SplitList from "@/components/timeCalc/SplitList";
@@ -41,7 +41,7 @@ export default function TimeCalculatorScreen() {
           onSubmit={() => {}}
         >
           <>
-            <SummaryOptions />
+            <SummaryOptionsCard />
 
             <TotalTime />
 

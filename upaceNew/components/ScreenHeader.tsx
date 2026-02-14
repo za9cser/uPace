@@ -2,7 +2,7 @@ import React from "react";
 import { View, StyleSheet } from "react-native";
 import { Text } from "react-native-paper";
 import { ThemeToggle } from "./ThemeToggle";
-import { useCustomTheme } from "../theme/themeContext";
+import { useCustomTheme } from "../theme/ThemeContext";
 
 interface ScreenHeaderProps {
   title: string;

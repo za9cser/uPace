@@ -1,4 +1,4 @@
-import { ThemeProvider } from "../theme/themeContext";
+import { ThemeProvider } from "@/theme/ThemeContext";
 import { SnackbarProvider } from "../context/SnackbarContext";
 import { useColorScheme } from "react-native";
 import {
