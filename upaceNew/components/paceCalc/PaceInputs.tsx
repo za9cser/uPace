@@ -4,6 +4,7 @@ import { useCustomTheme } from "../../theme/ThemeContext";
 import TimeInputRow from "./TimeInputRow";
 import PaceInputRow from "./PaceInputRow";
 import DistanceInputRow from "./DistanceInputRow";
+import LapSplitCalculator from "./lapSplit/LapSplitCalculator";
 
 const PaceInputs = () => {
   const theme = useCustomTheme();
