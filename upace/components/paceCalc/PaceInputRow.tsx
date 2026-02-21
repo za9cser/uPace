@@ -1,6 +1,6 @@
 import { View, StyleSheet } from "react-native";
 import { useFormikContext } from "formik";
-import TimeInput from "../TimeInput";
+import TimeInput from "../common/TimeInput";
 import CalcButton from "./CalcButton";
 import { PaceCalcFormValues } from "@/lib/paceCalc/types/PaceCalcFormValues";
 import {
