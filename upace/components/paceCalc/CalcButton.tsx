@@ -1,5 +1,5 @@
 import { Button } from "react-native-paper";
-import { useCustomTheme } from "../../theme/ThemeContext";
+import { useCustomTheme } from "@/theme/ThemeContext";
 import { StyleSheet } from "react-native";
 
 interface Props {

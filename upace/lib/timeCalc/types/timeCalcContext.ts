@@ -1,4 +1,4 @@
-import { TimeSplit, SummaryOptions } from "../../../types";
+import { TimeSplit, SummaryOptions } from "@/types";
 
 export interface TimeCalcFormValues {
   minutes: number;

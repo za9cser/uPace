@@ -1,6 +1,6 @@
 import { View, StyleSheet } from "react-native";
 import { TextInput, Text } from "react-native-paper";
-import { useCustomTheme } from "../theme/ThemeContext";
+import { useCustomTheme } from "@/theme/ThemeContext";
 
 interface TimeInputProps {
   label: string;
@@ -12,7 +12,7 @@ interface TimeInputProps {
   placeholder?: string;
 }
 
-export const TimeInput = ({
+const TimeInput = ({
   label,
   value,
   onChange,
@@ -70,6 +70,8 @@ export const TimeInput = ({
     </View>
   );
 };
+
+export default TimeInput;
 
 const styles = StyleSheet.create({
   container: {

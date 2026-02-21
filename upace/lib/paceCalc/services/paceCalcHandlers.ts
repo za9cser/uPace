@@ -2,7 +2,7 @@ import {
   PaceCalcFormValues,
   TimeObject,
   PaceObject,
-} from "../types/PaceCalcFormValues";
+} from "@/types/PaceCalcFormValues";
 
 // Check if a time object is effectively "empty" (all zeros)
 const isTimeEmpty = (time: TimeObject): boolean =>

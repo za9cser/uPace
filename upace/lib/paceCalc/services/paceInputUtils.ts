@@ -2,7 +2,7 @@ import {
   PaceCalcFormValues,
   TimeObject,
   PaceObject,
-} from "../types/PaceCalcFormValues";
+} from "@/types/PaceCalcFormValues";
 import { calculateMissingValue } from "./paceCalcHandlers";
 import { Keyboard } from "react-native";
 
