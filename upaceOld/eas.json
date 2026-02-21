@@ -1,7 +1,6 @@
 {
   "cli": {
-    "version": ">= 7.3.0",
-    "requireCommit": true
+    "version": ">= 7.3.0"
   },
   "build": {
     "development": {
@@ -9,10 +8,7 @@
       "distribution": "internal"
     },
     "preview": {
-      "distribution": "internal",
-      "android": {
-        "buildType": "apk"
-      }
+      "distribution": "internal"
     },
     "production": {
       "android": {
