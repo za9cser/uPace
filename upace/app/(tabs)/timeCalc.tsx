@@ -1,7 +1,7 @@
 import { ScrollView, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Formik } from "formik";
-import { ScreenHeader } from "@/components/ScreenHeader";
+import { ScreenHeader } from "@/components/common/ScreenHeader";
 import { useCustomTheme } from "@/theme/ThemeContext";
 import SummaryOptionsCard from "@/components/timeCalc/SummaryOptionsCard";
 import TotalTime from "@/components/timeCalc/TotalTime";
