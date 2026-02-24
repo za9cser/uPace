@@ -28,8 +28,8 @@ export default function TabsLayout() {
         name="timeCalc"
         options={{
           title: "Time Calc",
-          tabBarIcon: () => (
-            <Icon name="timer" size={20} color={theme.colors.text} />
+          tabBarIcon: ({ color }) => (
+            <Icon name="timer" size={20} color={color} />
           ),
         }}
       />
@@ -37,8 +37,8 @@ export default function TabsLayout() {
         name="pace"
         options={{
           title: "Pace Calc",
-          tabBarIcon: () => (
-            <Icon name="directions-run" size={20} color={theme.colors.text} />
+          tabBarIcon: ({ color }) => (
+            <Icon name="directions-run" size={20} color={color} />
           ),
         }}
       />
