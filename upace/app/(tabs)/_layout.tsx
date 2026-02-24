@@ -16,7 +16,10 @@ export default function TabsLayout() {
           borderTopColor: theme.colors.border,
           borderTopWidth: 1,
         },
-        tabBarLabelStyle: styles.tabBarLabelStyle,
+        tabBarLabelStyle: [
+          styles.tabBarLabelStyle,
+          { color: theme.colors.text },
+        ],
       }}
       initialRouteName="timeCalc"
     >
@@ -24,14 +27,18 @@ export default function TabsLayout() {
         name="timeCalc"
         options={{
           title: "Time Calc",
-          tabBarIcon: () => <Text style={styles.title}>⏱</Text>,
+          tabBarIcon: () => (
+            <Text style={[styles.title, { color: theme.colors.text }]}>⏱</Text>
+          ),
         }}
       />
       <Tabs.Screen
         name="pace"
         options={{
           title: "Pace Calc",
-          tabBarIcon: () => <Text style={styles.title}>🏃</Text>,
+          tabBarIcon: () => (
+            <Text style={[styles.title, { color: theme.colors.text }]}>🏃</Text>
+          ),
         }}
       />
     </Tabs>
