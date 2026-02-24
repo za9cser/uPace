@@ -1,4 +1,9 @@
-import { View, StyleSheet, Keyboard } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Keyboard,
+  TextInput as RNTextInput,
+} from "react-native";
 import { Card, Button } from "react-native-paper";
 import TimeInput from "../common/TimeInput";
 import { useCustomTheme } from "@/theme/ThemeContext";
@@ -6,11 +11,15 @@ import { useFormikContext, FieldArray } from "formik";
 import { TimeCalcFormValues } from "@/lib/timeCalc/types/TimeCalcFormValues";
 import { TimeSplit } from "@/types";
 import { useSnackbar } from "@/context/SnackbarContext";
+import { useRef } from "react";
 
 const NewSplit = () => {
   const { showSnackbar } = useSnackbar();
   const theme = useCustomTheme();
   const { values, setFieldValue } = useFormikContext<TimeCalcFormValues>();
+  const minutesRef = useRef<RNTextInput>(null);
+  const secondsRef = useRef<RNTextInput>(null);
+  const decisecondsRef = useRef<RNTextInput>(null);
 
   return (
     <FieldArray
@@ -29,25 +38,45 @@ const NewSplit = () => {
             <View style={styles.addSplitForm}>
               <View style={styles.inputRow}>
                 <TimeInput
+                  ref={minutesRef}
                   label="MIN"
                   value={values.minutes}
                   onChange={(value) => setFieldValue("minutes", value)}
                   max={99}
                   placeholder="mm"
+                  onSubmitEditing={() => secondsRef.current?.focus()}
                 />
                 <TimeInput
+                  ref={secondsRef}
                   label="SEC"
                   value={values.seconds}
                   onChange={(value) => setFieldValue("seconds", value)}
                   max={59}
                   placeholder="ss"
+                  onSubmitEditing={() => decisecondsRef.current?.focus()}
                 />
                 <TimeInput
+                  ref={decisecondsRef}
                   label="DEC"
                   value={values.deciseconds}
                   onChange={(value) => setFieldValue("deciseconds", value)}
                   max={9}
                   placeholder="d"
+                  onSubmitEditing={() => {
+                    Keyboard.dismiss();
+                    const newSplit: TimeSplit = {
+                      id: Date.now().toString(),
+                      minutes: values.minutes,
+                      seconds: values.seconds,
+                      deciseconds: values.deciseconds,
+                    };
+                    push(newSplit);
+                    setFieldValue("minutes", 0);
+                    setFieldValue("seconds", 0);
+                    setFieldValue("deciseconds", 0);
+                    showSnackbar("Split added successfully", "success");
+                  }}
+                  returnKeyType="done"
                 />
               </View>
               <Button

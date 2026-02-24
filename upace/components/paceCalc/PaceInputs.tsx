@@ -1,12 +1,14 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, TextInput as RNTextInput } from "react-native";
 import { Card } from "react-native-paper";
 import { useCustomTheme } from "@/theme/ThemeContext";
 import TimeInputRow from "./TimeInputRow";
 import PaceInputRow from "./PaceInputRow";
 import DistanceInputRow from "./DistanceInputRow";
+import { useRef } from "react";
 
 const PaceInputs = () => {
   const theme = useCustomTheme();
+  const paceInputRowRef = useRef<RNTextInput | undefined>(null);
 
   return (
     <Card
@@ -19,8 +21,8 @@ const PaceInputs = () => {
       ]}
     >
       <Card.Content style={styles.cardContent}>
-        <TimeInputRow />
-        <PaceInputRow />
+        <TimeInputRow paceInputRowRef={paceInputRowRef} />
+        <PaceInputRow ref={paceInputRowRef} />
         <DistanceInputRow />
       </Card.Content>
     </Card>

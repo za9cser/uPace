@@ -1,4 +1,4 @@
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, TextInput as RNTextInput } from "react-native";
 import { useFormikContext } from "formik";
 import TimeInput from "../common/TimeInput";
 import CalcButton from "./CalcButton";
@@ -8,9 +8,17 @@ import {
   handleTimeFieldChange,
   parseTimeValues,
 } from "@/lib/paceCalc/services/paceInputUtils";
+import { useRef } from "react";
 
-const TimeInputRow = () => {
+interface TimeInputRowProps {
+  paceInputRowRef?: React.RefObject<RNTextInput>;
+}
+
+const TimeInputRow = ({ paceInputRowRef }: TimeInputRowProps) => {
   const { values, setFieldValue } = useFormikContext<PaceCalcFormValues>();
+  const hoursRef = useRef<RNTextInput>(null);
+  const minutesRef = useRef<RNTextInput>(null);
+  const secondsRef = useRef<RNTextInput>(null);
 
   // Parse time values from Formik
   const {
@@ -36,32 +44,39 @@ const TimeInputRow = () => {
       <View style={styles.timeInputsRow}>
         <View style={styles.inputWrapper}>
           <TimeInput
+            ref={hoursRef}
             label=""
             value={timeHours}
             onChange={(value) => handleTimeChange("hours", value)}
             max={23}
             placeholder="hh"
             min={0}
+            onSubmitEditing={() => minutesRef.current?.focus()}
           />
         </View>
         <View style={styles.inputWrapper}>
           <TimeInput
+            ref={minutesRef}
             label=""
             value={timeMinutes}
             onChange={(value) => handleTimeChange("minutes", value)}
             max={59}
             placeholder="mm"
             min={0}
+            onSubmitEditing={() => secondsRef.current?.focus()}
           />
         </View>
         <View style={styles.inputWrapper}>
           <TimeInput
+            ref={secondsRef}
             label=""
             value={timeSeconds}
             onChange={(value) => handleTimeChange("seconds", value)}
             max={59}
             placeholder="ss"
             min={0}
+            onSubmitEditing={() => paceInputRowRef?.current?.focus()}
+            returnKeyType="next"
           />
         </View>
       </View>
