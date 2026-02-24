@@ -7,6 +7,7 @@ import {
   ThemeProvider as NavThemeProvider,
 } from "@react-navigation/native";
 import { Slot } from "expo-router";
+import { ThemedStatusBar } from "@/components/common/ThemedStatusBar";
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
@@ -15,6 +16,7 @@ export default function RootLayout() {
   return (
     <ThemeProvider initialMode={isDark ? "dark" : "light"}>
       <NavThemeProvider value={isDark ? DarkTheme : DefaultTheme}>
+        <ThemedStatusBar />
         <SnackbarProvider>
           <Slot />
         </SnackbarProvider>
