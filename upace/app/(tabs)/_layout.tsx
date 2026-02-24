@@ -1,6 +1,7 @@
 import { Tabs } from "expo-router";
-import { Text, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { useCustomTheme } from "@/theme/ThemeContext";
+import Icon from "react-native-vector-icons/MaterialIcons";
 
 export default function TabsLayout() {
   const theme = useCustomTheme();
@@ -28,7 +29,7 @@ export default function TabsLayout() {
         options={{
           title: "Time Calc",
           tabBarIcon: () => (
-            <Text style={[styles.title, { color: theme.colors.text }]}>⏱</Text>
+            <Icon name="timer" size={20} color={theme.colors.text} />
           ),
         }}
       />
@@ -37,7 +38,7 @@ export default function TabsLayout() {
         options={{
           title: "Pace Calc",
           tabBarIcon: () => (
-            <Text style={[styles.title, { color: theme.colors.text }]}>🏃</Text>
+            <Icon name="directions-run" size={20} color={theme.colors.text} />
           ),
         }}
       />
@@ -46,9 +47,6 @@ export default function TabsLayout() {
 }
 
 const styles = StyleSheet.create({
-  title: {
-    fontSize: 24,
-  },
   tabBarLabelStyle: {
     fontSize: 12,
     fontWeight: "600",
