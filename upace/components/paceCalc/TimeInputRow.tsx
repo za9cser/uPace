@@ -28,7 +28,7 @@ const TimeInputRow = ({ paceInputRowRef }: TimeInputRowProps) => {
   } = parseTimeValues(values.time);
 
   const handleTimeChange = (
-    field: keyof PaceCalcFormValues["time"],
+    field: "hours" | "minutes" | "seconds",
     value: number
   ) => {
     handleTimeFieldChange(field, value, values.time, values, setFieldValue);
