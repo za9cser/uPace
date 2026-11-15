@@ -15,7 +15,7 @@
     "android": {
       "predictiveBackGestureEnabled": false,
       "package": "com.za9cser.upaceapp",
-      "version": "17"
+      "versionCode": 17
     },
     "web": {
       "favicon": "./assets/favicon.png"
