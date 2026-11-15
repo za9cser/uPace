@@ -2,7 +2,7 @@
   "expo": {
     "name": "uPace",
     "slug": "upace",
-    "version": "2.0.0",
+    "version": "2.0.1",
     "orientation": "portrait",
     "icon": "./assets/splash.png",
     "userInterfaceStyle": "automatic",
@@ -15,7 +15,7 @@
     "android": {
       "predictiveBackGestureEnabled": false,
       "package": "com.za9cser.upaceapp",
-      "versionCode": 17
+      "versionCode": 18
     },
     "web": {
       "favicon": "./assets/favicon.png"
