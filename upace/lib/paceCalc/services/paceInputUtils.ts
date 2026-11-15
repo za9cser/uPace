@@ -2,7 +2,7 @@ import {
   PaceCalcFormValues,
   TimeObject,
   PaceObject,
-} from "@/types/PaceCalcFormValues";
+} from "@/lib/paceCalc/types/PaceCalcFormValues";
 import { calculateMissingValue } from "./paceCalcHandlers";
 import { Keyboard } from "react-native";
 
@@ -42,7 +42,7 @@ export const handleCalculateField = (
 
 // Handle field change with auto-calculation
 export const handleFieldChange = (
-  field: keyof PaceCalcFormValues,
+  field: "time" | "pace" | "distance",
   value: string | TimeObject | PaceObject,
   values: PaceCalcFormValues,
   setFieldValue: (field: string, value: any) => void
