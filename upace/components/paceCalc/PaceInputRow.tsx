@@ -1,4 +1,5 @@
-import { View, StyleSheet, TextInput as RNTextInput } from "react-native";
+import { View, StyleSheet } from "react-native";
+import type { TextInputInstance } from "react-native";
 import { useFormikContext } from "formik";
 import TimeInput from "../common/TimeInput";
 import CalcButton from "./CalcButton";
@@ -8,25 +9,21 @@ import {
   handlePaceFieldChange,
   parsePaceValues,
 } from "@/lib/paceCalc/services/paceInputUtils";
-import { forwardRef, useRef } from "react";
+import { forwardRef, useImperativeHandle, useRef } from "react";
 
-interface PaceInputRowProps {
-  // Add any additional props if needed
+interface PaceInputFocusHandle {
+  focus: () => void;
 }
 
-const PaceInputRow = forwardRef<RNTextInput, PaceInputRowProps>(
+const PaceInputRow = forwardRef<PaceInputFocusHandle>(
   (props, ref) => {
     const { values, setFieldValue } = useFormikContext<PaceCalcFormValues>();
-    const minutesRef = useRef<RNTextInput>(null);
-    const secondsRef = useRef<RNTextInput>(null);
+    const minutesRef = useRef<TextInputInstance>(null);
+    const secondsRef = useRef<TextInputInstance>(null);
 
-    // Expose the minutesRef to parent components
-    if (ref) {
-      // @ts-ignore
-      ref.current = {
-        focus: () => minutesRef.current?.focus(),
-      };
-    }
+    useImperativeHandle(ref, () => ({
+      focus: () => minutesRef.current?.focus(),
+    }));
 
     // Parse pace values from Formik
     const { minutes: paceMinutes, seconds: paceSeconds } = parsePaceValues(

@@ -11,8 +11,9 @@ uPace — утилитное React Native / Expo-приложение для б�
 
 ## Стек и запуск
 
-- Expo SDK 54, React Native 0.81, React 19, TypeScript в strict mode.
-- Маршрутизация: Expo Router 6 с typed routes.
+- Expo SDK 58, React Native 0.88, React 19.3, TypeScript 6 в strict mode.
+- Требуется Node.js `^22.13.0`, `^24.3.0`, `^26.0.0` или новее.
+- Маршрутизация: Expo Router 58 с typed routes.
 - UI: React Native Paper, Material Icons, `react-native-safe-area-context`.
 - Состояние экранных форм: Formik; глобальные providers — тема и Snackbar.
 - Пакетный менеджер: npm (`package-lock.json`).
@@ -110,7 +111,7 @@ eas.json                  EAS Build profiles
 3. Для расчётов вручную проверь обычный и граничные случаи: пустые/нулевые значения, неполный последний круг, переход секунд в минуты, отключённые компоненты суммы.
 4. Для UI проверь light/dark mode, клавиатуру и переходы фокуса, длинные результаты и нижние вкладки.
 
-Текущий baseline TypeScript не чистый: есть ошибки ref-типов в `components/paceCalc/PaceInputs.tsx`, неверные импорты `@/types/PaceCalcFormValues` и `@/types/TimeCalcFormValues` в services, а также вытекающие ошибки типизации. Не считай их результатом своего изменения, но не используй baseline как причину оставлять новые ошибки.
+Текущий baseline TypeScript не чистый: есть неверные импорты `@/types/PaceCalcFormValues` и `@/types/TimeCalcFormValues` в services, а также вытекающие ошибки типизации. Не считай их результатом своего изменения, но не используй baseline как причину оставлять новые ошибки.
 
 ## Чего избегать
 

@@ -13,10 +13,9 @@
       "bundleIdentifier": "com.upace.app"
     },
     "android": {
-      "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
       "package": "com.za9cser.upaceapp",
-      "version": 16
+      "version": "16"
     },
     "web": {
       "favicon": "./assets/favicon.png"

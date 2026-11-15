@@ -3,6 +3,10 @@ import { StyleSheet } from "react-native";
 import { useCustomTheme } from "@/theme/ThemeContext";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
+export const unstable_settings = {
+  initialRouteName: "timeCalc",
+};
+
 export default function TabsLayout() {
   const theme = useCustomTheme();
 
@@ -22,7 +26,6 @@ export default function TabsLayout() {
           { color: theme.colors.text },
         ],
       }}
-      initialRouteName="timeCalc"
     >
       <Tabs.Screen
         name="timeCalc"

@@ -5,8 +5,8 @@ import {
   DarkTheme,
   DefaultTheme,
   ThemeProvider as NavThemeProvider,
-} from "@react-navigation/native";
-import { Slot } from "expo-router";
+  Slot,
+} from "expo-router";
 import { ThemedStatusBar } from "@/components/common/ThemedStatusBar";
 
 export default function RootLayout() {

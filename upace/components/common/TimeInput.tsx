@@ -1,4 +1,5 @@
-import { View, StyleSheet, TextInput as RNTextInput } from "react-native";
+import { View, StyleSheet } from "react-native";
+import type { TextInputInstance } from "react-native";
 import { TextInput, Text } from "react-native-paper";
 import { useCustomTheme } from "@/theme/ThemeContext";
 import React, { forwardRef, useState, useEffect } from "react";
@@ -15,7 +16,7 @@ interface TimeInputProps {
   returnKeyType?: "done" | "next";
 }
 
-const TimeInput = forwardRef<RNTextInput, TimeInputProps>(
+const TimeInput = forwardRef<TextInputInstance, TimeInputProps>(
   (
     {
       label,

@@ -1,9 +1,5 @@
-import {
-  View,
-  StyleSheet,
-  Keyboard,
-  TextInput as RNTextInput,
-} from "react-native";
+import { View, StyleSheet, Keyboard } from "react-native";
+import type { TextInputInstance } from "react-native";
 import { Card, Button } from "react-native-paper";
 import TimeInput from "../common/TimeInput";
 import { useCustomTheme } from "@/theme/ThemeContext";
@@ -17,9 +13,9 @@ const NewSplit = () => {
   const { showSnackbar } = useSnackbar();
   const theme = useCustomTheme();
   const { values, setFieldValue } = useFormikContext<TimeCalcFormValues>();
-  const minutesRef = useRef<RNTextInput>(null);
-  const secondsRef = useRef<RNTextInput>(null);
-  const decisecondsRef = useRef<RNTextInput>(null);
+  const minutesRef = useRef<TextInputInstance>(null);
+  const secondsRef = useRef<TextInputInstance>(null);
+  const decisecondsRef = useRef<TextInputInstance>(null);
 
   return (
     <FieldArray

@@ -1,4 +1,5 @@
-import { View, StyleSheet, TextInput as RNTextInput } from "react-native";
+import { View, StyleSheet } from "react-native";
+import type { TextInputInstance } from "react-native";
 import { useFormikContext } from "formik";
 import TimeInput from "../common/TimeInput";
 import CalcButton from "./CalcButton";
@@ -11,14 +12,14 @@ import {
 import { useRef } from "react";
 
 interface TimeInputRowProps {
-  paceInputRowRef?: React.RefObject<RNTextInput>;
+  paceInputRowRef?: React.RefObject<{ focus: () => void } | null>;
 }
 
 const TimeInputRow = ({ paceInputRowRef }: TimeInputRowProps) => {
   const { values, setFieldValue } = useFormikContext<PaceCalcFormValues>();
-  const hoursRef = useRef<RNTextInput>(null);
-  const minutesRef = useRef<RNTextInput>(null);
-  const secondsRef = useRef<RNTextInput>(null);
+  const hoursRef = useRef<TextInputInstance>(null);
+  const minutesRef = useRef<TextInputInstance>(null);
+  const secondsRef = useRef<TextInputInstance>(null);
 
   // Parse time values from Formik
   const {

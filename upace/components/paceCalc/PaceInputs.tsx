@@ -1,4 +1,5 @@
-import { StyleSheet, TextInput as RNTextInput } from "react-native";
+import { StyleSheet } from "react-native";
+import type { TextInputInstance } from "react-native";
 import { Card } from "react-native-paper";
 import { useCustomTheme } from "@/theme/ThemeContext";
 import TimeInputRow from "./TimeInputRow";
@@ -8,7 +9,7 @@ import { useRef } from "react";
 
 const PaceInputs = () => {
   const theme = useCustomTheme();
-  const paceInputRowRef = useRef<RNTextInput | undefined>(null);
+  const paceInputRowRef = useRef<{ focus: () => void } | null>(null);
 
   return (
     <Card
