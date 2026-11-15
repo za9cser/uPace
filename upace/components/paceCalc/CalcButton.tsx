@@ -43,6 +43,7 @@ const styles = StyleSheet.create({
   inputLabelText: {
     fontSize: 16,
     fontWeight: "600",
+    marginHorizontal: 8,
   },
   addButtonContent: {
     height: 52,
