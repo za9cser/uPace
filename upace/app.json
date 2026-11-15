@@ -2,14 +2,12 @@
   "expo": {
     "name": "uPace",
     "slug": "upace",
-    "version": "2.0.0-build-1",
+    "version": "2.0.0",
     "orientation": "portrait",
     "icon": "./assets/splash.png",
     "userInterfaceStyle": "automatic",
     "scheme": "upace",
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.upace.app"
@@ -17,7 +15,7 @@
     "android": {
       "predictiveBackGestureEnabled": false,
       "package": "com.za9cser.upaceapp",
-      "version": "16"
+      "version": "17"
     },
     "web": {
       "favicon": "./assets/favicon.png"
