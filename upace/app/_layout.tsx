@@ -8,9 +8,16 @@ import {
   Slot,
 } from "expo-router";
 import { ThemedStatusBar } from "@/components/common/ThemedStatusBar";
+import { useFonts } from "expo-font";
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
+  const [fontsLoaded] = useFonts({
+    MaterialIcons: require("react-native-vector-icons/Fonts/MaterialIcons.ttf"),
+    MaterialCommunityIcons: require("react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"),
+  });
+
+  if (!fontsLoaded) return null;
 
   const isDark = colorScheme === "dark";
   return (
